@@ -79,7 +79,7 @@ sudo podman run \
     --security-opt label=type:unconfined_t \
     -v $(pwd)/output:/output \
     -v /var/lib/containers/storage:/var/lib/containers/storage \
-    quay.io/rhel-bootc/bootc-image-builder:latest \
+    registry.redhat.io/rhel9/bootc-image-builder:latest \
     --type qcow2 \
     --local \
     localhost/rhel-bootc-vm:qcow
