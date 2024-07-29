@@ -66,6 +66,8 @@ In this repo you will find some use cases that explain and show RHEL Image mode 
 
 ## Resources
 
+- [Red Hat Developers - Getting Started with RHEL Image Mode](https://developers.redhat.com/products/rhel-image-mode/overview)
+
 - [Bootable container images mission statement](https://containers.github.io/bootable/)
 
 - [bootc project on GitHub](https://github.com/containers/bootc)
@@ -73,5 +75,3 @@ In this repo you will find some use cases that explain and show RHEL Image mode 
 - [bootc-image-builder project on GitHub](https://github.com/osbuild/bootc-image-builder)
 
 - [Podman page](https://podman.io/)
-- [Fedora ELN project](https://docs.fedoraproject.org/en-US/eln/)
-- [CentOS9 Stream project](https://centos.org/stream9/)
