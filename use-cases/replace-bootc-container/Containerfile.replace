@@ -10,7 +10,6 @@ RUN echo "This server is equipped with Nginx and PostgreSQL" > /etc/motd.d/20-re
 RUN dnf -y install postgresql postgresql-server vim && \
     dnf clean all && \
     rm -rf /var/cache /var/log/dnf && \
-    /usr/bin/postgresql-setup --initdb && \
     systemctl enable postgresql
 COPY ./files/sysusers.d/ /usr/lib/sysusers.d/
 COPY ./files/tmpfiles.d/ /usr/lib/tmpfiles.d/
