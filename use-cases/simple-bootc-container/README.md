@@ -1,6 +1,6 @@
 # Use Case - Simple bootc container
 
-This example shows a very simple example of a bootc container the is built starting from a *centos-bootc* image.
+This example shows a very simple example of a bootc container the is built starting from a *rhel-bootc* image.
 
 The Containerfile in the example:
 
