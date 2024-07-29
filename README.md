@@ -35,13 +35,14 @@ Some of the main features are:
 
 Creating a bootable container for RHEL Image Mode is as easy as writing and running a Containerfile like this:
 
+> [!WARNING]
+> To build images using RHEL bootc image you need a RHEL System with a valid subscription attached to it. For non-production workloads, you can register for a [free Red Hat developer subscription](https://developers.redhat.com/register).
+
+
 ```dockerfile
 FROM registry.redhat.io/rhel9/rhel-bootc:9.4
 CMD [ "/sbin/init" ]
 ```
-
-> [!INFO]
-> To build images using RHEL bootc image you need a RHEL System with a valid subscription attached to it. For non-production workloads, you can register for a [free Red Hat developer subscription](https://developers.redhat.com/register).
 
 You can proceed customizing the image, adding users, packages, configurations, etc following the [Dockerfile Reference](https://docs.docker.com/reference/dockerfile/)
 
