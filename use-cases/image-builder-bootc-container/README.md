@@ -92,20 +92,23 @@ The process will take care of all required steps (deploying the image, SELinux c
 ```bash
 Generating manifest-qcow2.json ... DONE
 Building manifest-qcow2.json
-starting -Pipeline source org.osbuild.skopeo: 2bdb5945fe35e00303ccedea4d9a88be74a2fb903c57de4cea5c9cc2be516b38
+starting -Pipeline source org.osbuild.containers-storage: 8aaabad5f0c2c00eb12666076be4e6843f04e262230e2976dbb1218e96f2ca53
 Build
   root: <host>
-source/org.osbuild.skopeo (org.osbuild.skopeo): Getting image source signatures
+Pipeline build: 2fb8b2a9ec9dc564950ddc6213d923bdd036c2328a97d0bb785c72fb5b6e1154
+Build
+  root: <host>
+  runner: org.osbuild.rhel82 (org.osbuild.rhel82)
 [...]
 
-⏱  Duration: 68s
-manifest - finished successfullybuild:          734b3cce0a0a99fdccc7d22454ed46542e5af3aae24a80ff0f7947a956fbe81c
-ostree-deployment:      eb722c921b64950f84e0aa5537a569899603b0922cc16d7917f8018e923529d1
-image:          818574c70b735b87695463a922e7e2c3037a9030e11268a2446483cc70f605ae
-qcow2:          01eb69b883b4346cd81273d76f55dfa417e605172f7cb7ac45d6872453ae241a
-vmdk:           3580b19f4160d14e629a7bfc72d057bd836441d2fd1c6a31032932dd3b785343
-ovf:            05ec95f59cb3d3d40a81c69709fcacb34e07925b75a5d048dd56e5b25b34fad9
-archive:        9620c02c16ce30df872a136e7b44f8064b197fb7141f51100cddc705d08a6d5c
+⏱  Duration: 81s
+manifest - finished successfully
+build:          2fb8b2a9ec9dc564950ddc6213d923bdd036c2328a97d0bb785c72fb5b6e1154
+image:          a578f97344212ef8cdc1a53717b61d72b4cc89504811c7b73e35aafe9a4011e5
+qcow2:          ae3acbc9afa8886b03ce112d57177e7a9e0a05819d3f0d7bba9fc0e2663fddf5
+vmdk:           a926054ee74e3fa6193efc467be82ad7ff041e58db6712cabf19a82793cbc345
+ovf:            02baf8c99f0322217499ddf7ca5f853b74f37926ab7739efc2e7e6dd87ecc8c1
+archive:        beb1ba4cddc9a18f49f190d33d9a3ef0221b90d19683f810f170ec4629c55f39
 Build complete!
 
 ```
