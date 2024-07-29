@@ -58,7 +58,7 @@ From here, you can verify that:
 - The user has sudo privileges
 
 ```bash
-[bootc-user@centos-bootc-bootc ~]$ sudo su
+[bootc-user@rhel-bootc-bootc ~]$ sudo su
 bash-5.1# whoami
 root
 ```
