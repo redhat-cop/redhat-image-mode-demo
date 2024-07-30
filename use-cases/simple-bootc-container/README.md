@@ -23,7 +23,7 @@ podman run -it --name bootc-container --hostname bootc-container -p 2022:22 rhel
 
 Note: The *"-p 2022:22"* part forwards the container's SSH port to the host 2022 port.
 
-The contaienr will now start and a login prompt will appear:
+The container will now start and a login prompt will appear:
 
 ![](./assets/bootc-container.png)
 

@@ -42,7 +42,7 @@ podman run -it --name rhel-bootc-vm --hostname rhel-bootc-vm -p 8080:80 -p 3306:
 Note: The *"-p 8080:80" -p 3306:3306* part forwards the container's *http* and *mariadb* port to the port 8080 and 3306 on the host to test that httpd and mariadb are working.
 
 
-The contaienr will now start and a login prompt will appear:
+The container will now start and a login prompt will appear:
 
 ![](./assets/bootc-container.png)
 

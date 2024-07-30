@@ -32,7 +32,7 @@ podman run -it --name rhel-bootc-vm --hostname rhel-bootc-vm -p 8080:80 rhel-boo
 
 Note: The *"-p 8080:80"* part forwards the container's *http* port to the port 8080 on the host to test that it is working.
 
-The contaienr will now start and a login prompt will appear:
+The container will now start and a login prompt will appear:
 
 ![](./assets/bootc-container.png)
 
@@ -140,7 +140,7 @@ sudo virt-install \
 Wait for the VM to be ready and retrieve the IP address for the domain to log-in using SSH using *bootc-user/redhat* credentials:
 
 ```bash
- ~ ▓▒░ VM_IP=$(sudo virsh -q domifaddr rhel-bootc-vm | awk '{ print $4 }' | cut -d"/" -f1) ssh bootc-user@$VM_IP
+ ~ ▓▒░ VM_IP=$(sudo virsh -q domifaddr rhel-bootc-vm | awk '{ print $4 }' | cut -d"/" -f1) && ssh bootc-user@$VM_IP
 Warning: Permanently added '192.168.150.157' (ED25519) to the list of known hosts.
 bootc-user@192.168.150.157's password:
 [bootc-user@localhost ~]$ curl localhost

@@ -63,7 +63,7 @@ In this repo you will find some use cases that explain and show RHEL Image mode 
 
 ### Generate and deploy VM Images, AMI and ISO images with bootc-image-builder
 
-- [Generate a QCOW image for a VM using bootc-image-builder](./use-cases/image-builder-bootc-container/)
+- [Generate a QCOW image for a VM using bootc-image-builder](./use-cases/image-builder-bootc-qcow/)
 
 ## Resources
 

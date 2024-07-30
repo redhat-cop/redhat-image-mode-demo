@@ -32,7 +32,7 @@ podman run -it --name rhel-bootc-httpd --hostname rhel-bootc-httpd -p 8080:80 rh
 
 Note: The *"-p 8080:80"* part forwards the container's *http* port to the port 8080 on the host to test that it is working.
 
-The contaienr will now start and a login prompt will appear:
+The container will now start and a login prompt will appear:
 
 ![](./assets/bootc-container.png)
 
