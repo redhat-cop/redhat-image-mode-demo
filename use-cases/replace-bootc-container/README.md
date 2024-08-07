@@ -1,4 +1,4 @@
-# Use Case - Applying a different image to an existing VM
+# Use Case - Applying a different RHEL container image to an existing VM
 
 Our team is looking to improve performances and test different configurations.
 We created our new and shiny image with Apache HTTPD and MariaDB, but you are exploring alternatives and want to use [Nginx](https://www.nginx.com/) and [PostgreSQL](https://www.postgresql.org/) as some of your team members are more familiar with that stack.

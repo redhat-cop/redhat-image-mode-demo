@@ -1,4 +1,4 @@
-# Use Case - Building a ISO image using bootc-image-builder
+# Use Case - Building a RHEL ISO image using bootc-image-builder
 
 In this example, we will build a container image from a Containerfile and we will generate a ISO image to spin up a Virtual Machine in KVM and install RHEL from the container image.
 

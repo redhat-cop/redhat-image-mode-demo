@@ -1,7 +1,6 @@
 # 🏗️🏗️ Introducing RHEL Image Mode! 🏗️🏗️
 
-- [What are bootable container images?](#what-are-bootable-containers)
-   * [How are they different?](#how-are-they-different)
+- [What is RHEL Image Mode?](#what-is-rhel-image-mode)
 - [🎯🎯 Let's get started 🎯🎯](#-lets-get-started-)
 - [Use Cases](#use-cases)
    * [Getting started with bootable container images](#getting-started-with-bootable-containers)
@@ -10,30 +9,22 @@
 
 - [Resources](#resources)
 
-## What are bootable container images?
+## What is RHEL Image Mode?
 
-As the name suggests, bootable container images differ from general purpose containers as the underlying image they use contains all necessary bits to make it act exactly like a standard OS, including modules, systemd, etc.
-They use specific tailored base images that include a Linux kernel and upon boot *systemd* is running as pid1 as in a "standard" OS.
+RHEL Image mode is a new approach for operating system deployment that enables users to create, deploy and manage Red Hat Enterprise Linux as a bootc container image.
 
-> [!TIP]
-> Read more in the [mission statement](https://containers.github.io/bootable/)
+This approach simplifies operations across the enterprise, allowing developers, operations teams and solution providers to use the same container-native tools and techniques to manage everything from applications to the underlying OS.
 
-### How are they different?
+### How is RHEL Image mode different?
 
-Bootable container images can enable a 360° integrated container-native workflow that covers the underlying OS up to the application layer.
-They benefit of a set of dedicated tools (bootc, bootc-image-builder, etc) to compose, build and distribute images that can be defined using common Containerfile structure and instructions.
+Due to the container-oriented nature, RHEL Image mode opens up to a unification and standardization of OS management and deployment, allowing the integration with existing CI/CD workflows and/or GitOps, reducing complexity.
 
-Some of the main features are:
+RHEL Image mode also helps increasing security as the content, updates and patches are predictable and atomic, preventing manual modification of core services, packages and applications for a guaranteed consistency at scale.
 
-- Bootable container images goal is to provide a way to deploy and manage immutable image-based Linux systems
-- Bootable container images images can act as a source to build VMs/Cloud images.
-- Bootable container images images can be used as a source to install and configure a new server/VM using kickstart/Anaconda
-- Bootable container images simplify testing applications on different architectures/platforms
-- Bootable container images streamline OS updates leveraging the [rpm-ostree system](https://coreos.github.io/rpm-ostree/)
 
 ## 🎯🎯 Let's get started 🎯🎯
 
-Creating a bootable container for RHEL Image Mode is as easy as writing and running a Containerfile like this:
+Creating a container for RHEL Image Mode is as easy as writing and running a Containerfile like this:
 
 > [!WARNING]
 > To build images using RHEL bootc image you need a RHEL System with a valid subscription attached to it. For non-production workloads, you can register for a [free Red Hat developer subscription](https://developers.redhat.com/register).
@@ -57,23 +48,27 @@ In this repo you will find some use cases that explain and show RHEL Image mode 
 
 ### Managing VM lifecycle with RHEL Image mode
 
-- [Use a bootc container to spin up a RHEL 9 VM with Anaconda and Kickstart](./use-cases/anaconda-ks-bootc-container/)
-- [Update a VM based on bootc container as a source adding packages and configuration](./use-cases/upgrade-bootc-container/)
-- [Change the ostree image of a running VM based on bootc](./use-cases/replace-bootc-container/)
+- [Use a RHEL bootc container to spin up a RHEL 9 VM with Anaconda and Kickstart](./use-cases/anaconda-ks-bootc-container/)
+- [Update a VM based on a RHEL bootc container as a source adding packages and configuration](./use-cases/upgrade-bootc-container/)
+- [Change the ostree image of a running VM based on RHEL bootc container](./use-cases/replace-bootc-container/)
 
 ### Generate and deploy VM Images, AMI and ISO images with bootc-image-builder
 
-- [Generate a QCOW image for a VM using bootc-image-builder](./use-cases/image-builder-bootc-qcow/)
-- [Generate a ISO image for a VM using bootc-image-builder](./use-cases/image-builder-bootc-iso/)
+- [Generate a RHEL QCOW image for a VM using bootc-image-builder](./use-cases/image-builder-bootc-qcow/)
+- [Generate a RHEL ISO image for a VM using bootc-image-builder](./use-cases/image-builder-bootc-iso/)
 
 ## Resources
 
-- [Red Hat Developers - Getting Started with RHEL Image Mode](https://developers.redhat.com/products/rhel-image-mode/overview)
+### RHEL Image mode
 
-- [Bootable container images mission statement](https://containers.github.io/bootable/)
+- [RHEL Image Mode landing page on Red Hat Website](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/image-mode)
+- [Red Hat Developers - Getting Started with RHEL Image Mode](https://developers.redhat.com/products/rhel-image-mode/overview)
+- [RHEL Image mode quickstart on Red Hat Blog](https://www.redhat.com/en/blog/image-mode-red-hat-enterprise-linux-quick-start-guide)
+
+
+
+### bootc Upstream projects
 
 - [bootc project on GitHub](https://github.com/containers/bootc)
-- [bootc documentation](https://containers.github.io/bootc/)
 - [bootc-image-builder project on GitHub](https://github.com/osbuild/bootc-image-builder)
 
-- [Podman page](https://podman.io/)

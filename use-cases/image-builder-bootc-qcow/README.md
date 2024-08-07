@@ -1,4 +1,4 @@
-# Use Case - Building a QCOW image using bootc-image-builder
+# Use Case - Building a RHEL QCOW image using bootc-image-builder
 
 In this example, we will build a container image from a Containerfile and we will generate a QCOW image to spin up a Virtual Machine in KVM.
 

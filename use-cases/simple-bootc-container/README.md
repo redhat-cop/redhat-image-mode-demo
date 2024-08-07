@@ -1,4 +1,4 @@
-# Use Case - Simple bootc container
+# Use Case - Simple RHEL bootc container
 
 This example shows a very simple example of a bootc container the is built starting from a *rhel-bootc* image.
 

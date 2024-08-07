@@ -1,4 +1,4 @@
-# Use Case - Bootc container as a setup source for Kickstart/Anaconda
+# Use Case - RHEL Bootc container as a setup source for Kickstart/Anaconda
 
 In this example, we will expand the image we built in the [Apache bootc use case](../httpd-bootc-container/) that you can use as a reference for details.
 This way, we will be able to streamline the creation of VMs based on a frozen, immutable configuration that will take few seconds to be deployed.
