@@ -13,4 +13,3 @@ RUN echo "This server now supports MariaDB as a database, after last update" > /
 RUN dnf -y install mariadb mariadb-server vim && dnf clean all && rm -rf /var/cache /var/log/dnf && systemctl enable mariadb
 COPY ./files/00-mariadb-tmpfile.conf /usr/lib/tmpfiles.d/
 EXPOSE 80 3306
-CMD [ "/sbin/init" ]

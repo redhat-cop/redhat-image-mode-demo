@@ -8,4 +8,3 @@ RUN dnf -y install httpd && \
     sed -ie 's,/var/www,/usr/share/www,' /etc/httpd/conf/httpd.conf
 RUN echo "Welcome to the bootc-http instance!" > /usr/share/www/html/index.html
 EXPOSE 80
-CMD [ "/sbin/init" ]

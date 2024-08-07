@@ -15,4 +15,3 @@ RUN dnf -y install postgresql postgresql-server vim && \
 COPY ./files/sysusers.d/ /usr/lib/sysusers.d/
 COPY ./files/tmpfiles.d/ /usr/lib/tmpfiles.d/
 EXPOSE 80 5432
-CMD [ "/sbin/init" ]
