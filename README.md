@@ -1,6 +1,7 @@
 # 🏗️🏗️ Introducing RHEL Image Mode! 🏗️🏗️
 
 - [What is RHEL Image Mode?](#what-is-rhel-image-mode)
+   * [How is RHEL Image Mode different?](#how-is-rhel-image-mode-different)
 - [🎯🎯 Let's get started 🎯🎯](#-lets-get-started-)
 - [Use Cases](#use-cases)
    * [Getting started with bootable container images](#getting-started-with-bootable-containers)
@@ -15,12 +16,11 @@ RHEL Image mode is a new approach for operating system deployment that enables u
 
 This approach simplifies operations across the enterprise, allowing developers, operations teams and solution providers to use the same container-native tools and techniques to manage everything from applications to the underlying OS.
 
-### How is RHEL Image mode different?
+### How is RHEL Image Mode different?
 
 Due to the container-oriented nature, RHEL Image mode opens up to a unification and standardization of OS management and deployment, allowing the integration with existing CI/CD workflows and/or GitOps, reducing complexity.
 
 RHEL Image mode also helps increasing security as the content, updates and patches are predictable and atomic, preventing manual modification of core services, packages and applications for a guaranteed consistency at scale.
-
 
 ## 🎯🎯 Let's get started 🎯🎯
 
@@ -62,10 +62,9 @@ In this repo you will find some use cases that explain and show RHEL Image mode 
 ### RHEL Image mode
 
 - [RHEL Image Mode landing page on Red Hat Website](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/image-mode)
+- [RHEL Image Mode quickstart on Red Hat Blog](https://www.redhat.com/en/blog/image-mode-red-hat-enterprise-linux-quick-start-guide)
+- [RHEL Image Mode documentation on Red Hat Website](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/using_image_mode_for_rhel_to_build_deploy_and_manage_operating_systems/index)
 - [Red Hat Developers - Getting Started with RHEL Image Mode](https://developers.redhat.com/products/rhel-image-mode/overview)
-- [RHEL Image mode quickstart on Red Hat Blog](https://www.redhat.com/en/blog/image-mode-red-hat-enterprise-linux-quick-start-guide)
-
-
 
 ### bootc Upstream projects
 
