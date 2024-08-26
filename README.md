@@ -58,6 +58,7 @@ In this repo you will find some use cases that explain and show RHEL Image mode 
 
 - [Generate a RHEL QCOW image for a VM using bootc-image-builder](./use-cases/image-builder-bootc-qcow/)
 - [Generate a RHEL ISO image for a VM using bootc-image-builder](./use-cases/image-builder-bootc-iso/)
+- [Generate a RHEL AMI image for an AWS instance using bootc-image-builder](./use-cases/ami-aws-image/)
 
 ## Resources
 
