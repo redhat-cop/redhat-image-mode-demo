@@ -4,8 +4,8 @@
    * [How is RHEL Image Mode different?](#how-is-rhel-image-mode-different)
 - [🎯🎯 Let's get started 🎯🎯](#-lets-get-started-)
 - [Use Cases](#use-cases)
-   * [Getting started with bootable container images](#getting-started-with-bootable-containers)
-   * [Managing VM lifecycle with bootable container images](#managing-vm-lifecycle-with-bootable-containers)
+   * [Getting started with RHEL Image mode](#getting-started-with-rhel-image-mode)
+   * [Managing VM lifecycle with RHEL Image mode](#managing-vm-lifecycle-with-rhel-image-mode)
    * [Generate and deploy VM Images, AMI and ISO images with bootc-image-builder](#generate-and-deploy-vm-images-ami-and-iso-images-with-bootc-image-builder)
 
 - [Resources](#resources)
