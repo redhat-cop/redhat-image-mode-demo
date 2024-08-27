@@ -6,8 +6,7 @@ We created our new and shiny image with Apache HTTPD and MariaDB, but you are ex
 We will then create an alternative image, with a dedicated tag, that will help our fellow colleagues in their efforts.
 Instead of redeploying the VM from scratch, we are going to use **bootc** to change the reference of the image in our existing VM to use it for configuring the system!
 
-
-The [Containerfile](./Containerfile.replace) will be very close to the [previous one](../anaconda-ks-bootc-container/Containerfile.anaconda):
+The [Containerfile](./Containerfile.replace) will be very close to the [previous one](../upgrade-bootc-container/Containerfile.upgrade):
 
 - Updates packages
 - Installs tmux and mkpasswd to create a simple user password
@@ -62,7 +61,7 @@ Welcome to the bootc-nginx instance!
 
 ### Testing Postgresql
 
-From the login prompt, login as **bootc-user/hostadmin** and impersonate the root user:
+From the login prompt, login as **bootc-user/redhat** and impersonate the root user:
 
 ```bash
 [bootc-user@rhel-bootc-vm-nginx ~]$ sudo -i
