@@ -61,7 +61,7 @@ You can now browse to [https://quay.io/repository/YOURQUAYUSERNAME/rhel-bootc-ht
 
 ### Prepare install media and review the kickstart file
 
-RHEL 9.4 are available on the [Red Hat Developer portal](https://developers.redhat.com/content-gateway/file/rhel/Red_Hat_Enterprise_Linux_9.4/rhel-9.4-x86_64-boot.iso) and for this use case we will only need the boot image.
+RHEL 9.4 ISO images are available on the [Red Hat Developer portal](https://developers.redhat.com/content-gateway/file/rhel/Red_Hat_Enterprise_Linux_9.4/rhel-9.4-x86_64-boot.iso) and for this use case we will only need the boot image.
 
 Save the image and place it in the use case folder with the name **rhel9.iso**
 
@@ -75,7 +75,7 @@ What is relevant is the **ostreecontainer** directive, that references the conta
 
 ### Creating the Virtual Machine in KVM
 
-You are now ready to spin-up a Virtual Machine using the downloaded boot image for CentOS Stream 9, injecting and using the kickstart to perform an unattended installation.
+You are now ready to spin-up a Virtual Machine using the downloaded boot image for RHEL 9.4, injecting and using the kickstart to perform an unattended installation.
 
 ```bash
 virt-install --name rhel9-server \
