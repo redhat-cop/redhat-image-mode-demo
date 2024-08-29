@@ -24,6 +24,12 @@ RHEL Image mode also helps increasing security as the content, updates and patch
 
 ## 🎯🎯 Let's get started 🎯🎯
 
+First of all, clone the repo:
+
+```bash
+git clone https://github.com/redhat-cop/redhat-image-mode-demo
+```
+
 Creating a container for RHEL Image Mode is as easy as writing and running a Containerfile like this:
 
 > [!WARNING]
@@ -45,20 +51,20 @@ In this repo you will find some use cases that explain and show RHEL Image mode 
 
 ### Getting started with RHEL Image mode
 
-- [Simple bootc container](./use-cases/simple-bootc-container/)
-- [Bootc container with Apache](./use-cases/httpd-bootc-container/)
+- [Simple bootc container](./use-cases/bootc-container-simple/)
+- [Bootc container with Apache](./use-cases/bootc-container-httpd/)
 
 ### Managing VM lifecycle with RHEL Image mode
 
-- [Use a RHEL bootc container to spin up a RHEL 9 VM with Anaconda and Kickstart](./use-cases/anaconda-ks-bootc-container/)
-- [Update a VM based on a RHEL bootc container as a source adding packages and configuration](./use-cases/upgrade-bootc-container/)
-- [Change the ostree image of a running VM based on RHEL bootc container](./use-cases/replace-bootc-container/)
+- [Use a RHEL bootc container to spin up a RHEL 9 VM with Anaconda and Kickstart](./use-cases/bootc-container-anaconda-ks/)
+- [Update a VM based on a RHEL bootc container as a source adding packages and configuration](./use-cases/bootc-container-upgrade/)
+- [Apply a different RHEL container image to an existing VM](./use-cases/bootc-container-replace/)
 
 ### Generate and deploy VM Images, AMI and ISO images with bootc-image-builder
 
-- [Generate a RHEL QCOW image for a VM using bootc-image-builder](./use-cases/image-builder-bootc-qcow/)
-- [Generate a RHEL ISO image for a VM using bootc-image-builder](./use-cases/image-builder-bootc-iso/)
-- [Generate a RHEL AMI image for an AWS instance using bootc-image-builder](./use-cases/ami-aws-image/)
+- [Generate a RHEL QCOW image for a VM using bootc-image-builder](./use-cases/bootc-image-builder-qcow/)
+- [Generate a RHEL ISO image for a VM using bootc-image-builder](./use-cases/bootc-image-builder-iso/)
+- [Generate a RHEL AMI image for an AWS instance using bootc-image-builder](./use-cases/bootc-image-builder-ami/)
 
 ## Resources
 

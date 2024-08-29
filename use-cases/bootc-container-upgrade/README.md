@@ -1,10 +1,10 @@
-# Use Case - Upgrading a VM based on a bootc image
+# Use Case - Upgrading a RHEL VM based on a bootc image
 
 In this example, we want to add some bits to the [previously generated httpd image](../anaconda-ks-bootc-container/) to add a [MariaDB server](https://mariadb.org/) and a text editor, [VIM](https://www.vim.org/).
 
 We will then use **bootc** to manage the system update, and you will see how easy and fast perfoming upgrades is.
 
-The [Containerfile](./Containerfile.upgrade) will be very close to the [previous one](../anaconda-ks-bootc-container/Containerfile.anaconda):
+The [Containerfile](./Containerfile.upgrade) will:
 
 - Updates packages
 - Installs tmux and mkpasswd to create a simple user password
@@ -108,7 +108,7 @@ You can now browse to [https://quay.io/repository/YOURQUAYUSERNAME/rhel-bootc-ht
 
 ## Updating the VM with the newly created image
 
-The first thing to do is logging in the VM created in the [previous use case](../anaconda-ks-bootc-container/):
+The first thing to do is logging in the VM created in the [previous use case](../bootc-container-anaconda-ks/) or any other use case (QCOW, ISO, AMI):
 
 ```bash
  ~ ▓▒░ ssh bootc-user@192.168.124.16

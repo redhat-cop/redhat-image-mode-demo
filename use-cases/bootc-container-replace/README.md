@@ -6,7 +6,7 @@ We created our new and shiny image with Apache HTTPD and MariaDB, but you are ex
 We will then create an alternative image, with a dedicated tag, that will help our fellow colleagues in their efforts.
 Instead of redeploying the VM from scratch, we are going to use **bootc** to change the reference of the image in our existing VM to use it for configuring the system!
 
-The [Containerfile](./Containerfile.replace) will be very close to the [previous one](../upgrade-bootc-container/Containerfile.upgrade):
+The [Containerfile](./Containerfile.replace) will be very close to the [previous one](../bootc-container-upgrade/Containerfile.upgrade):
 
 - Updates packages
 - Installs tmux and mkpasswd to create a simple user password
@@ -120,7 +120,7 @@ You can now browse to [https://quay.io/repository/YOURQUAYUSERNAME/rhel-bootc-ht
 
 ## Updating the VM with the newly created image
 
-The first thing to do is logging in the VM updated in the [previous use case](../upgrade-bootc-container/):
+The first thing to do is logging in the VM updated in the [previous use case](../bootc-container-upgrade/):
 
 ```bash
  ~ ▓▒░ ssh bootc-user@192.168.124.16
