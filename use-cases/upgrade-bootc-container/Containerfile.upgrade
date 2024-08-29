@@ -7,7 +7,7 @@ RUN dnf -y install httpd && \
     systemctl enable httpd && \
     mv /var/www /usr/share/www && \
     sed -ie 's,/var/www,/usr/share/www,' /etc/httpd/conf/httpd.conf
-RUN echo "Welcome to the bootc-http instance!" > /usr/share/www/html/index.html
+RUN echo "Welcome to the bootc-http instance! \nThe OS update was successful and you are now running an instance with MariaDB" > /usr/share/www/html/index.html
 RUN echo "This is a RHEL VM installed using a bootable container as an rpm-ostree source!" > /etc/motd.d/10-first-setup.motd
 RUN echo "This server now supports MariaDB as a database, after last update" > /etc/motd.d/20-upgrade.motd
 RUN dnf -y install mariadb mariadb-server vim && dnf clean all && rm -rf /var/cache /var/log/dnf && systemctl enable mariadb
