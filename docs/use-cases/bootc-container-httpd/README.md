@@ -12,9 +12,20 @@ The Containerfile in the example:
 - Enables the systemd unit for httpd
 - Adds a custom index.html
 
+<details>
+  <summary>Review Containerfile.httpd</summary>
+  ```dockerfile
+  --8<-- "use-cases/bootc-container-httpd/Containerfile.httpd"
+  ```
+</details>
+
 ## Building the image
 
-Review the [Containerfile.httpd](Containerfile.httpd) file, that includes all the building steps for the image.
+From the root folder of the repository, switch to the use case directory:
+
+```bash
+cd use-cases/bootc-container-httpd
+```
 
 To build the image:
 

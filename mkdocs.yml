@@ -1,5 +1,6 @@
 site_name: Red Hat Enterprise Linux Image Mode demo
 repo_url: https://github.com/redhat-cop/redhat-image-mode-demo/
+edit_uri: blob/main/
 site_author: Alessandro Rossi - Red Hat
 site_description: Documentation page for the Red Hat Enterprise Linux (RHEL) Image mode demo hosted on GitHub.
 theme: 
@@ -10,6 +11,7 @@ theme:
   features: 
     - content.code.copy
     - navigation.expand
+    - content.tooltips
   palette: 
     - scheme: default
       primary: custom
@@ -46,7 +48,12 @@ markdown_extensions:
       line_spans: __span
       pygments_lang_class: true
   - pymdownx.inlinehilite
-  - pymdownx.snippets
+  - pymdownx.snippets:
+      base_path: !relative $config_dir
   - pymdownx.superfences 
   - attr_list
   - pymdownx.emoji
+  - abbr
+plugins: 
+  - macros
+

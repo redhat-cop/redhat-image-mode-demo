@@ -6,7 +6,7 @@ We created our new and shiny image with Apache HTTPD and MariaDB, but you are ex
 We will then create an alternative image, with a dedicated tag, that will help our fellow colleagues in their efforts.
 Instead of redeploying the VM from scratch, we are going to use **bootc** to change the reference of the image in our existing VM to use it for configuring the system!
 
-The [Containerfile](./Containerfile.replace) will be very close to the [previous one](../bootc-container-upgrade/Containerfile.upgrade):
+The Containerfile.replace is similar to the one in the [Image Upgrade use case](../bootc-container-upgrade/README.md):
 
 - Updates packages
 - Installs tmux and mkpasswd to create a simple user password
@@ -20,9 +20,22 @@ The [Containerfile](./Containerfile.replace) will be very close to the [previous
 - Add postgresql-server package and vim
 - Enable the postgresql-server systemd unit
 
-Since the *bootc switch* command will preserve the /var and /etc content, we will use a workaround to create the needed dirs for Nginx and Postgresql leveraging [systemd-tmpfiles](./files/tmpfiles.d/) and [systemd-sysusers](./files/sysusers.d/) to ensure users are in place.
+Since the *bootc switch* command will preserve the /var and /etc content, we will use a workaround to create the needed dirs for Nginx and Postgresql leveraging [systemd-tmpfiles]({{ config.repo_url }}{{ config.edit_uri }}/use-cases/bootc-container-replace/files/tmpfiles.d/) and [systemd-sysusers]({{ config.repo_url }}{{ config.edit_uri }}/use-cases/bootc-container-replace/files/sysusers.d/) to ensure users are in place.
+
+<details>
+  <summary>Review Containerfile.replace</summary>
+  ```dockerfile
+  --8<-- "use-cases/bootc-container-replace/Containerfile.replace"
+  ```
+</details>
 
 ## Building the image
+
+From the root folder of the repository, switch to the use case directory:
+
+```bash
+cd use-cases/bootc-container-replace
+```
 
 You can build the image right from the Containerfile using Podman:
 
@@ -120,7 +133,7 @@ You can now browse to [https://quay.io/repository/YOURQUAYUSERNAME/rhel-bootc-ht
 
 ## Updating the VM with the newly created image
 
-The first thing to do is logging in the VM updated in the [previous use case](../bootc-container-upgrade/):
+The first thing to do is logging in the VM updated in the [previous use case](../bootc-container-upgrade/README.md):
 
 ```bash
  ~ ▓▒░ ssh bootc-user@192.168.124.16

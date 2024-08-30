@@ -9,6 +9,21 @@ The Containerfile in the example:
 - Creates a *bootc-user* user in the image
 - Adds the wheel group to sudoers
 
+<details>
+  <summary>Review Containerfile.simple</summary>
+  ```dockerfile
+  --8<-- "use-cases/bootc-container-simple/Containerfile.simple"
+  ```
+</details>
+
+## Building the image
+
+From the root folder of the repository, switch to the use case directory:
+
+```bash
+cd use-cases/bootc-container-simple
+```
+
 To build the image:
 
 ```bash
@@ -28,13 +43,3 @@ The container will now start and a login prompt will appear:
 ![](./assets/bootc-container.png)
 
 You can simply login with *bootc-user/redhat* and play around with the container content!
-
-## Example Containerfile
-
-```dockerfile
-FROM registry.redhat.io/rhel9/rhel-bootc:9.4
-RUN dnf -y update && dnf -y install tmux mkpasswd
-RUN pass=$(mkpasswd --method=SHA-512 --rounds=4096 redhat) && useradd -m -G wheel bootc-user -p $pass
-RUN echo "%wheel        ALL=(ALL)       NOPASSWD: ALL" > /etc/sudoers.d/wheel-sudo
-CMD [ "/sbin/init" ]
-```
