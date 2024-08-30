@@ -149,43 +149,6 @@
     
     
     
-      <label class="md-header__button md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-      </label>
-      <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
-      <label class="md-search__icon md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-      </label>
-      <nav class="md-search__options" aria-label="Search">
-        
-        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
-        </button>
-      </nav>
-      
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
-            Initializing search
-          </div>
-          <ol class="md-search-result__list" role="presentation"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-    
     
       <div class="md-header__source">
         <a href="https://github.com/redhat-cop/redhat-image-mode-demo/" title="Go to repository" class="md-source" data-md-component="source">
@@ -757,10 +720,10 @@
 
 
 <h1 id="use-case-building-a-rhel-aws-ami-image-using-bootc-image-builder">Use Case - Building a RHEL AWS AMI image using bootc-image-builder</h1>
-<blockquote>
-<p>[!WARNING]
-This example requires an <a href="https://aws.amazon.com/">active AWS account</a>. Free tier could not be enough due to the 5GB limitation on S3 storage.</p>
-</blockquote>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This example requires an <a href="https://aws.amazon.com/">active AWS account</a>. Free tier could not be enough due to the 5GB limitation on S3 storage.</p>
+</div>
 <p>In this example, we will build a container image from a Containerfile and we will generate an AWS AMI to use as a base for Instances.</p>
 <p>The Containerfile in the example:</p>
 <ul>
@@ -772,36 +735,54 @@ This example requires an <a href="https://aws.amazon.com/">active AWS account</a
 <li>Enables the systemd unit for httpd</li>
 <li>Adds a custom index.html</li>
 </ul>
+<details>
+  <summary>Review Containerfile.ami</summary>
+  <div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">MAINTAINER</span><span class="w"> </span><span class="s">Alessandro Rossi &lt;al.rossi87@gmail.com&gt;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">FROM</span><span class="w"> </span><span class="s">registry.redhat.io/rhel9/rhel-bootc:9.4</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">RUN</span><span class="w"> </span>dnf<span class="w"> </span>-y<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>dnf<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>tmux<span class="w"> </span>mkpasswd
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">RUN</span><span class="w"> </span><span class="nv">pass</span><span class="o">=</span><span class="k">$(</span>mkpasswd<span class="w"> </span>--method<span class="o">=</span>SHA-512<span class="w"> </span>--rounds<span class="o">=</span><span class="m">4096</span><span class="w"> </span>redhat<span class="k">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>useradd<span class="w"> </span>-m<span class="w"> </span>-G<span class="w"> </span>wheel<span class="w"> </span>bootc-user<span class="w"> </span>-p<span class="w"> </span><span class="nv">$pass</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">RUN</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;%wheel        ALL=(ALL)       NOPASSWD: ALL&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/etc/sudoers.d/wheel-sudo
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">RUN</span><span class="w"> </span>dnf<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>httpd<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>httpd<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span>mv<span class="w"> </span>/var/www<span class="w"> </span>/usr/share/www<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span>sed<span class="w"> </span>-ie<span class="w"> </span><span class="s1">&#39;s,/var/www,/usr/share/www,&#39;</span><span class="w"> </span>/etc/httpd/conf/httpd.conf
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="k">RUN</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Welcome to the bootc-http instance!&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/usr/share/www/html/index.html
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="k">EXPOSE</span><span class="w"> </span><span class="s">80</span>
+</span></code></pre></div>
+</details>
+
 <h2 id="building-the-image">Building the image</h2>
-<p>Review the <a href="Containerfile.ami">Containerfile.ami</a> file, that includes all the building steps for the image.</p>
+<p>From the root folder of the repository, switch to the use case directory:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">cd</span><span class="w"> </span>use-cases/bootc-image-builder-ami
+</span></code></pre></div>
 <p>To build the image:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>podman<span class="w"> </span>build<span class="w"> </span>-f<span class="w"> </span>Containerfile.ami<span class="w"> </span>-t<span class="w"> </span>rhel-bootc-vm:ami<span class="w"> </span>.
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>podman<span class="w"> </span>build<span class="w"> </span>-f<span class="w"> </span>Containerfile.ami<span class="w"> </span>-t<span class="w"> </span>rhel-bootc-vm:ami<span class="w"> </span>.
 </span></code></pre></div>
 <h2 id="testing-the-image">Testing the image</h2>
 <p>You can now test it using:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>podman<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--name<span class="w"> </span>rhel-bootc-vm<span class="w"> </span>--hostname<span class="w"> </span>rhel-bootc-vm<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:80<span class="w"> </span>rhel-bootc-vm:ami
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>podman<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--name<span class="w"> </span>rhel-bootc-vm<span class="w"> </span>--hostname<span class="w"> </span>rhel-bootc-vm<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:80<span class="w"> </span>rhel-bootc-vm:ami
 </span></code></pre></div>
 <p>Note: The <em>"-p 8080:80"</em> part forwards the container's <em>http</em> port to the port 8080 on the host to test that it is working.</p>
 <p>The container will now start and a login prompt will appear:</p>
 <p><img alt="" src="assets/bootc-container.png" /></p>
 <p>On another terminal tab or in your browser, you can verify that the httpd server is working and serving traffic.</p>
 <p><strong>Terminal</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="w"> </span>~<span class="w"> </span>▓▒░<span class="w"> </span>curl<span class="w"> </span>localhost:8080
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Welcome<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>bootc-http<span class="w"> </span>instance!
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="w"> </span>~<span class="w"> </span>▓▒░<span class="w"> </span>curl<span class="w"> </span>localhost:8080
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Welcome<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>bootc-http<span class="w"> </span>instance!
 </span></code></pre></div>
 <p><strong>Browser</strong></p>
 <p><img alt="" src="assets/browser-test.png" /></p>
 <h2 id="tagging-and-pushing-the-image">Tagging and pushing the image</h2>
 <p>To tag and push the image you can simply run (replace <strong>YOURQUAYUSERNAME</strong> with the account name):</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">QUAY_USER</span><span class="o">=</span>YOURQUAYUSERNAME
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">QUAY_USER</span><span class="o">=</span>YOURQUAYUSERNAME
 </span></code></pre></div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>podman<span class="w"> </span>tag<span class="w"> </span>rhel-bootc-vm:ami<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/rhel-bootc-vm:ami
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>podman<span class="w"> </span>tag<span class="w"> </span>rhel-bootc-vm:ami<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/rhel-bootc-vm:ami
 </span></code></pre></div>
 <p>Log-in to Quay.io:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>podman<span class="w"> </span>login<span class="w"> </span>-u<span class="w"> </span><span class="nv">$QUAY_USER</span><span class="w"> </span>quay.io
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>podman<span class="w"> </span>login<span class="w"> </span>-u<span class="w"> </span><span class="nv">$QUAY_USER</span><span class="w"> </span>quay.io
 </span></code></pre></div>
 <p>And push the image:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>podman<span class="w"> </span>push<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/rhel-bootc-vm:ami
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>podman<span class="w"> </span>push<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/rhel-bootc-vm:ami
 </span></code></pre></div>
 <p>You can now browse to <a href="https://quay.io/repository/YOURQUAYUSERNAME/rhel-bootc-vm?tab=settings">https://quay.io/repository/YOURQUAYUSERNAME/rhel-bootc-vm?tab=settings</a> and ensure that the repository is set to <strong>"Public"</strong>.</p>
 <p><img alt="" src="assets/quay-repo-public.png" /></p>
@@ -813,90 +794,144 @@ This example requires an <a href="https://aws.amazon.com/">active AWS account</a
 <li>a policy (<strong>vmimport</strong>) to allow importing from S3 to the AMI catalog</li>
 <li>a role to allow the <strong>vmie</strong> service and bind the policy</li>
 </ul>
-<p>In <a href="./files/">this folder</a> you can preview the <a href="files/aws-policy.json">policy definition</a> and the <a href="files/aws-role.json">role definition</a> before applying.</p>
-<p>To configure use the <em>aws configure</em> command and provide the required information:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="o">[</span>~<span class="o">]</span>$<span class="w"> </span>aws<span class="w"> </span>configure<span class="w"> </span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>AWS<span class="w"> </span>Access<span class="w"> </span>Key<span class="w"> </span>ID<span class="w"> </span><span class="o">[]</span>:<span class="w"> </span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>AWS<span class="w"> </span>Secret<span class="w"> </span>Access<span class="w"> </span>Key<span class="w"> </span><span class="o">[]</span>:<span class="w"> </span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>Default<span class="w"> </span>region<span class="w"> </span>name<span class="w"> </span><span class="o">[]</span>:<span class="w"> </span>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>Default<span class="w"> </span>output<span class="w"> </span>format<span class="w"> </span><span class="o">[</span>json<span class="o">]</span>:
+<p>In <a href="https://github.com/redhat-cop/redhat-image-mode-demo/blob/main//use-cases/bootc-image-builder-ami/files/">the files folder</a> are stored the <strong>policy definition</strong> and the <strong>role definition</strong> that you can review below before applying.</p>
+<details>
+  <summary>Review aws-policy.json</summary>
+  <div class="language-json highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="nt">&quot;Version&quot;</span><span class="p">:</span><span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="nt">&quot;Statement&quot;</span><span class="p">:[</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">       </span><span class="p">{</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">          </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">          </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">             </span><span class="s2">&quot;s3:GetBucketLocation&quot;</span><span class="p">,</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">             </span><span class="s2">&quot;s3:GetObject&quot;</span><span class="p">,</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">             </span><span class="s2">&quot;s3:ListBucket&quot;</span><span class="w"> </span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">          </span><span class="p">],</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">          </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">             </span><span class="s2">&quot;arn:aws:s3:::rhel-bootc-demo&quot;</span><span class="p">,</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">             </span><span class="s2">&quot;arn:aws:s3:::rhel-bootc-demo/*&quot;</span>
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">          </span><span class="p">]</span>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">       </span><span class="p">},</span>
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">       </span><span class="p">{</span>
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">          </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">          </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="w">             </span><span class="s2">&quot;ec2:ModifySnapshotAttribute&quot;</span><span class="p">,</span>
+</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="w">             </span><span class="s2">&quot;ec2:CopySnapshot&quot;</span><span class="p">,</span>
+</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="w">             </span><span class="s2">&quot;ec2:RegisterImage&quot;</span><span class="p">,</span>
+</span><span id="__span-9-22"><a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="w">             </span><span class="s2">&quot;ec2:Describe*&quot;</span>
+</span><span id="__span-9-23"><a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="w">          </span><span class="p">],</span>
+</span><span id="__span-9-24"><a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a><span class="w">          </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+</span><span id="__span-9-25"><a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a><span class="w">       </span><span class="p">}</span>
+</span><span id="__span-9-26"><a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a><span class="w">    </span><span class="p">]</span>
+</span><span id="__span-9-27"><a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a><span class="w"> </span><span class="p">}</span>
+</span></code></pre></div>
+</details>
+
+<details>
+  <summary>Review aws-role.json</summary>
+  <div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="nt">&quot;Version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="nt">&quot;Statement&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">       </span><span class="p">{</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">          </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">          </span><span class="nt">&quot;Principal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">            </span><span class="nt">&quot;Service&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vmie.amazonaws.com&quot;</span><span class="w"> </span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">        </span><span class="p">},</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">          </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sts:AssumeRole&quot;</span><span class="p">,</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">          </span><span class="nt">&quot;Condition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">             </span><span class="nt">&quot;StringEquals&quot;</span><span class="p">:{</span>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">                </span><span class="nt">&quot;sts:Externalid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vmimport&quot;</span>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">             </span><span class="p">}</span>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="w">          </span><span class="p">}</span>
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="w">       </span><span class="p">}</span>
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="w">    </span><span class="p">]</span>
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="w"> </span><span class="p">}</span>
+</span></code></pre></div>
+</details>
+
+<p>To start the configuration use the <em>aws configure</em> command and provide the required information:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="o">[</span>~<span class="o">]</span>$<span class="w"> </span>aws<span class="w"> </span>configure<span class="w"> </span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>AWS<span class="w"> </span>Access<span class="w"> </span>Key<span class="w"> </span>ID<span class="w"> </span><span class="o">[]</span>:<span class="w"> </span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>AWS<span class="w"> </span>Secret<span class="w"> </span>Access<span class="w"> </span>Key<span class="w"> </span><span class="o">[]</span>:<span class="w"> </span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>Default<span class="w"> </span>region<span class="w"> </span>name<span class="w"> </span><span class="o">[]</span>:<span class="w"> </span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>Default<span class="w"> </span>output<span class="w"> </span>format<span class="w"> </span><span class="o">[</span>json<span class="o">]</span>:
 </span></code></pre></div>
 <p>Once this is in place, we can proceed with the resources.</p>
 <p>For S3 (replace YOURREGION with the correct region, ie. eu-west-1):</p>
-<blockquote>
-<p>[!TIP]
-S3 Bucket names are globally registered and unique, based on the name you find available, edit the reference in lines 12-13 of <a href="files/aws-policy.json">the policy file</a></p>
-</blockquote>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="o">[</span>~<span class="o">]</span>$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">REGION</span><span class="o">=</span>YOURREGION
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>aws<span class="w"> </span>s3api<span class="w"> </span>create-bucket<span class="w"> </span>--bucket<span class="w"> </span>rhel-bootc-demo<span class="w"> </span>--create-bucket-configuration<span class="w"> </span><span class="nv">LocationConstraint</span><span class="o">=</span><span class="nv">$REGION</span>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>S3 Bucket names are globally registered and unique, based on the name you find available, <strong>edit the reference in lines 12-13 of the aws-policy.json file</strong></p>
+</div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="o">[</span>~<span class="o">]</span>$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">REGION</span><span class="o">=</span>YOURREGION
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>aws<span class="w"> </span>s3api<span class="w"> </span>create-bucket<span class="w"> </span>--bucket<span class="w"> </span>rhel-bootc-demo<span class="w"> </span>--create-bucket-configuration<span class="w"> </span><span class="nv">LocationConstraint</span><span class="o">=</span><span class="nv">$REGION</span>
 </span></code></pre></div>
 <p>Let's proceed with the role:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>aws<span class="w"> </span>iam<span class="w"> </span>create-role<span class="w"> </span>--role-name<span class="w"> </span>vmimport<span class="w"> </span>--assume-role-policy-document<span class="w"> </span>file://files/aws-role.json<span class="w"> </span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>aws<span class="w"> </span>iam<span class="w"> </span>create-role<span class="w"> </span>--role-name<span class="w"> </span>vmimport<span class="w"> </span>--assume-role-policy-document<span class="w"> </span>file://files/aws-role.json<span class="w"> </span>
 </span></code></pre></div>
 <p>And then associate the policy to the role:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>aws<span class="w"> </span>iam<span class="w"> </span>put-role-policy<span class="w"> </span>--role-name<span class="w"> </span>vmimport<span class="w"> </span>--policy-name<span class="w"> </span>vmimport<span class="w"> </span>--policy-document<span class="w"> </span>file://files/aws-policy.json
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>aws<span class="w"> </span>iam<span class="w"> </span>put-role-policy<span class="w"> </span>--role-name<span class="w"> </span>vmimport<span class="w"> </span>--policy-name<span class="w"> </span>vmimport<span class="w"> </span>--policy-document<span class="w"> </span>file://files/aws-policy.json
 </span></code></pre></div>
 <p>We are now good to go!</p>
 <h2 id="generating-the-aws-ami-image">Generating the AWS AMI image</h2>
 <p>To generate the AMI image we will be using <a href="https://github.com/osbuild/bootc-image-builder">bootc-image-builder</a> container image that will help us transitioning from our newly generated bootable container image to an AMI image that can be used on AWS.</p>
 <p>Let's proceed with the QCOW image creation:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>sudo<span class="w"> </span>podman<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span>--rm<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span>-it<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span>--privileged<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">    </span>--pull<span class="o">=</span>newer<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">    </span>-v<span class="w"> </span><span class="nv">$HOME</span>/.aws:/root/.aws:ro<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">    </span>--env<span class="w"> </span><span class="nv">AWS_PROFILE</span><span class="o">=</span>default<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">    </span>registry.redhat.io/rhel9/bootc-image-builder:latest<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">    </span>--type<span class="w"> </span>ami<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">    </span>--aws-ami-name<span class="w"> </span>rhel-bootc-x86<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">    </span>--aws-bucket<span class="w"> </span>rhel-bootc-demo<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">    </span>--aws-region<span class="w"> </span>eu-west-1<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">    </span>quay.io/<span class="nv">$QUAY_USER</span>/rhel-bootc-vm:ami
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>sudo<span class="w"> </span>podman<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">    </span>--rm<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">    </span>--privileged<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">    </span>--pull<span class="o">=</span>newer<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">    </span>-v<span class="w"> </span><span class="nv">$HOME</span>/.aws:/root/.aws:ro<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">    </span>--env<span class="w"> </span><span class="nv">AWS_PROFILE</span><span class="o">=</span>default<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">    </span>registry.redhat.io/rhel9/bootc-image-builder:latest<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="w">    </span>--type<span class="w"> </span>ami<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="w">    </span>--aws-ami-name<span class="w"> </span>rhel-bootc-x86<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="w">    </span>--aws-bucket<span class="w"> </span>rhel-bootc-demo<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="w">    </span>--aws-region<span class="w"> </span>eu-west-1<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="w">    </span>quay.io/<span class="nv">$QUAY_USER</span>/rhel-bootc-vm:ami
 </span></code></pre></div>
 <p>The process will take care of all required steps (deploying the image, SELinux configuration, filesystem configuration, ostree configuration, etc.), after a couple of minutes we will find in the output:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Building<span class="w"> </span>manifest-ami.json
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>starting<span class="w"> </span>-Pipeline<span class="w"> </span><span class="nb">source</span><span class="w"> </span>org.osbuild.containers-storage:<span class="w"> </span>6ec72d5cb7fb74985ee0fcdc8d90db85079cd08caa64fde9153c40aae3744f18
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>Build
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span>root:<span class="w"> </span>&lt;host&gt;
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>Pipeline<span class="w"> </span>build:<span class="w"> </span>733863e98e5497425dbf00ac2eec52175d453834f17868944ed3408bcd9a3d16
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>Build
-</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">  </span>root:<span class="w"> </span>&lt;host&gt;
-</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">  </span>runner:<span class="w"> </span>org.osbuild.rhel82<span class="w"> </span><span class="o">(</span>org.osbuild.rhel82<span class="o">)</span>
-</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="o">[</span>...<span class="o">]</span>
-</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>
-</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>⏱<span class="w">  </span>Duration:<span class="w"> </span>1s
-</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>manifest<span class="w"> </span>-<span class="w"> </span>finished<span class="w"> </span>successfully
-</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>build:<span class="w">          </span>733863e98e5497425dbf00ac2eec52175d453834f17868944ed3408bcd9a3d16
-</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>image:<span class="w">          </span>6b2f313ea4e75ddb9f8c9f2da14d4234760986240d1957093bb3631f0010c09e
-</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>qcow2:<span class="w">          </span>194f4993f08ada94b56bc5a59d17a08251388f9210e13f4671d231f7cd9abb97
-</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>vmdk:<span class="w">           </span>6d03b4759af85fd6408f36c72fde3eaa271466beef14a5f1af0499410055df9c
-</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>ovf:<span class="w">            </span>c2410b0f4eecb91c7298d17c98dc672b42aedd02bb9809dab8feb1b185259689
-</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>archive:<span class="w">        </span>950f23c305d2b41148790246e9abb8c925da34077f2954fabad284b9782f914e
-</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>Build<span class="w"> </span>complete!
-</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>Uploading<span class="w"> </span>image/disk.raw<span class="w"> </span>to<span class="w"> </span>rhel-bootc-demo:b1a83f25-051e-434c-a50f-ab634d1b798c-disk.raw
-</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="m">10</span>.00<span class="w"> </span>GiB<span class="w"> </span>/<span class="w"> </span><span class="m">10</span>.00<span class="w"> </span>GiB<span class="w"> </span><span class="o">[</span>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<span class="o">]</span><span class="w"> </span><span class="m">100</span>.00%<span class="w"> </span><span class="m">79</span>.03<span class="w"> </span>MiB<span class="w"> </span>p/s
-</span><span id="__span-12-22"><a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>File<span class="w"> </span>uploaded<span class="w"> </span>to<span class="w"> </span>https://rhel-bootc-demo.s3.eu-west-1.amazonaws.com/b1a83f25-051e-434c-a50f-ab634d1b798c-disk.raw
-</span><span id="__span-12-23"><a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>Registering<span class="w"> </span>AMI<span class="w"> </span>rhel-bootc-x86
-</span><span id="__span-12-24"><a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a>Deleted<span class="w"> </span>S3<span class="w"> </span>object<span class="w"> </span>rhel-bootc-demo:b1a83f25-051e-434c-a50f-ab634d1b798c-disk.raw
-</span><span id="__span-12-25"><a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a>AMI<span class="w"> </span>registered:<span class="w"> </span>ami-0ade40e197a89bb69
-</span><span id="__span-12-26"><a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a>Snapshot<span class="w"> </span>ID:<span class="w"> </span>snap-068821f35b9b832af
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Building<span class="w"> </span>manifest-ami.json
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>starting<span class="w"> </span>-Pipeline<span class="w"> </span><span class="nb">source</span><span class="w"> </span>org.osbuild.containers-storage:<span class="w"> </span>6ec72d5cb7fb74985ee0fcdc8d90db85079cd08caa64fde9153c40aae3744f18
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>Build
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">  </span>root:<span class="w"> </span>&lt;host&gt;
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>Pipeline<span class="w"> </span>build:<span class="w"> </span>733863e98e5497425dbf00ac2eec52175d453834f17868944ed3408bcd9a3d16
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>Build
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">  </span>root:<span class="w"> </span>&lt;host&gt;
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">  </span>runner:<span class="w"> </span>org.osbuild.rhel82<span class="w"> </span><span class="o">(</span>org.osbuild.rhel82<span class="o">)</span>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="o">[</span>...<span class="o">]</span>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>⏱<span class="w">  </span>Duration:<span class="w"> </span>1s
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>manifest<span class="w"> </span>-<span class="w"> </span>finished<span class="w"> </span>successfully
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>build:<span class="w">          </span>733863e98e5497425dbf00ac2eec52175d453834f17868944ed3408bcd9a3d16
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>image:<span class="w">          </span>6b2f313ea4e75ddb9f8c9f2da14d4234760986240d1957093bb3631f0010c09e
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>qcow2:<span class="w">          </span>194f4993f08ada94b56bc5a59d17a08251388f9210e13f4671d231f7cd9abb97
+</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>vmdk:<span class="w">           </span>6d03b4759af85fd6408f36c72fde3eaa271466beef14a5f1af0499410055df9c
+</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>ovf:<span class="w">            </span>c2410b0f4eecb91c7298d17c98dc672b42aedd02bb9809dab8feb1b185259689
+</span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a>archive:<span class="w">        </span>950f23c305d2b41148790246e9abb8c925da34077f2954fabad284b9782f914e
+</span><span id="__span-16-19"><a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>Build<span class="w"> </span>complete!
+</span><span id="__span-16-20"><a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a>Uploading<span class="w"> </span>image/disk.raw<span class="w"> </span>to<span class="w"> </span>rhel-bootc-demo:b1a83f25-051e-434c-a50f-ab634d1b798c-disk.raw
+</span><span id="__span-16-21"><a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a><span class="m">10</span>.00<span class="w"> </span>GiB<span class="w"> </span>/<span class="w"> </span><span class="m">10</span>.00<span class="w"> </span>GiB<span class="w"> </span><span class="o">[</span>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<span class="o">]</span><span class="w"> </span><span class="m">100</span>.00%<span class="w"> </span><span class="m">79</span>.03<span class="w"> </span>MiB<span class="w"> </span>p/s
+</span><span id="__span-16-22"><a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a>File<span class="w"> </span>uploaded<span class="w"> </span>to<span class="w"> </span>https://rhel-bootc-demo.s3.eu-west-1.amazonaws.com/b1a83f25-051e-434c-a50f-ab634d1b798c-disk.raw
+</span><span id="__span-16-23"><a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a>Registering<span class="w"> </span>AMI<span class="w"> </span>rhel-bootc-x86
+</span><span id="__span-16-24"><a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a>Deleted<span class="w"> </span>S3<span class="w"> </span>object<span class="w"> </span>rhel-bootc-demo:b1a83f25-051e-434c-a50f-ab634d1b798c-disk.raw
+</span><span id="__span-16-25"><a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a>AMI<span class="w"> </span>registered:<span class="w"> </span>ami-0ade40e197a89bb69
+</span><span id="__span-16-26"><a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a>Snapshot<span class="w"> </span>ID:<span class="w"> </span>snap-068821f35b9b832af
 </span></code></pre></div>
 <p>You can verify that the AMI is now present in the <a href="https://eu-west-1.console.aws.amazon.com/ec2/home?region=eu-west-1#Images:visibility=owned-by-me">AMIs section</a> on AWS. (the URL may be different based on the region).</p>
 <p><img alt="" src="assets/aws-ami.png" /></p>
 <h2 id="create-the-instance-on-aws">Create the Instance on AWS</h2>
 <p>Using your preferred method, either via GUI or CLI, you can now create a fresh instance using the AMI we just imported.</p>
 <p>Wait for the Instance to be ready and retrieve the IP address to log-in using SSH using <em>bootc-user/redhat</em> credentials:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="w"> </span>~<span class="w"> </span>▓▒░<span class="w"> </span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>❯<span class="w"> </span>ssh<span class="w"> </span>bootc-user@*****
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>The<span class="w"> </span>authenticity<span class="w"> </span>of<span class="w"> </span>host<span class="w"> </span><span class="s1">&#39;***** (*****)&#39;</span><span class="w"> </span>can<span class="s1">&#39;t be established.</span>
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="s1">ED25519 key fingerprint is SHA256:OgY5Ym9dycIE2KPS5SRYRcmogUHalrUD35CyEH2A/j4.</span>
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="s1">This key is not known by any other names.</span>
-</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="s1">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span>
-</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="s1">Warning: Permanently added &#39;</span>*****<span class="s1">&#39; (ED25519) to the list of known hosts.</span>
-</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="s1">bootc-user@*****&#39;</span>s<span class="w"> </span>password:<span class="w"> </span>
-</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="o">[</span>bootc-user@ip-172-31-22-31<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="w"> </span>~<span class="w"> </span>▓▒░<span class="w"> </span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>❯<span class="w"> </span>ssh<span class="w"> </span>bootc-user@*****
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>The<span class="w"> </span>authenticity<span class="w"> </span>of<span class="w"> </span>host<span class="w"> </span><span class="s1">&#39;***** (*****)&#39;</span><span class="w"> </span>can<span class="s1">&#39;t be established.</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="s1">ED25519 key fingerprint is SHA256:OgY5Ym9dycIE2KPS5SRYRcmogUHalrUD35CyEH2A/j4.</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="s1">This key is not known by any other names.</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="s1">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="s1">Warning: Permanently added &#39;</span>*****<span class="s1">&#39; (ED25519) to the list of known hosts.</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="s1">bootc-user@*****&#39;</span>s<span class="w"> </span>password:<span class="w"> </span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="o">[</span>bootc-user@ip-172-31-22-31<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>
 </span></code></pre></div>
 
 
@@ -944,7 +979,7 @@ S3 Bucket names are globally registered and unique, based on the name you find a
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand", "content.tooltips"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.af256bd8.min.js"></script>

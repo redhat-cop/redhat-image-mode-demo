@@ -151,43 +151,6 @@
     
     
     
-      <label class="md-header__button md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-      </label>
-      <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
-      <label class="md-search__icon md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-      </label>
-      <nav class="md-search__options" aria-label="Search">
-        
-        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
-        </button>
-      </nav>
-      
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
-            Initializing search
-          </div>
-          <ol class="md-search-result__list" role="presentation"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-    
     
       <div class="md-header__source">
         <a href="https://github.com/redhat-cop/redhat-image-mode-demo/" title="Go to repository" class="md-source" data-md-component="source">
@@ -734,97 +697,115 @@
 <li>Enables the systemd unit for httpd</li>
 <li>Adds a custom index.html</li>
 </ul>
+<details>
+  <summary>Review Containerfile.qcow</summary>
+  <div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">MAINTAINER</span><span class="w"> </span><span class="s">Alessandro Rossi &lt;al.rossi87@gmail.com&gt;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">FROM</span><span class="w"> </span><span class="s">registry.redhat.io/rhel9/rhel-bootc:9.4</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">RUN</span><span class="w"> </span>dnf<span class="w"> </span>-y<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>dnf<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>tmux<span class="w"> </span>mkpasswd
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">RUN</span><span class="w"> </span><span class="nv">pass</span><span class="o">=</span><span class="k">$(</span>mkpasswd<span class="w"> </span>--method<span class="o">=</span>SHA-512<span class="w"> </span>--rounds<span class="o">=</span><span class="m">4096</span><span class="w"> </span>redhat<span class="k">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>useradd<span class="w"> </span>-m<span class="w"> </span>-G<span class="w"> </span>wheel<span class="w"> </span>bootc-user<span class="w"> </span>-p<span class="w"> </span><span class="nv">$pass</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">RUN</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;%wheel        ALL=(ALL)       NOPASSWD: ALL&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/etc/sudoers.d/wheel-sudo
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">RUN</span><span class="w"> </span>dnf<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>httpd<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>httpd<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span>mv<span class="w"> </span>/var/www<span class="w"> </span>/usr/share/www<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span>sed<span class="w"> </span>-ie<span class="w"> </span><span class="s1">&#39;s,/var/www,/usr/share/www,&#39;</span><span class="w"> </span>/etc/httpd/conf/httpd.conf
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="k">RUN</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Welcome to the bootc-http instance!&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/usr/share/www/html/index.html
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="k">EXPOSE</span><span class="w"> </span><span class="s">80</span>
+</span></code></pre></div>
+</details>
+
 <h2 id="building-the-image">Building the image</h2>
-<p>Review the <a href="Containerfile.qcow">Containerfile.qcow</a> file, that includes all the building steps for the image.</p>
+<p>From the root folder of the repository, switch to the use case directory:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">cd</span><span class="w"> </span>use-cases/bootc-image-builder-qcow
+</span></code></pre></div>
 <p>To build the image:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>podman<span class="w"> </span>build<span class="w"> </span>-f<span class="w"> </span>Containerfile.qcow<span class="w"> </span>-t<span class="w"> </span>rhel-bootc-vm:qcow<span class="w"> </span>.
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>podman<span class="w"> </span>build<span class="w"> </span>-f<span class="w"> </span>Containerfile.qcow<span class="w"> </span>-t<span class="w"> </span>rhel-bootc-vm:qcow<span class="w"> </span>.
 </span></code></pre></div>
 <h2 id="testing-the-image">Testing the image</h2>
 <p>You can now test it using:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>podman<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--name<span class="w"> </span>rhel-bootc-vm<span class="w"> </span>--hostname<span class="w"> </span>rhel-bootc-vm<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:80<span class="w"> </span>rhel-bootc-vm:qcow
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>podman<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--name<span class="w"> </span>rhel-bootc-vm<span class="w"> </span>--hostname<span class="w"> </span>rhel-bootc-vm<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:80<span class="w"> </span>rhel-bootc-vm:qcow
 </span></code></pre></div>
 <p>Note: The <em>"-p 8080:80"</em> part forwards the container's <em>http</em> port to the port 8080 on the host to test that it is working.</p>
 <p>The container will now start and a login prompt will appear:</p>
 <p><img alt="" src="assets/bootc-container.png" /></p>
 <p>On another terminal tab or in your browser, you can verify that the httpd server is working and serving traffic.</p>
 <p><strong>Terminal</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="w"> </span>~<span class="w"> </span>▓▒░<span class="w"> </span>curl<span class="w"> </span>localhost:8080
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Welcome<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>bootc-http<span class="w"> </span>instance!
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="w"> </span>~<span class="w"> </span>▓▒░<span class="w"> </span>curl<span class="w"> </span>localhost:8080
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Welcome<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>bootc-http<span class="w"> </span>instance!
 </span></code></pre></div>
 <p><strong>Browser</strong></p>
 <p><img alt="" src="assets/browser-test.png" /></p>
 <h2 id="generating-the-qcow-image">Generating the QCOW image</h2>
 <p>To generate the QCOW image we will be using <a href="https://github.com/osbuild/bootc-image-builder">bootc-image-builder</a> container image that will help us transitioning from our newly generated bootable container image to a VM image that can be used with KVM.</p>
 <p>The bootc-image-builder container will need <strong>rootful</strong> access to run, so the first thing we need to do is copying the image from our current user (the one we built the image with) to <em>root</em>:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>podman<span class="w"> </span>image<span class="w"> </span>scp<span class="w"> </span><span class="k">$(</span>whoami<span class="k">)</span>@localhost::rhel-bootc-vm:qcow
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>podman<span class="w"> </span>image<span class="w"> </span>scp<span class="w"> </span><span class="k">$(</span>whoami<span class="k">)</span>@localhost::rhel-bootc-vm:qcow
 </span></code></pre></div>
 <p>Now, verify that the image is correctly present for root user:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="w"> </span>~<span class="w"> </span>▓▒░<span class="w"> </span>sudo<span class="w"> </span>podman<span class="w"> </span>images
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>REPOSITORY<span class="w">                                </span>TAG<span class="w">         </span>IMAGE<span class="w"> </span>ID<span class="w">      </span>CREATED<span class="w">        </span>SIZE
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>localhost/rhel-bootc-vm<span class="w">                 </span>qcow<span class="w">        </span>0ee1017eb9bc<span class="w">  </span><span class="m">7</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">  </span><span class="m">1</span>.81<span class="w"> </span>GB
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="w"> </span>~<span class="w"> </span>▓▒░<span class="w"> </span>sudo<span class="w"> </span>podman<span class="w"> </span>images
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>REPOSITORY<span class="w">                                </span>TAG<span class="w">         </span>IMAGE<span class="w"> </span>ID<span class="w">      </span>CREATED<span class="w">        </span>SIZE
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>localhost/rhel-bootc-vm<span class="w">                 </span>qcow<span class="w">        </span>0ee1017eb9bc<span class="w">  </span><span class="m">7</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">  </span><span class="m">1</span>.81<span class="w"> </span>GB
 </span></code></pre></div>
 <p>We are now ready!
 Let's proceed with the QCOW image creation:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>podman<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span>--rm<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span>-it<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span>--privileged<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span>--pull<span class="o">=</span>newer<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span>--security-opt<span class="w"> </span><span class="nv">label</span><span class="o">=</span>type:unconfined_t<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/output:/output<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span>-v<span class="w"> </span>/var/lib/containers/storage:/var/lib/containers/storage<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span>registry.redhat.io/rhel9/bootc-image-builder:latest<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span>--type<span class="w"> </span>qcow2<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span>--local<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span>localhost/rhel-bootc-vm:qcow
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>podman<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span>--rm<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span>--privileged<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span>--pull<span class="o">=</span>newer<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span>--security-opt<span class="w"> </span><span class="nv">label</span><span class="o">=</span>type:unconfined_t<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/output:/output<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span>-v<span class="w"> </span>/var/lib/containers/storage:/var/lib/containers/storage<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span>registry.redhat.io/rhel9/bootc-image-builder:latest<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span>--type<span class="w"> </span>qcow2<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">    </span>--local<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">    </span>localhost/rhel-bootc-vm:qcow
 </span></code></pre></div>
 <p>We will use the local image we just copied to save in the <strong>output</strong> folder our generated image.</p>
 <p>The process will take care of all required steps (deploying the image, SELinux configuration, filesystem configuration, ostree configuration, etc.), after a couple of minutes we will find in the output:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Generating<span class="w"> </span>manifest-qcow2.json<span class="w"> </span>...<span class="w"> </span>DONE
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Building<span class="w"> </span>manifest-qcow2.json
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>starting<span class="w"> </span>-Pipeline<span class="w"> </span><span class="nb">source</span><span class="w"> </span>org.osbuild.containers-storage:<span class="w"> </span>8aaabad5f0c2c00eb12666076be4e6843f04e262230e2976dbb1218e96f2ca53
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>Build
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span>root:<span class="w"> </span>&lt;host&gt;
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>Pipeline<span class="w"> </span>build:<span class="w"> </span>2fb8b2a9ec9dc564950ddc6213d923bdd036c2328a97d0bb785c72fb5b6e1154
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>Build
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span>root:<span class="w"> </span>&lt;host&gt;
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">  </span>runner:<span class="w"> </span>org.osbuild.rhel82<span class="w"> </span><span class="o">(</span>org.osbuild.rhel82<span class="o">)</span>
-</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="o">[</span>...<span class="o">]</span>
-</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>
-</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>⏱<span class="w">  </span>Duration:<span class="w"> </span>81s
-</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>manifest<span class="w"> </span>-<span class="w"> </span>finished<span class="w"> </span>successfully
-</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>build:<span class="w">          </span>2fb8b2a9ec9dc564950ddc6213d923bdd036c2328a97d0bb785c72fb5b6e1154
-</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>image:<span class="w">          </span>a578f97344212ef8cdc1a53717b61d72b4cc89504811c7b73e35aafe9a4011e5
-</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>qcow2:<span class="w">          </span>ae3acbc9afa8886b03ce112d57177e7a9e0a05819d3f0d7bba9fc0e2663fddf5
-</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>vmdk:<span class="w">           </span>a926054ee74e3fa6193efc467be82ad7ff041e58db6712cabf19a82793cbc345
-</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>ovf:<span class="w">            </span>02baf8c99f0322217499ddf7ca5f853b74f37926ab7739efc2e7e6dd87ecc8c1
-</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>archive:<span class="w">        </span>beb1ba4cddc9a18f49f190d33d9a3ef0221b90d19683f810f170ec4629c55f39
-</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>Build<span class="w"> </span>complete!
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Generating<span class="w"> </span>manifest-qcow2.json<span class="w"> </span>...<span class="w"> </span>DONE
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Building<span class="w"> </span>manifest-qcow2.json
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>starting<span class="w"> </span>-Pipeline<span class="w"> </span><span class="nb">source</span><span class="w"> </span>org.osbuild.containers-storage:<span class="w"> </span>8aaabad5f0c2c00eb12666076be4e6843f04e262230e2976dbb1218e96f2ca53
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>Build
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span>root:<span class="w"> </span>&lt;host&gt;
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>Pipeline<span class="w"> </span>build:<span class="w"> </span>2fb8b2a9ec9dc564950ddc6213d923bdd036c2328a97d0bb785c72fb5b6e1154
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>Build
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">  </span>root:<span class="w"> </span>&lt;host&gt;
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">  </span>runner:<span class="w"> </span>org.osbuild.rhel82<span class="w"> </span><span class="o">(</span>org.osbuild.rhel82<span class="o">)</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="o">[</span>...<span class="o">]</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>⏱<span class="w">  </span>Duration:<span class="w"> </span>81s
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>manifest<span class="w"> </span>-<span class="w"> </span>finished<span class="w"> </span>successfully
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>build:<span class="w">          </span>2fb8b2a9ec9dc564950ddc6213d923bdd036c2328a97d0bb785c72fb5b6e1154
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>image:<span class="w">          </span>a578f97344212ef8cdc1a53717b61d72b4cc89504811c7b73e35aafe9a4011e5
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>qcow2:<span class="w">          </span>ae3acbc9afa8886b03ce112d57177e7a9e0a05819d3f0d7bba9fc0e2663fddf5
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>vmdk:<span class="w">           </span>a926054ee74e3fa6193efc467be82ad7ff041e58db6712cabf19a82793cbc345
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>ovf:<span class="w">            </span>02baf8c99f0322217499ddf7ca5f853b74f37926ab7739efc2e7e6dd87ecc8c1
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>archive:<span class="w">        </span>beb1ba4cddc9a18f49f190d33d9a3ef0221b90d19683f810f170ec4629c55f39
+</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>Build<span class="w"> </span>complete!
 </span></code></pre></div>
 <p>Verify that under the <em>output/qcow2</em> folder we have our image ready to be used.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="w"> </span>~/<span class="w"> </span>▓▒░<span class="w"> </span>tree<span class="w"> </span>output
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>output
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>├──<span class="w"> </span>manifest-qcow2.json
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>└──<span class="w"> </span>qcow2
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span>└──<span class="w"> </span>disk.qcow2
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="w"> </span>~/<span class="w"> </span>▓▒░<span class="w"> </span>tree<span class="w"> </span>output
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>output
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>├──<span class="w"> </span>manifest-qcow2.json
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>└──<span class="w"> </span>qcow2
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span>└──<span class="w"> </span>disk.qcow2
 </span></code></pre></div>
 <h2 id="create-the-vm-in-kvm">Create the VM in KVM</h2>
 <p>We will now use the image to spin up our Virtual Machine in KVM.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sudo<span class="w"> </span>virt-install<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span>--name<span class="w"> </span>rhel-bootc-vm<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span>--vcpus<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span>--memory<span class="w"> </span><span class="m">4096</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span>--import<span class="w"> </span>--disk<span class="w"> </span>./output/qcow2/disk.qcow2,format<span class="o">=</span>qcow2<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span>--os-variant<span class="w"> </span>rhel9.4<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span>--network<span class="w"> </span><span class="nv">network</span><span class="o">=</span>default
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>sudo<span class="w"> </span>virt-install<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span>--name<span class="w"> </span>rhel-bootc-vm<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span>--vcpus<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span>--memory<span class="w"> </span><span class="m">4096</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span>--import<span class="w"> </span>--disk<span class="w"> </span>./output/qcow2/disk.qcow2,format<span class="o">=</span>qcow2<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">    </span>--os-variant<span class="w"> </span>rhel9.4<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">    </span>--network<span class="w"> </span><span class="nv">network</span><span class="o">=</span>default
 </span></code></pre></div>
 <p>Wait for the VM to be ready and retrieve the IP address for the domain to log-in using SSH using <em>bootc-user/redhat</em> credentials:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="w"> </span>~<span class="w"> </span>▓▒░<span class="w"> </span><span class="nv">VM_IP</span><span class="o">=</span><span class="k">$(</span>sudo<span class="w"> </span>virsh<span class="w"> </span>-q<span class="w"> </span>domifaddr<span class="w"> </span>rhel-bootc-vm<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{ print $4 }&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="s2">&quot;/&quot;</span><span class="w"> </span>-f1<span class="k">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>ssh<span class="w"> </span>bootc-user@<span class="nv">$VM_IP</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>Warning:<span class="w"> </span>Permanently<span class="w"> </span>added<span class="w"> </span><span class="s1">&#39;192.168.150.157&#39;</span><span class="w"> </span><span class="o">(</span>ED25519<span class="o">)</span><span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>list<span class="w"> </span>of<span class="w"> </span>known<span class="w"> </span>hosts.
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>bootc-user@192.168.150.157<span class="err">&#39;</span>s<span class="w"> </span>password:
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="o">[</span>bootc-user@localhost<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>curl<span class="w"> </span>localhost
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>Welcome<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>bootc-http<span class="w"> </span>instance!
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="o">[</span>bootc-user@localhost<span class="w"> </span>~<span class="o">]</span>$
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="w"> </span>~<span class="w"> </span>▓▒░<span class="w"> </span><span class="nv">VM_IP</span><span class="o">=</span><span class="k">$(</span>sudo<span class="w"> </span>virsh<span class="w"> </span>-q<span class="w"> </span>domifaddr<span class="w"> </span>rhel-bootc-vm<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{ print $4 }&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="s2">&quot;/&quot;</span><span class="w"> </span>-f1<span class="k">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>ssh<span class="w"> </span>bootc-user@<span class="nv">$VM_IP</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>Warning:<span class="w"> </span>Permanently<span class="w"> </span>added<span class="w"> </span><span class="s1">&#39;192.168.150.157&#39;</span><span class="w"> </span><span class="o">(</span>ED25519<span class="o">)</span><span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>list<span class="w"> </span>of<span class="w"> </span>known<span class="w"> </span>hosts.
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>bootc-user@192.168.150.157<span class="err">&#39;</span>s<span class="w"> </span>password:
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="o">[</span>bootc-user@localhost<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>curl<span class="w"> </span>localhost
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>Welcome<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>bootc-http<span class="w"> </span>instance!
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="o">[</span>bootc-user@localhost<span class="w"> </span>~<span class="o">]</span>$
 </span></code></pre></div>
 
 
@@ -872,7 +853,7 @@ Let's proceed with the QCOW image creation:</p>
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand", "content.tooltips"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.af256bd8.min.js"></script>
