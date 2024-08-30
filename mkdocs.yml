@@ -5,6 +5,7 @@ site_author: Alessandro Rossi - Red Hat
 site_description: Documentation page for the Red Hat Enterprise Linux (RHEL) Image mode demo hosted on GitHub.
 theme: 
   name: material
+  favicon: assets/logo.png
   logo: assets/logo.png
   font:
     text: Red Hat Display  
@@ -30,6 +31,7 @@ nav:
   - Getting Started:
     - Introducing RHEL Image mode: getting-started/introduction.md
     - Quickstart: getting-started/quickstart.md
+    - Contributing to the project: getting-started/contributing.md
   - Use Cases:
     - Build a simple RHEL container: use-cases/bootc-container-simple/README.md
     - Build an Apache RHEL image: use-cases/bootc-container-httpd/README.md
