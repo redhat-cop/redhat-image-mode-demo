@@ -12,9 +12,20 @@ The Containerfile in the example:
 - Enables the systemd unit for httpd
 - Adds a custom index.html
 
+<details>
+  <summary>Review Containerfile.qcow</summary>
+  ```dockerfile
+  --8<-- "use-cases/bootc-image-builder-qcow/Containerfile.qcow"
+  ```
+</details>
+
 ## Building the image
 
-Review the [Containerfile.qcow](Containerfile.qcow) file, that includes all the building steps for the image.
+From the root folder of the repository, switch to the use case directory:
+
+```bash
+cd use-cases/bootc-image-builder-qcow
+```
 
 To build the image:
 

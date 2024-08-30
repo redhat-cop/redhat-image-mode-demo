@@ -1,9 +1,9 @@
 # Use Case - RHEL Bootc container as a setup source for Kickstart/Anaconda
 
-In this example, we will expand the image we built in the [Apache bootc use case](../bootc-container-httpd/) that you can use as a reference for details.
+In this example, we will expand the image we built in the [Apache bootc use case](../bootc-container-httpd/README.md) that you can use as a reference for details.
 This way, we will be able to streamline the creation of VMs based on a frozen, immutable configuration that will take few seconds to be deployed.
 
-The [Containerfile](./Containerfile.anaconda) in the example:
+The Containerfile.anaconda in the example:
 
 - Updates packages
 - Installs tmux and mkpasswd to create a simple user password
@@ -14,12 +14,25 @@ The [Containerfile](./Containerfile.anaconda) in the example:
 - Adds a custom index.html
 - Customizes the Message of the day
 
+<details>
+  <summary>Review Containerfile.anaconda</summary>
+  ```dockerfile
+  --8<-- "use-cases/bootc-container-anaconda-ks/Containerfile.anaconda"
+  ```
+</details>
+
 ## Pre-requisites
 
 You need a Container registry to push the image and make it available. I suggest creating an account [on Quay.io](https://quay.io/).
 During the configuration I will be using my username, *kubealex*, for the demo.
 
 ## Building the image
+
+From the root folder of the repository, switch to the use case directory:
+
+```bash
+cd use-cases/bootc-container-anaconda
+```
 
 You can build the image right from the Containerfile using Podman:
 
@@ -61,11 +74,11 @@ You can now browse to [https://quay.io/repository/YOURQUAYUSERNAME/rhel-bootc-ht
 
 ### Prepare install media and review the kickstart file
 
-RHEL 9.4 are available on the [Red Hat Developer portal](https://developers.redhat.com/content-gateway/file/rhel/Red_Hat_Enterprise_Linux_9.4/rhel-9.4-x86_64-boot.iso) and for this use case we will only need the boot image.
+RHEL 9.4 ISO images are available on the [Red Hat Developer portal](https://developers.redhat.com/content-gateway/file/rhel/Red_Hat_Enterprise_Linux_9.4/rhel-9.4-x86_64-boot.iso) and for this use case we will only need the boot image.
 
 Save the image and place it in the use case folder with the name **rhel9.iso**
 
-The [kickstart file](ks.cfg) is a very simple one:
+The kickstart file is a very simple one:
 
 - Configures text install
 - Creates a *root* user with password *redhat*
@@ -73,9 +86,17 @@ The [kickstart file](ks.cfg) is a very simple one:
 
 What is relevant is the **ostreecontainer** directive, that references the container image we just built as a source for the installation!
 
+<details>
+  <summary>Review ks.cfg</summary>
+  ```dockerfile
+  --8<-- "use-cases/bootc-container-anaconda-ks/ks.cfg"
+  ```
+</details>
+
+
 ### Creating the Virtual Machine in KVM
 
-You are now ready to spin-up a Virtual Machine using the downloaded boot image for CentOS Stream 9, injecting and using the kickstart to perform an unattended installation.
+You are now ready to spin-up a Virtual Machine using the downloaded boot image for RHEL 9.4, injecting and using the kickstart to perform an unattended installation.
 
 ```bash
 virt-install --name rhel9-server \

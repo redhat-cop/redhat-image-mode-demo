@@ -1,7 +1,7 @@
 # Use Case - Building a RHEL AWS AMI image using bootc-image-builder
 
-> [!WARNING]
-> This example requires an [active AWS account](https://aws.amazon.com/). Free tier could not be enough due to the 5GB limitation on S3 storage.
+!!! warning
+    This example requires an [active AWS account](https://aws.amazon.com/). Free tier could not be enough due to the 5GB limitation on S3 storage.
 
 In this example, we will build a container image from a Containerfile and we will generate an AWS AMI to use as a base for Instances.
 
@@ -15,9 +15,20 @@ The Containerfile in the example:
 - Enables the systemd unit for httpd
 - Adds a custom index.html
 
+<details>
+  <summary>Review Containerfile.ami</summary>
+  ```dockerfile
+  --8<-- "use-cases/bootc-image-builder-ami/Containerfile.ami"
+  ```
+</details>
+
 ## Building the image
 
-Review the [Containerfile.ami](Containerfile.ami) file, that includes all the building steps for the image.
+From the root folder of the repository, switch to the use case directory:
+
+```bash
+cd use-cases/bootc-image-builder-ami
+```
 
 To build the image:
 
@@ -91,9 +102,23 @@ The specific needs are:
 - a policy (**vmimport**) to allow importing from S3 to the AMI catalog
 - a role to allow the **vmie** service and bind the policy
 
-In [this folder](./files/) you can preview the [policy definition](./files/aws-policy.json) and the [role definition](./files/aws-role.json) before applying.
+In [the files folder]({{ config.repo_url }}{{ config.edit_uri }}/use-cases/bootc-image-builder-ami/files/) are stored the **policy definition** and the **role definition** that you can review below before applying.
 
-To configure use the *aws configure* command and provide the required information:
+<details>
+  <summary>Review aws-policy.json</summary>
+  ```json
+  --8<-- "use-cases/bootc-image-builder-ami/files/aws-policy.json"
+  ```
+</details>
+
+<details>
+  <summary>Review aws-role.json</summary>
+  ```json
+  --8<-- "use-cases/bootc-image-builder-ami/files/aws-role.json"
+  ```
+</details>
+
+To start the configuration use the *aws configure* command and provide the required information:
 
 ```bash
 [~]$ aws configure 
@@ -107,8 +132,8 @@ Once this is in place, we can proceed with the resources.
 
 For S3 (replace YOURREGION with the correct region, ie. eu-west-1):
 
-> [!TIP]
-> S3 Bucket names are globally registered and unique, based on the name you find available, edit the reference in lines 12-13 of [the policy file](./files/aws-policy.json)
+!!! tip
+    S3 Bucket names are globally registered and unique, based on the name you find available, **edit the reference in lines 12-13 of the aws-policy.json file**
 
 ```bash
 [~]$ export REGION=YOURREGION

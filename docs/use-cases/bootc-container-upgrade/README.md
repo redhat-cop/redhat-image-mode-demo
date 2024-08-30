@@ -1,10 +1,10 @@
 # Use Case - Upgrading a VM based on a bootc image
 
-In this example, we want to add some bits to the [previously generated httpd image](../bootc-container-anaconda-ks/) to add a [MariaDB server](https://mariadb.org/) and a text editor, [VIM](https://www.vim.org/).
+In this example, we want to add some bits to the [previously generated httpd image](../bootc-container-anaconda-ks/README.md) to add a [MariaDB server](https://mariadb.org/) and a text editor, [VIM](https://www.vim.org/).
 
 We will then use **bootc** to manage the system update, and you will see how easy and fast perfoming upgrades is.
 
-The [Containerfile](./Containerfile.upgrade) will:
+The Containerfile in this example will:
 
 - Updates packages
 - Installs tmux and mkpasswd to create a simple user password
@@ -17,13 +17,32 @@ The [Containerfile](./Containerfile.upgrade) will:
 
 But it will add the following two steps, resulting in a different image with an additional layer:
 
-**- Add an additional message of the day with the upgrade notes**
-**- Add mariadb-server package and vim**
-**- Enable the mariadb systemd unit**
+**- Add an additional message of the day with the upgrade notes** 
 
-Since the *bootc update* command will preserve the /var and /etc content, we will use a workaround to create the needed dirs for MariaDB leveraging [systemd-tmpfiles](./files/00-mariadb-tmpfile.conf).
+**- Add mariadb-server package and vim** 
+
+**- Enable the mariadb systemd unit** 
+
+<details>
+  <summary>Review Containerfile.replace</summary>
+  ```dockerfile
+  --8<-- "use-cases/bootc-container-upgrade/Containerfile.upgrade"
+  ```
+</details>
+
+Since the *bootc update* command will preserve the /var and /etc content, we will use a workaround to create the needed dirs for MariaDB leveraging **systemd tmpfiles**:
+
+```bash
+--8<-- "use-cases/bootc-container-upgrade/files/00-mariadb-tmpfile.conf"
+```
 
 ## Building the image
+
+From the root folder of the repository, switch to the use case directory:
+
+```bash
+cd use-cases/bootc-container-upgrade
+```
 
 You can build the image right from the Containerfile using Podman:
 
@@ -108,7 +127,7 @@ You can now browse to [https://quay.io/repository/YOURQUAYUSERNAME/rhel-bootc-ht
 
 ## Updating the VM with the newly created image
 
-The first thing to do is logging in the VM created in the [previous use case](../bootc-container-anaconda-ks/) or any other use case (QCOW, ISO, AMI):
+The first thing to do is logging in the VM created in the [previous use case](../bootc-container-anaconda-ks/README.md) or any other use case (QCOW, ISO, AMI):
 
 ```bash
  ~ ▓▒░ ssh bootc-user@192.168.124.16

@@ -12,9 +12,20 @@ The Containerfile in the example:
 - Enables the systemd unit for httpd
 - Adds a custom index.html
 
+<details>
+  <summary>Review Containerfile.iso</summary>
+  ```dockerfile
+  --8<-- "use-cases/bootc-image-builder-iso/Containerfile.iso"
+  ```
+</details>
+
 ## Building the image
 
-Review the [Containerfile.iso](Containerfile.iso) file, that includes all the building steps for the image.
+From the root folder of the repository, switch to the use case directory:
+
+```bash
+cd use-cases/bootc-image-builder-iso
+```
 
 To build the image:
 
@@ -78,17 +89,11 @@ podman push quay.io/$QUAY_USER/rhel-bootc-vm:iso
 
 In this example, we will not create the user in the image, but we will provide a customization using the **config.toml** file. It can be used to perform customizations of users, groups, etc.
 
-A sample *config.toml* that we will use to create our **bootc-user/redhat** and add it to the **wheel** group is as follows:
+A sample *config.toml* is already present in the use case directory, that we will use to create our **bootc-user/redhat** and add it to the **wheel** group is as follows:
 
+```toml
+  --8<-- "use-cases/bootc-image-builder-iso/config.toml"
 ```
-[[blueprint.customizations.user]]
-name = "bootc-user"
-password = "redhat"
-groups = ["wheel"]
-
-```
-
-In the directory, a **config.toml** file is already present.
 
 ## Generating the ISO image
 
