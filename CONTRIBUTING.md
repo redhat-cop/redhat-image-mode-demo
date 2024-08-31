@@ -23,7 +23,7 @@ If you want to contribute with fixes or enhancement for already existing use cas
 
 To contribute with new use cases, you can create a new folder in the **docs/use-cases/** and **use-cases/** folders with a meaningful name. 
 
-The README.md of each single use case should contain minimal information about the use case and a link to the Document Site section corresponding to it.
+The README.md of each single use case should contain the use case title and a link to the documentation website section corresponding to it.
 
 To include snippets within the repo you can follow the [Pymdownx-snippets plugin documentation](https://facelessuser.github.io/pymdown-extensions/extensions/snippets/). 
 

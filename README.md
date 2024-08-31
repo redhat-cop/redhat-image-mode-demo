@@ -30,20 +30,7 @@ First of all, clone the repo:
 git clone https://github.com/redhat-cop/redhat-image-mode-demo
 ```
 
-Creating a container for RHEL Image Mode is as easy as writing and running a Containerfile like this:
-
-> [!WARNING]
-> To build images using RHEL bootc image you need a RHEL System with a valid subscription attached to it. For non-production workloads, you can register for a [free Red Hat developer subscription](https://developers.redhat.com/register).
-
-
-```dockerfile
-FROM registry.redhat.io/rhel9/rhel-bootc:9.4
-```
-
-You can proceed customizing the image, adding users, packages, configurations, etc following the [Dockerfile Reference](https://docs.docker.com/reference/dockerfile/) as well as providing informative/documentation layers (MAINTAINER, LABEL, etc) following the best-practices of Containerfile creation.
-
-> [!TIP]
-> Some Dockerfile Directives (EXPOSE, ENTRYPOINT, ENV, among them) are ignored during RHEL Image deployment on a system, see [the documentation](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/using_image_mode_for_rhel_to_build_deploy_and_manage_operating_systems/building-and-testing-the-rhel-bootable-container-images_using-image-mode-for-rhel-to-build-deploy-and-manage-operating-systems#building-and-testing-the-rhel-bootable-container-images_using-image-mode-for-rhel-to-build-deploy-and-manage-operating-systems) for more details.
+Now check out the [documentation website](https://redhat-cop.github.io/redhat-image-mode-demo/) for the step-by-step instructions of the use cases!
 
 ## Use Cases
 
@@ -51,20 +38,20 @@ In this repo you will find some use cases that explain and show RHEL Image mode 
 
 ### Getting started with RHEL Image mode
 
-- [Simple bootc container](./use-cases/bootc-container-simple/)
-- [Bootc container with Apache](./use-cases/bootc-container-httpd/)
+- [Simple bootc container](https://redhat-cop.github.io/redhat-image-mode-demo/use-cases/bootc-container-simple/)
+- [Bootc container with Apache](https://redhat-cop.github.io/redhat-image-mode-demo/use-cases/bootc-container-httpd/)
 
 ### Managing VM lifecycle with RHEL Image mode
 
-- [Use a RHEL bootc container to spin up a RHEL 9 VM with Anaconda and Kickstart](./use-cases/bootc-container-anaconda-ks/)
-- [Update a VM based on a RHEL bootc container as a source adding packages and configuration](./use-cases/bootc-container-upgrade/)
-- [Apply a different RHEL container image to an existing VM](./use-cases/bootc-container-replace/)
+- [Use a RHEL bootc container to spin up a RHEL 9 VM with Anaconda and Kickstart](https://redhat-cop.github.io/redhat-image-mode-demo/use-cases/bootc-container-anaconda-ks/)
+- [Update a VM based on a RHEL bootc container as a source adding packages and configuration](https://redhat-cop.github.io/redhat-image-mode-demo/use-cases/bootc-container-upgrade/)
+- [Apply a different RHEL container image to an existing VM](https://redhat-cop.github.io/redhat-image-mode-demo/use-cases/bootc-container-replace/)
 
 ### Generate and deploy VM Images, AMI and ISO images with bootc-image-builder
 
-- [Generate a RHEL QCOW image for a VM using bootc-image-builder](./use-cases/bootc-image-builder-qcow/)
-- [Generate a RHEL ISO image for a VM using bootc-image-builder](./use-cases/bootc-image-builder-iso/)
-- [Generate a RHEL AMI image for an AWS instance using bootc-image-builder](./use-cases/bootc-image-builder-ami/)
+- [Generate a RHEL QCOW image for a VM using bootc-image-builder](https://redhat-cop.github.io/redhat-image-mode-demo/use-cases/bootc-image-builder-qcow/)
+- [Generate a RHEL ISO image for a VM using bootc-image-builder](https://redhat-cop.github.io/redhat-image-mode-demo/use-cases/bootc-image-builder-iso/)
+- [Generate a RHEL AMI image for an AWS instance using bootc-image-builder](https://redhat-cop.github.io/redhat-image-mode-demo/use-cases/bootc-image-builder-ami/)
 
 ## Resources
 
