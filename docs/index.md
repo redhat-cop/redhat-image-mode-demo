@@ -13,6 +13,7 @@ Below you can find some external resources from Red Hat websites and upstream pr
 - [RHEL Image Mode quickstart on Red Hat Blog](https://www.redhat.com/en/blog/image-mode-red-hat-enterprise-linux-quick-start-guide)
 - [RHEL Image Mode documentation on Red Hat Website](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/using_image_mode_for_rhel_to_build_deploy_and_manage_operating_systems/index)
 - [Red Hat Developers - Getting Started with RHEL Image Mode](https://developers.redhat.com/products/rhel-image-mode/overview)
+- [A new state of mind with image mode for RHEL on Red Hat Blog](https://www.redhat.com/en/blog/new-state-mind-image-mode-rhel)
 
 ## bootc Upstream projects
 
