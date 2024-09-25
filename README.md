@@ -53,6 +53,10 @@ In this repo you will find some use cases that explain and show RHEL Image mode 
 - [Generate a RHEL ISO image for a VM using bootc-image-builder](https://redhat-cop.github.io/redhat-image-mode-demo/use-cases/bootc-image-builder-iso/)
 - [Generate a RHEL AMI image for an AWS instance using bootc-image-builder](https://redhat-cop.github.io/redhat-image-mode-demo/use-cases/bootc-image-builder-ami/)
 
+### RHEL Image Mode Systems integration with other Red Hat Tools and products
+
+- [Manage RHEL Image Mode systems with Red Hat insights](https://redhat-cop.github.io/redhat-image-mode-demo/use-cases/image-mode-management-insights/)
+
 ## Resources
 
 ### RHEL Image mode
