@@ -112,7 +112,6 @@ sudo podman run \
     -v /var/lib/containers/storage:/var/lib/containers/storage \
     registry.redhat.io/rhel9/bootc-image-builder:latest \
     --type iso \
-    --local \
     quay.io/$QUAY_USER/rhel-bootc-vm:iso
 ```
 
