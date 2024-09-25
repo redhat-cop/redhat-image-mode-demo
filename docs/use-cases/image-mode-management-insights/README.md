@@ -129,14 +129,120 @@ sudo virt-install \
     --network network=default
 ```
 
-Wait for the VM to be ready and retrieve the IP address for the domain to log-in using SSH using *bootc-user/redhat* credentials:
+## Register the VM with Red Hat Insights
+
+Once the VM is up and running, log-in using the **bootc-user/redhat** credentials:
 
 ```bash
- ~ ▓▒░ VM_IP=$(sudo virsh -q domifaddr rhel-bootc-vm | awk '{ print $4 }' | cut -d"/" -f1) && ssh bootc-user@$VM_IP
-Warning: Permanently added '192.168.150.157' (ED25519) to the list of known hosts.
-bootc-user@192.168.150.157's password:
-[bootc-user@localhost ~]$ curl localhost
-Welcome to the bootc-http instance!
-[bootc-user@localhost ~]$
+VM_IP=$(sudo virsh -q domifaddr rhel-bootc-vm | awk '{ print $4 }' | cut -d"/" -f1) && ssh bootc-user@$VM_IP
 ```
+
+Register the VM with Red Hat Subscription Manager using your Red Hat ID:
+
+```bash
+sudo subscription-manager register
+```
+
+And then register it with Red Hat Insights:
+
+```bash
+sudo insights-client --register
+```
+
+After some seconds, the data will be uploaded and you can browse to [Red Hat Insights](https://console.redhat.com/insights/inventory) to check that your new host is registered. 
+
+If you go in the host itsels (it should be registered as *localhost*) you will see a dedicated section called **BOOTC** where information about the current image in use is shown, as in the picture.
+
+![](./assets/insights-install.png)
+
+## Optional - Update the image and visualize the changes on Red Hat Insights
+
+For showcasing how Red Hat Insights supports image updates, we also have an updated version, that adds an additional motd.
+
+<details>
+  <summary>Review Containerfile.insights-update</summary>
+  ```dockerfile
+  --8<-- "use-cases/image-mode-management-insights/Containerfile.insights-update"
+  ```
+</details>
+
+### Building the image
+
+From the root folder of the repository, switch to the use case directory:
+
+```bash
+cd use-cases/image-mode-management-insights
+```
+
+To build the image:
+
+```bash
+podman build -f Containerfile.insights-update -t rhel-bootc-vm:insights .
+```
+
+### Tagging and pushing the image
+
+To tag and push the image you can simply run (replace **YOURQUAYUSERNAME** with the account name):
+
+
+```bash
+export QUAY_USER=YOURQUAYUSERNAME
+```
+
+```bash
+podman tag rhel-bootc-vm:ami quay.io/$QUAY_USER/rhel-bootc-vm:insights
+```
+
+Log-in to Quay.io:
+
+```bash
+podman login -u $QUAY_USER quay.io
+```
+
+And push the image:
+
+```bash
+podman push quay.io/$QUAY_USER/rhel-bootc-vm:insights
+```
+
+### Updating the VM using the new image
+
+Once the VM is up and running, log-in using the **bootc-user/redhat** credentials:
+
+```bash
+VM_IP=$(sudo virsh -q domifaddr rhel-bootc-vm | awk '{ print $4 }' | cut -d"/" -f1) && ssh bootc-user@$VM_IP
+```
+
+Run the bootc upgrade command to update the OS to the lastest version:
+
+```bash
+sudo bootc upgrade
+```
+
+Run the insights-client utility to see the changes, as the new image will be shown as *available* and no rollback images is available since the upgrade still isn't applied.
+
+```bash
+sudo insights-client
+```
+
+Verify on the Console that you see the updated info on the image:
+
+![](./assets/insights-upgrade.png)
+
+
+Reboot the VM to apply the new update:
+
+```bash
+sudo reboot
+```
+
+And then re-run the Insights-client upload:
+
+```bash
+sudo insights-client
+```
+
+Now the new version is applied, and if you check the console, no new update is scheduled, but you can see the rollback image pointing to the pre-upgrade image:
+
+![](./assets/insights-rollback.png)
 

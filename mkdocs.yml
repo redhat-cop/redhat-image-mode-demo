@@ -41,6 +41,7 @@ nav:
     - Generate a RHEL QCOW image for a VM using bootc-image-builder: use-cases/bootc-image-builder-qcow/README.md 
     - Generate a RHEL ISO image for a VM using bootc-image-builder: use-cases/bootc-image-builder-iso/README.md
     - Generate a RHEL AMI image for an AWS instance using bootc-image-builder: use-cases/bootc-image-builder-ami/README.md
+    - Manage RHEL Image Mode systems with Red Hat Insights: use-cases/image-mode-management-insights/README.md
 markdown_extensions:
   - admonition
   - pymdownx.details
