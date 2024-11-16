@@ -144,7 +144,7 @@ sudo virt-install \
     --vcpus 4 \
     --memory 4096 \
     --import --disk ./output/qcow2/disk.qcow2,format=qcow2 \
-    --os-variant rhel9.4 \
+    --os-variant rhel9.5 \
     --network network=default
 ```
 

@@ -17,11 +17,11 @@ The Containerfile in this example will:
 
 But it will add the following two steps, resulting in a different image with an additional layer:
 
-**- Add an additional message of the day with the upgrade notes** 
+**- Add an additional message of the day with the upgrade notes**
 
-**- Add mariadb-server package and vim** 
+**- Add mariadb-server package and vim**
 
-**- Enable the mariadb systemd unit** 
+**- Enable the mariadb systemd unit**
 
 <details>
   <summary>Review Containerfile.replace</summary>
@@ -131,8 +131,8 @@ The first thing to do is logging in the VM created in the [previous use case](..
 
 ```bash
  ~ ▓▒░ ssh bootc-user@192.168.124.16
-bootc-user@192.168.124.16's password: 
-This is a RHEL 9.4 VM installed using a bootable container as an rpm-ostree source!
+bootc-user@192.168.124.16's password:
+This is a RHEL 9.5 VM installed using a bootable container as an rpm-ostree source!
 Last login: Mon Jul 29 12:03:40 2024 from 192.168.124.1
 [bootc-user@localhost ~]$
 ```
@@ -192,7 +192,7 @@ Let's log back in!
 
 ```bash
  ~ ▓▒░ ssh bootc-user@192.168.124.16
-bootc-user@192.168.124.16's password: 
+bootc-user@192.168.124.16's password:
 This is a RHEL VM installed using a bootable container as an rpm-ostree source!
 This server now supports MariaDB as a database, after last update
 Last login: Mon Jul 29 12:10:44 2024 from 192.168.124.1
@@ -241,7 +241,7 @@ Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
-MariaDB [(none)]> 
+MariaDB [(none)]>
 ```
 
 Here we go, our image is updated and fully working. Of course we can use the new image to provision similar VMs that need the same pieces of software on them.
