@@ -152,7 +152,7 @@ sudo insights-client --register
 
 After some seconds, the data will be uploaded and you can browse to [Red Hat Insights](https://console.redhat.com/insights/inventory) to check that your new host is registered.
 
-If you go in the host itsels (it should be registered as *localhost*) you will see a dedicated section called **BOOTC** where information about the current image in use is shown, as in the picture.
+If you go in the host itself (it should be registered as *localhost*) you will see a dedicated section called **BOOTC** where information about the current image in use is shown, as in the picture.
 
 ![](./assets/insights-install.png)
 
