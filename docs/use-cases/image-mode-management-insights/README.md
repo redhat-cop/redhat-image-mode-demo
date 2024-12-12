@@ -73,6 +73,7 @@ sudo podman run \
     -v $(pwd)/output:/output \
     -v /var/lib/containers/storage:/var/lib/containers/storage \
     registry.redhat.io/rhel9/bootc-image-builder:latest \
+    build \
     --type qcow2 \
     quay.io/$QUAY_USER/rhel-bootc-vm:insights
 ```
@@ -149,7 +150,7 @@ And then register it with Red Hat Insights:
 sudo insights-client --register
 ```
 
-After some seconds, the data will be uploaded and you can browse to [Red Hat Insights](https://console.redhat.com/insights/inventory) to check that your new host is registered. 
+After some seconds, the data will be uploaded and you can browse to [Red Hat Insights](https://console.redhat.com/insights/inventory) to check that your new host is registered.
 
 If you go in the host itsels (it should be registered as *localhost*) you will see a dedicated section called **BOOTC** where information about the current image in use is shown, as in the picture.
 

@@ -91,6 +91,7 @@ sudo podman run \
     -v $(pwd)/output:/output \
     -v /var/lib/containers/storage:/var/lib/containers/storage \
     registry.redhat.io/rhel9/bootc-image-builder:latest \
+    build \
     --type qcow2 \
     --local \
     localhost/rhel-bootc-vm:qcow
