@@ -121,10 +121,10 @@ In [the files folder]({{ config.repo_url }}{{ config.edit_uri }}/use-cases/bootc
 To start the configuration use the *aws configure* command and provide the required information:
 
 ```bash
-[~]$ aws configure 
-AWS Access Key ID []: 
-AWS Secret Access Key []: 
-Default region name []: 
+[~]$ aws configure
+AWS Access Key ID []:
+AWS Secret Access Key []:
+Default region name []:
 Default output format [json]:
 ```
 
@@ -143,7 +143,7 @@ aws s3api create-bucket --bucket rhel-bootc-demo --create-bucket-configuration L
 Let's proceed with the role:
 
 ```bash
-aws iam create-role --role-name vmimport --assume-role-policy-document file://files/aws-role.json 
+aws iam create-role --role-name vmimport --assume-role-policy-document file://files/aws-role.json
 ```
 
 And then associate the policy to the role:
@@ -170,6 +170,7 @@ sudo podman run \
     -v $HOME/.aws:/root/.aws:ro \
     --env AWS_PROFILE=default \
     registry.redhat.io/rhel9/bootc-image-builder:latest \
+    build \
     --type ami \
     --aws-ami-name rhel-bootc-x86 \
     --aws-bucket rhel-bootc-demo \
@@ -221,7 +222,7 @@ Using your preferred method, either via GUI or CLI, you can now create a fresh i
 Wait for the Instance to be ready and retrieve the IP address to log-in using SSH using *bootc-user/redhat* credentials:
 
 ```bash
- ~ ▓▒░ 
+ ~ ▓▒░
 ❯ ssh bootc-user@*****
 
 The authenticity of host '***** (*****)' can't be established.
@@ -229,7 +230,7 @@ ED25519 key fingerprint is SHA256:OgY5Ym9dycIE2KPS5SRYRcmogUHalrUD35CyEH2A/j4.
 This key is not known by any other names.
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
 Warning: Permanently added '*****' (ED25519) to the list of known hosts.
-bootc-user@*****'s password: 
-[bootc-user@ip-172-31-22-31 ~]$ 
+bootc-user@*****'s password:
+[bootc-user@ip-172-31-22-31 ~]$
 ```
 
