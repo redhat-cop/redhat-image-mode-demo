@@ -53,7 +53,6 @@ On another terminal tab or in your browser, you can verify that the httpd server
 
 ```bash
  ~ ▓▒░ curl localhost:8080
-Welcome to the bootc-http instance!
 ```
 
 **Browser**
