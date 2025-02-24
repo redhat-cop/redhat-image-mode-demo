@@ -30,7 +30,7 @@ But it will add the following two steps, resulting in a different image with an 
   ```
 </details>
 
-Since the *bootc update* command will preserve the /var and /etc content, we will use a workaround to create the needed dirs for MariaDB leveraging **systemd tmpfiles**:
+Since the *bootc upgrade* command will preserve the /var and /etc content, we will use a workaround to create the needed dirs for MariaDB leveraging **systemd tmpfiles**:
 
 ```bash
 --8<-- "use-cases/bootc-container-update/files/00-mariadb-tmpfile.conf"
@@ -142,14 +142,14 @@ Verify that bootc is installed:
 [bootc-user@localhost ~]$ bootc --help
 Deploy and transactionally in-place with bootable container images.
 
-The `bootc` project currently uses ostree-containers as a backend to support a model of bootable container images.  Once installed, whether directly via `bootc install` (executed as part of a container) or via another mechanism such as an OS installer tool, further updates can be pulled via e.g. `bootc update`.
+The `bootc` project currently uses ostree-containers as a backend to support a model of bootable container images.  Once installed, whether directly via `bootc install` (executed as part of a container) or via another mechanism such as an OS installer tool, further updates can be pulled via e.g. `bootc upgrade`.
 
 Changes in `/etc` and `/var` persist.
 
 Usage: bootc <COMMAND>
 
 Commands:
-  update      Download and queue an updated container image to apply
+  upgrade      Download and queue an updated container image to apply
   switch       Target a new container image reference to boot
   edit         Apply full changes to the host specification
   status       Display status
@@ -161,13 +161,13 @@ Options:
   -h, --help   Print help (see a summary with '-h')
 ```
 
-Note that among the options we have the **update** option that we will be using in this use case.
-The update option allows checking, fetching and using any updated container image corresponding to the *imagename:tag* we used, in this case **quay.io/YOURQUAYUSERNAME/rhel-bootc-vm:httpd**
+Note that among the options we have the **upgrade** option that we will be using in this use case.
+The upgrade option allows checking, fetching and using any updated container image corresponding to the *imagename:tag* we used, in this case **quay.io/YOURQUAYUSERNAME/rhel-bootc-vm:httpd**
 
-The update command requires higher privileges to run, let's perform the update!
+The upgrade command requires higher privileges to run, let's perform the update!
 
 ```bash
-[bootc-user@localhost ~]$ sudo bootc update
+[bootc-user@localhost ~]$ sudo bootc upgrade
 layers already present: 71; layers needed: 4 (99.3 MB)
  379 B [████████████████████] (0s) Fetched layer sha256:3851db6a0d50                                                                                                                                                                                                                                                                                                                                            Queued for next boot: quay.io/kubealex/rhel-bootc-vm:httpd
   Version: 9.20240714.0
