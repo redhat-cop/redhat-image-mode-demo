@@ -6,7 +6,7 @@ We will then use **bootc** to manage the system upgrade, and you will see how ea
 
 The Containerfile in this example will:
 
-- Customize the idex file
+- Customize the index file
 - Customizes the Message of the day
 
 <details>
@@ -60,19 +60,9 @@ On another terminal tab or in your browser, you can verify that the httpd server
 
 ![](./assets/browser-test.png)
 
-### Testing Mariadb
-
-From the login prompt, login as **bootc-user/redhat** and impersonate the root user:
-
-```bash
-[bootc-user@rhel-bootc-vm ~]$ sudo -i
-[root@rhel-bootc-vm ~]#
-```
-
 ## Tagging and pushing the image
 
 To tag and push the image you can simply run (replace **YOURQUAYUSERNAME** with the account name):
-
 
 ```bash
 export QUAY_USER=YOURQUAYUSERNAME
