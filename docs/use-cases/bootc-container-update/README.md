@@ -24,7 +24,7 @@ But it will add the following two steps, resulting in a different image with an 
 **- Enable the mariadb systemd unit**
 
 <details>
-  <summary>Review Containerfile.replace</summary>
+  <summary>Review Containerfile.update</summary>
   ```dockerfile
   --8<-- "use-cases/bootc-container-update/Containerfile.update"
   ```
