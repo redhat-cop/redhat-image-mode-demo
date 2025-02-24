@@ -1,8 +1,8 @@
-# Use Case - Upgrading a VM based on a bootc image
+# Use Case - Updating a VM based on a bootc image
 
 In this example, we want to add some bits to the [previously generated httpd image](../bootc-container-anaconda-ks/README.md) to add a [MariaDB server](https://mariadb.org/) and a text editor, [VIM](https://www.vim.org/).
 
-We will then use **bootc** to manage the system update, and you will see how easy and fast perfoming upgrades is.
+We will then use **bootc** to manage the system update, and you will see how easy and fast perfoming updates is.
 
 The Containerfile in this example will:
 
@@ -17,7 +17,7 @@ The Containerfile in this example will:
 
 But it will add the following two steps, resulting in a different image with an additional layer:
 
-**- Add an additional message of the day with the upgrade notes**
+**- Add an additional message of the day with the update notes**
 
 **- Add mariadb-server package and vim**
 
@@ -26,14 +26,14 @@ But it will add the following two steps, resulting in a different image with an 
 <details>
   <summary>Review Containerfile.replace</summary>
   ```dockerfile
-  --8<-- "use-cases/bootc-container-upgrade/Containerfile.upgrade"
+  --8<-- "use-cases/bootc-container-update/Containerfile.update"
   ```
 </details>
 
-Since the *bootc update* command will preserve the /var and /etc content, we will use a workaround to create the needed dirs for MariaDB leveraging **systemd tmpfiles**:
+Since the *bootc upgrade* command will preserve the /var and /etc content, we will use a workaround to create the needed dirs for MariaDB leveraging **systemd tmpfiles**:
 
 ```bash
---8<-- "use-cases/bootc-container-upgrade/files/00-mariadb-tmpfile.conf"
+--8<-- "use-cases/bootc-container-update/files/00-mariadb-tmpfile.conf"
 ```
 
 ## Building the image
@@ -41,13 +41,13 @@ Since the *bootc update* command will preserve the /var and /etc content, we wil
 From the root folder of the repository, switch to the use case directory:
 
 ```bash
-cd use-cases/bootc-container-upgrade
+cd use-cases/bootc-container-update
 ```
 
 You can build the image right from the Containerfile using Podman:
 
 ```bash
-podman build -f Containerfile.upgrade -t rhel-bootc-vm:httpd .
+podman build -f Containerfile.update -t rhel-bootc-vm:httpd .
 ```
 
 ## Testing the image
@@ -164,7 +164,7 @@ Options:
 Note that among the options we have the **upgrade** option that we will be using in this use case.
 The upgrade option allows checking, fetching and using any updated container image corresponding to the *imagename:tag* we used, in this case **quay.io/YOURQUAYUSERNAME/rhel-bootc-vm:httpd**
 
-The upgrade command requires higher privileges to run, let's perform the upgrade!
+The upgrade command requires higher privileges to run, let's perform the update!
 
 ```bash
 [bootc-user@localhost ~]$ sudo bootc upgrade
@@ -209,7 +209,7 @@ You can already see that something changed, we have a new line in our message of
              https://mariadb.com/kb/en/library/systemd/
     Process: 676 ExecStartPre=/usr/libexec/mariadb-check-socket (code=exited, status=0/SUCCESS)
     Process: 722 ExecStartPre=/usr/libexec/mariadb-prepare-db-dir mariadb.service (code=exited, status=0/SUCCESS)
-    Process: 1373 ExecStartPost=/usr/libexec/mariadb-check-upgrade (code=exited, status=0/SUCCESS)
+    Process: 1373 ExecStartPost=/usr/libexec/mariadb-check-update (code=exited, status=0/SUCCESS)
    Main PID: 1359 (mariadbd)
      Status: "Taking your SQL requests now..."
       Tasks: 13 (limit: 23136)
