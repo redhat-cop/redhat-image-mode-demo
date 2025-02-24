@@ -36,7 +36,7 @@ nav:
     - Build a simple RHEL container: use-cases/bootc-container-simple/README.md
     - Build an Apache RHEL image: use-cases/bootc-container-httpd/README.md
     - Use a RHEL bootc container to spin up a RHEL 9 VM with Anaconda and Kickstart: use-cases/bootc-container-anaconda-ks/README.md
-    - Update a VM based on a RHEL bootc container as a source adding packages and configuration: use-cases/bootc-container-upgrade/README.md
+    - Update a VM based on a RHEL bootc container as a source adding packages and configuration: use-cases/bootc-container-update/README.md
     - Apply a different RHEL container image to an existing VM: use-cases/bootc-container-replace/README.md
     - Generate a RHEL QCOW image for a VM using bootc-image-builder: use-cases/bootc-image-builder-qcow/README.md 
     - Generate a RHEL ISO image for a VM using bootc-image-builder: use-cases/bootc-image-builder-iso/README.md
