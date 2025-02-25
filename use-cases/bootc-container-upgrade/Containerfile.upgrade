@@ -7,7 +7,7 @@ RUN dnf -y install httpd && \
     systemctl enable httpd && \
     mv /var/www /usr/share/www && \
     sed -ie 's,/var/www,/usr/share/www,' /etc/httpd/conf/httpd.conf && \
-    mkdir /var/log/httpd
+    mkdir -p /var/log/httpd
 COPY files/index.html /usr/share/www/html/index.html
 RUN echo "This is a RHEL VM installed using a bootable container as an rpm-ostree source!" > /etc/motd.d/10-first-setup.motd
 RUN echo "This server is now running on RHEL 10 after the latest upgrade." > /etc/motd.d/20-upgrade.motd
