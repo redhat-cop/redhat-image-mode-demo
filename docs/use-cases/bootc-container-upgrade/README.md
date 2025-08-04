@@ -1,6 +1,6 @@
 # Use Case - Upgrading a VM based on a bootc image
 
-In this example, we want to add some bits to the [previously generated httpd image](../bootc-container-anaconda-ks/README.md) to upgrade the system from **RHEL 9.5** to **RHEL 10 Beta**.
+In this example, we want to add some bits to the [previously generated httpd image](../bootc-container-anaconda-ks/README.md) to upgrade the system from **RHEL 9.6** to **RHEL 10 Beta**.
 
 We will then use **bootc** to manage the system upgrade, and you will see how easy and fast perfoming upgrades is.
 
@@ -96,7 +96,7 @@ The first thing to do is logging in the VM created in the [previous use case](..
 ```bash
  ~ ▓▒░ ssh bootc-user@192.168.124.16
 bootc-user@192.168.124.16's password:
-This is a RHEL 9.5 VM installed using a bootable container as an rpm-ostree source!
+This is a RHEL 9.6 VM installed using a bootable container as an rpm-ostree source!
 Last login: Mon Jul 29 12:03:40 2024 from 192.168.124.1
 [bootc-user@localhost ~]$
 ```
@@ -134,7 +134,7 @@ The upgrade command requires higher privileges to run, let's perform the upgrade
 ```bash
 [bootc-user@localhost ~]$ sudo bootc upgrade
 layers already present: 2; layers needed: 71 (1.5 GB)
-Fetching layers ████████████████████ 71/71 
+Fetching layers ████████████████████ 71/71
  └ Fetching ████████████████████ 240 B/240 B (0 B/s) layer 3f31bbba8d765173de253
 Fetched layers: 1.39 GiB in 3 minutes (6.93 MiB/
 Queued for next boot: quay.io/kubealex/rhel-image-mode-demo:app
@@ -157,17 +157,17 @@ Let's log back in!
 
 ```bash
  ~ ▓▒░ ssh bootc-user@192.168.122.19
-bootc-user@192.168.122.19's password: 
+bootc-user@192.168.122.19's password:
 This is a RHEL VM installed using a bootable container as an rpm-ostree source!
 This server is now running on RHEL 10 after the latest upgrade.
 Last login: Mon Feb 24 12:15:42 2025 from 192.168.122.1
-[bootc-user@localhost ~]$ 
+[bootc-user@localhost ~]$
 ```
 
 You can already see that something changed, we have a new line in our message of the day, let's check the OS version:
 
 ```bash
-[bootc-user@localhost ~]$ cat /etc/os-release 
+[bootc-user@localhost ~]$ cat /etc/os-release
 NAME="Red Hat Enterprise Linux"
 VERSION="10.0 (Coughlan)"
 ID="rhel"

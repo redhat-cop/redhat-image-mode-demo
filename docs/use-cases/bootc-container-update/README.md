@@ -131,7 +131,7 @@ The first thing to do is logging in the VM created in the [previous use case](..
 ```bash
  ~ ▓▒░ ssh bootc-user@192.168.124.16
 bootc-user@192.168.124.16's password:
-This is a RHEL 9.5 VM installed using a bootable container as an rpm-ostree source!
+This is a RHEL 9.6 VM installed using a bootable container as an rpm-ostree source!
 Last login: Mon Jul 29 12:03:40 2024 from 192.168.124.1
 [bootc-user@localhost ~]$
 ```
