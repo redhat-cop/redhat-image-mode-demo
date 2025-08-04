@@ -145,7 +145,7 @@ sudo virt-install \
     --vcpus 4 \
     --memory 4096 \
     --import --disk ./output/qcow2/disk.qcow2,format=qcow2 \
-    --os-variant rhel9.5 \
+    --os-variant rhel9.6 \
     --network network=default
 ```
 
@@ -159,4 +159,3 @@ bootc-user@192.168.150.157's password:
 Welcome to the bootc-http instance!
 [bootc-user@localhost ~]$
 ```
-

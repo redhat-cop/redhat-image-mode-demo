@@ -177,7 +177,7 @@ sudo virt-install \
     --vcpus 4 \
     --memory 4096 \
     --cdrom ./output/bootiso/install.iso \
-    --os-variant rhel9.5 \
+    --os-variant rhel9.6 \
     --disk size=20 \
     --network network=default
 ```
@@ -192,7 +192,6 @@ Wait for the VM to be ready and retrieve the IP address for the domain to log-in
  ~ ▓▒░ VM_IP=$(sudo virsh -q domifaddr rhel-bootc-vm | awk '{ print $4 }' | cut -d"/" -f1) && ssh bootc-user@$VM_IP
 Warning: Permanently added '192.168.124.209' (ED25519) to the list of known hosts.
 bootc-user@192.168.124.209's password:
-This is a RHEL 9.5 VM installed using a bootable container as an rpm-ostree source!
+This is a RHEL 9.6 VM installed using a bootable container as an rpm-ostree source!
 [bootc-user@localhost ~]$
 ```
-

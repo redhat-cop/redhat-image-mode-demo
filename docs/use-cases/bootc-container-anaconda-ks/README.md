@@ -70,11 +70,11 @@ You can now browse to [https://quay.io/repository/YOURQUAYUSERNAME/rhel-bootc-ht
 ![](./assets/quay-repo-public.png)
 
 
-## Install RHEL 9.5 using the resulting image
+## Install RHEL 9.6 using the resulting image
 
 ### Prepare install media and review the kickstart file
 
-RHEL 9.5 ISO images are available on the [Red Hat Developer portal](https://developers.redhat.com/content-gateway/file/rhel/Red_Hat_Enterprise_Linux_9.5/rhel-9.5-x86_64-boot.iso) and for this use case we will only need the boot image.
+RHEL 9.6 ISO images are available on the [Red Hat Developer portal](https://developers.redhat.com/content-gateway/file/rhel/Red_Hat_Enterprise_Linux_9.6/rhel-9.6-x86_64-boot.iso) and for this use case we will only need the boot image.
 
 Save the image and place it in the use case folder with the name **rhel9.iso**
 
@@ -96,7 +96,7 @@ What is relevant is the **ostreecontainer** directive, that references the conta
 
 ### Creating the Virtual Machine in KVM
 
-You are now ready to spin-up a Virtual Machine using the downloaded boot image for RHEL 9.5, injecting and using the kickstart to perform an unattended installation.
+You are now ready to spin-up a Virtual Machine using the downloaded boot image for RHEL 9.6, injecting and using the kickstart to perform an unattended installation.
 
 ```bash
 virt-install --name rhel9-server \
@@ -105,7 +105,7 @@ virt-install --name rhel9-server \
 --disk size=20 \
 --network network=default \
 --location ./rhel9.iso \
---os-variant rhel9.5 \
+--os-variant rhel9.6 \
 --initrd-inject ks.cfg \
 --extra-args "inst.ks=file:/ks.cfg"
 ```
