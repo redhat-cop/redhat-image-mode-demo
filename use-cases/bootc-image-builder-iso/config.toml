@@ -1,4 +1,4 @@
-[[blueprint.customizations.user]]
+[[customizations.user]]
 name = "bootc-user"
 password = "redhat"
 groups = ["wheel"]
