@@ -30,7 +30,7 @@ cd use-cases/bootc-image-builder-iso
 To build the image:
 
 ```bash
-podman build -f Containerfile.iso -t rhel-bootc-vm:iso .
+podman build -f Containerfile.iso -t rhel-bootc-vm:iso
 ```
 
 ## Testing the image
@@ -38,7 +38,7 @@ podman build -f Containerfile.iso -t rhel-bootc-vm:iso .
 You can now test it using:
 
 ```bash
-podman run -it --name rhel-bootc-vm --hostname rhel-bootc-vm -p 8080:80 rhel-bootc-vm:iso
+podman run -it --rm --name rhel-bootc-vm --hostname rhel-bootc-vm -p 8080:80 rhel-bootc-vm:iso
 ```
 
 Note: The *"-p 8080:80"* part forwards the container's *http* port to the port 8080 on the host to test that it is working.
@@ -52,13 +52,21 @@ On another terminal tab or in your browser, you can verify that the httpd server
 **Terminal**
 
 ```bash
- ~ ▓▒░ curl localhost:8080
+curl localhost:8080
+```
+```
 Welcome to the bootc-http instance!
 ```
 
 **Browser**
 
 ![](./assets/browser-test.png)
+
+Stop the httpd server from the second container using podman.
+
+```bash
+podman stop rhel-bootc-vm
+```
 
 ## Tagging and pushing the image
 
@@ -89,7 +97,7 @@ podman push quay.io/$QUAY_USER/rhel-bootc-vm:iso
 
 In this example, we will not create the user in the image, but we will provide a customization using the **config.toml** file. It can be used to perform customizations of users, groups, etc.
 
-A sample *config.toml* is already present in the use case directory, that we will use to create our **bootc-user/redhat** and add it to the **wheel** group is as follows:
+A sample *config.toml* is already present in the use case directory, that we will use to create our VM. As this is an install ISO, we use kickstart to create the VM as well as the  **bootc-user/redhat** and add it to the **wheel** group is as follows:
 
 ```toml
   --8<-- "use-cases/bootc-image-builder-iso/config.toml"
@@ -97,26 +105,31 @@ A sample *config.toml* is already present in the use case directory, that we wil
 
 ## Generating the ISO image
 
-To generate the ISO image we will be using [bootc-image-builder](https://github.com/osbuild/bootc-image-builder) container image that will help us transitioning from our newly generated bootable container image to a ISO file that can be used with KVM to install the OS.
+To generate the ISO image we will be using [bootc-image-builder](https://github.com/osbuild/bootc-image-builder) container image that will help us transitioning from our newly generated bootable container image to a ISO file that can be used with KVM or bare metal to install the OS.
 
-The bootc-image-builder container will need **rootful** access to run, let's proceed with the ISO image creation:
+The bootc-image-builder container will need **rootful** access to run and a local copy of the image in system storage. You can pull the image using `root` credentials from quay.io, or you can copy the image from user storage to system storage. Since this image was just built, let's save network traffic and do the latter. You will be asked for your `sudo` password to complete the copy.
+
+```bash
+podman image scp localhost/rhel-bootc-vm:iso root@localhost::
+```
+
+Let's proceed with the ISO image creation:
 
 ```bash
 sudo podman run \
     --rm \
-    -it \
     --privileged \
-    --pull=newer \
     --security-opt label=type:unconfined_t \
     -v $(pwd)/output:/output \
+    -v $(pwd)/config.toml:/config.toml \
     -v /var/lib/containers/storage:/var/lib/containers/storage \
     registry.redhat.io/rhel9/bootc-image-builder:latest \
-    build \
     --type iso \
-    quay.io/$QUAY_USER/rhel-bootc-vm:iso
+    localhost/rhel-bootc-vm:iso
 ```
+!!! tip If you pulled the image from quay.io, use the full path you used to push.
 
-We will use the image we pushed before to create our image in the **output** folder.
+We will use the image we built before to create our image in the **output** folder.
 
 The process will take care of all required steps (deploying the image, SELinux configuration, filesystem configuration, ostree configuration, etc.), after a couple of minutes we will find in the output:
 
@@ -160,24 +173,32 @@ Results saved in
 Verify that under the *output/bootiso* folder we have our image ready to be used.
 
 ```bash
- ~/ ▓▒░ tree output
+tree output
+```
+```
 output/
 ├── bootiso
 │   └── install.iso
 └── manifest-iso.json
+
+2 directories, 2 files
 ```
 
 ## Create the VM in KVM
 
-We will now use the image to spin up our Virtual Machine in KVM.
+We will now use the image to spin up our Virtual Machine in KVM. Copy the ISO to a KVM storage pool on the system. We'll use a standard libvirt location, `boot` but if you have another storage pool configured you can use that as well. 
+
+```bash
+sudo cp output/bootiso/install.iso /var/lib/libvirt/boot/
+```
 
 ```bash
 sudo virt-install \
     --name rhel-bootc-vm \
     --vcpus 4 \
     --memory 4096 \
-    --cdrom ./output/bootiso/install.iso \
-    --os-variant rhel9.6 \
+    --cdrom /var/lib/libvirt/boot/install.iso \
+    --os-variant rhel9-unknown \
     --disk size=20 \
     --network network=default
 ```
@@ -186,10 +207,12 @@ We can check that the installer is running using the VM Console:
 
 ![](./assets/anaconda-boot.png)
 
-Wait for the VM to be ready and retrieve the IP address for the domain to log-in using SSH using *bootc-user/redhat* credentials:
+You can log into the graphical console directly, or log in via SSH in another shell. Wait for the VM to be ready and retrieve the IP address for the domain to log-in using SSH using *bootc-user/redhat* credentials:
 
 ```bash
- ~ ▓▒░ VM_IP=$(sudo virsh -q domifaddr rhel-bootc-vm | awk '{ print $4 }' | cut -d"/" -f1) && ssh bootc-user@$VM_IP
+VM_IP=$(sudo virsh -q domifaddr rhel-bootc-vm | awk '{ print $4 }' | cut -d"/" -f1) && ssh bootc-user@$VM_IP
+```
+```
 Warning: Permanently added '192.168.124.209' (ED25519) to the list of known hosts.
 bootc-user@192.168.124.209's password:
 This is a RHEL 9.6 VM installed using a bootable container as an rpm-ostree source!
