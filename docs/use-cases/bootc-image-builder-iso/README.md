@@ -107,11 +107,22 @@ A sample *config.toml* is already present in the use case directory, that we wil
 
 To generate the ISO image we will be using [bootc-image-builder](https://github.com/osbuild/bootc-image-builder) container image that will help us transitioning from our newly generated bootable container image to a ISO file that can be used with KVM or bare metal to install the OS.
 
-The bootc-image-builder container will need **rootful** access to run and a local copy of the image in system storage. You can pull the image using `root` credentials from quay.io, or you can copy the image from user storage to system storage. Since this image was just built, let's save network traffic and do the latter. You will be asked for your `sudo` password to complete the copy.
+The bootc-image-builder container will need **rootful** access to run and a local copy of the image in system storage. You can pull the image using `root` credentials from quay.io to accomplish this.
 
 ```bash
-podman image scp localhost/rhel-bootc-vm:iso root@localhost::
+sudo podman pull quay.io/$QUAY_USER/rhel-bootc-vm:iso
 ```
+
+??? tip "Using podman image scp"
+
+    You can use `podman` to copy images between remote hosts using 
+    SCP with the `image` subcommand. This will also work for local
+    storage on Linux without using SSHd. For example, to copy the 
+    locally built image to system storage without pulling from the quay.io:
+    
+    ```bash
+    podman image scp quay.io/$QUAY_USER/rhel-bootc-vm:iso root@localhost::
+    ```
 
 Let's proceed with the ISO image creation:
 
@@ -125,11 +136,10 @@ sudo podman run \
     -v /var/lib/containers/storage:/var/lib/containers/storage \
     registry.redhat.io/rhel9/bootc-image-builder:latest \
     --type iso \
-    localhost/rhel-bootc-vm:iso
+    quay.io/$QUAY_USER/rhel-bootc-vm:iso
 ```
-!!! tip If you pulled the image from quay.io, use the full path you used to push.
 
-We will use the image we built before to create our image in the **output** folder.
+We will use the image we built to create our ISO in the **output** folder.
 
 The process will take care of all required steps (deploying the image, SELinux configuration, filesystem configuration, ostree configuration, etc.), after a couple of minutes we will find in the output:
 
