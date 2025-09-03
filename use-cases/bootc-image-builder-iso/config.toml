@@ -1,7 +1,6 @@
 [customizations.installer.kickstart]
 contents = """
 # Basic setup
-text
 
 network --bootproto=dhcp --device=link --activate 
 

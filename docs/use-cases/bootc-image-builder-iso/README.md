@@ -78,7 +78,7 @@ export QUAY_USER=YOURQUAYUSERNAME
 ```
 
 ```bash
-podman tag rhel-bootc-vm:httpd quay.io/$QUAY_USER/rhel-bootc-vm:iso
+podman tag rhel-bootc-vm:iso quay.io/$QUAY_USER/rhel-bootc-vm:iso
 ```
 
 Log-in to Quay.io:
@@ -107,9 +107,10 @@ A sample *config.toml* is already present in the use case directory, that we wil
 
 To generate the ISO image we will be using [bootc-image-builder](https://github.com/osbuild/bootc-image-builder) container image that will help us transitioning from our newly generated bootable container image to a ISO file that can be used with KVM or bare metal to install the OS.
 
-The bootc-image-builder container will need **rootful** access to run and a local copy of the image in system storage. You can pull the image using `root` credentials from quay.io to accomplish this.
+The bootc-image-builder container will need **rootful** access to run and a local copy of the image in system storage. You can pull the image using `root` credentials from quay.io to accomplish this. If the repository isn't public, you will need to log into quay.io again. You can control visibility of the repository under `Repository Settings` in the quay.io interface.
 
 ```bash
+sudo podman login -u $QUAY_USER quay.io
 sudo podman pull quay.io/$QUAY_USER/rhel-bootc-vm:iso
 ```
 
@@ -124,7 +125,7 @@ sudo podman pull quay.io/$QUAY_USER/rhel-bootc-vm:iso
     podman image scp quay.io/$QUAY_USER/rhel-bootc-vm:iso root@localhost::
     ```
 
-Let's proceed with the ISO image creation:
+Once the image has been made available, proceed with the ISO image creation:
 
 ```bash
 sudo podman run \
