@@ -1,4 +1,25 @@
-[[customizations.user]]
-name = "bootc-user"
-password = "redhat"
-groups = ["wheel"]
+[customizations.installer.kickstart]
+contents = """
+# Basic setup
+
+network --bootproto=dhcp --device=link --activate 
+
+# Basic partitioning
+clearpart --all --initlabel --disklabel=gpt
+reqpart --add-boot
+part / --grow --fstype xfs
+
+# No ostreecontainer command needed, instead we lay down the container contents with BIB in the ISO
+
+firewall --disabled
+services --enabled=sshd
+
+# mkpasswd --method=SHA-512 --rounds=4096 redhat
+user --name=bootc-user --groups=wheel --iscrypted --password=$6$rounds=4096$1VjdHWc6vFCglSh9$3HcKRPO8i2ias09AJ9y6FhQu4V/es/evh6/GJtTtduV.K6AExr.eQb/Ava8v0fZhHKTtoFniEGR2nKO.fCear1
+
+# Only inject a SSH key for root
+rootpw --iscrypted locked
+
+reboot
+"""
+
