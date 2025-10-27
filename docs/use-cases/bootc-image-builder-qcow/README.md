@@ -43,9 +43,7 @@ podman run -it --name rhel-bootc-vm --hostname rhel-bootc-vm -p 8080:80 rhel-boo
 
 Note: The *"-p 8080:80"* part forwards the container's *http* port to the port 8080 on the host to test that it is working.
 
-The container will now start and a login prompt will appear:
-
-![](./assets/bootc-container.png)
+The container will now start and a login prompt will appear.
 
 On another terminal tab or in your browser, you can verify that the httpd server is working and serving traffic.
 
@@ -90,7 +88,7 @@ sudo podman run \
     --security-opt label=type:unconfined_t \
     -v $(pwd)/output:/output \
     -v /var/lib/containers/storage:/var/lib/containers/storage \
-    registry.redhat.io/rhel9/bootc-image-builder:latest \
+    registry.redhat.io/rhel10/bootc-image-builder:latest \
     build \
     --type qcow2 \
     --local \
@@ -145,7 +143,7 @@ sudo virt-install \
     --vcpus 4 \
     --memory 4096 \
     --import --disk ./output/qcow2/disk.qcow2,format=qcow2 \
-    --os-variant rhel9.6 \
+    --os-variant rhel10.0 \
     --network network=default
 ```
 

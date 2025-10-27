@@ -60,10 +60,7 @@ podman run -it --name rhel-bootc-vm --hostname rhel-bootc-vm -p 8080:80 -p 3306:
 
 Note: The *"-p 8080:80" -p 3306:3306* part forwards the container's *http* and *mariadb* port to the port 8080 and 3306 on the host to test that httpd and mariadb are working.
 
-
-The container will now start and a login prompt will appear:
-
-![](./assets/bootc-container.png)
+The container will now start and a login prompt will appear.
 
 ### Testing Apache
 
@@ -131,7 +128,7 @@ The first thing to do is logging in the VM created in the [previous use case](..
 ```bash
  ~ ▓▒░ ssh bootc-user@192.168.124.16
 bootc-user@192.168.124.16's password:
-This is a RHEL 9.6 VM installed using a bootable container as an rpm-ostree source!
+This is a RHEL 10.0 VM installed using a bootable container as an rpm-ostree source!
 Last login: Mon Jul 29 12:03:40 2024 from 192.168.124.1
 [bootc-user@localhost ~]$
 ```
@@ -192,7 +189,7 @@ Let's log back in!
 ```bash
  ~ ▓▒░ ssh bootc-user@192.168.124.16
 bootc-user@192.168.124.16's password:
-This is a RHEL VM installed using a bootable container as an rpm-ostree source!
+This is a RHEL 10.0 VM installed using a bootable container as source!
 This server now supports MariaDB as a database, after last update
 Last login: Mon Jul 29 12:10:44 2024 from 192.168.124.1
 [bootc-user@localhost ~]$
