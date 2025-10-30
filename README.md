@@ -57,6 +57,10 @@ In this repo you will find some use cases that explain and show RHEL Image mode 
 
 - [Manage RHEL Image Mode systems with Red Hat insights](https://redhat-cop.github.io/redhat-image-mode-demo/use-cases/image-mode-management-insights/)
 
+### Way of Working with Image Mode for RHEL
+
+- [Way of Working with Image Mode for RHEL](https://redhat-cop.github.io/redhat-image-mode-demo/use-cases/image-mode-way-of-working/)
+
 ## Resources
 
 ### RHEL Image mode
@@ -71,4 +75,3 @@ In this repo you will find some use cases that explain and show RHEL Image mode 
 
 - [bootc project on GitHub](https://github.com/containers/bootc)
 - [bootc-image-builder project on GitHub](https://github.com/osbuild/bootc-image-builder)
-
