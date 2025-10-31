@@ -43,9 +43,7 @@ podman run -it --name rhel-bootc-httpd --hostname rhel-bootc-httpd -p 8080:80 rh
 
 Note: The *"-p 8080:80"* part forwards the container's *http* port to the port 8080 on the host to test that it is working.
 
-The container will now start and a login prompt will appear:
-
-![](./assets/bootc-container.png)
+The container will now start and a login prompt will appear.
 
 On another terminal tab or in your browser, you can verify that the httpd server is working and serving traffic.
 
@@ -83,7 +81,6 @@ bash-5.1# systemctl status | more
      Jobs: 0 queued
    Failed: 0 units
     Since: Fri 2024-07-19 08:19:28 UTC; 1min 57s ago
-  systemd: 252-32.el9_4
 ```
 
 - Apache is loaded as a systemd unit

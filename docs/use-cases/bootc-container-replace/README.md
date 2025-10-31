@@ -53,9 +53,7 @@ podman run -it --name rhel-bootc-vm-nginx --hostname rhel-bootc-vm-nginx -p 8080
 
 Note: The *"-p 8080:80" -p 5432:5432* part forwards the container's *http* and *postgresql* port to the port 8080 and 3306 on the host to test that nginx and postgresql are working.
 
-The container will now start and a login prompt will appear:
-
-![](./assets/bootc-container.png)
+The container will now start and a login prompt will appear.
 
 ### Testing Nginx
 
@@ -137,8 +135,8 @@ The first thing to do is logging in the VM updated in the [previous use case](..
 
 ```bash
  ~ ▓▒░ ssh bootc-user@192.168.124.16
-bootc-user@192.168.124.16's password: 
-This is a RHEL VM installed using a bootable container as an rpm-ostree source!
+bootc-user@192.168.124.16's password:
+This is a RHEL VM installed using a bootable container as source!
 This server now supports MariaDB as a database, after last update
 Last login: Mon Jul 29 12:12:51 2024 from 192.168.124.1
 [bootc-user@localhost ~]$
@@ -198,8 +196,8 @@ Let's log back in!
 
 ```bash
  ~/▓▒░ ssh bootc-user@192.168.124.16
-bootc-user@192.168.124.16's password: 
-This is a RHEL 9 VM installed using a bootable container as an rpm-ostree source!
+bootc-user@192.168.124.16's password:
+This is a RHEL 10 VM installed using a bootable container as an rpm-ostree source!
 This server is equipped with Nginx and PostgreSQL
 Last login: Mon Jul 29 12:26:13 2024 from 192.168.124.1
 

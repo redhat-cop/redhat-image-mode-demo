@@ -43,9 +43,7 @@ podman run -it --rm --name rhel-bootc-vm --hostname rhel-bootc-vm -p 8080:80 rhe
 
 Note: The *"-p 8080:80"* part forwards the container's *http* port to the port 8080 on the host to test that it is working.
 
-The container will now start and a login prompt will appear:
-
-![](./assets/bootc-container.png)
+The container will now start and a login prompt will appear.
 
 On another terminal tab or in your browser, you can verify that the httpd server is working and serving traffic.
 
@@ -116,11 +114,11 @@ sudo podman pull quay.io/$QUAY_USER/rhel-bootc-vm:iso
 
 ??? tip "Using podman image scp"
 
-    You can use `podman` to copy images between remote hosts using 
+    You can use `podman` to copy images between remote hosts using
     SCP with the `image` subcommand. This will also work for local
-    storage on Linux without using SSHd. For example, to copy the 
+    storage on Linux without using SSHd. For example, to copy the
     locally built image to system storage without pulling from the quay.io:
-    
+
     ```bash
     podman image scp quay.io/$QUAY_USER/rhel-bootc-vm:iso root@localhost::
     ```
@@ -135,7 +133,7 @@ sudo podman run \
     -v $(pwd)/output:/output \
     -v $(pwd)/config.toml:/config.toml \
     -v /var/lib/containers/storage:/var/lib/containers/storage \
-    registry.redhat.io/rhel9/bootc-image-builder:latest \
+    registry.redhat.io/rhel10/bootc-image-builder:latest \
     --type iso \
     quay.io/$QUAY_USER/rhel-bootc-vm:iso
 ```
@@ -197,7 +195,7 @@ output/
 
 ## Create the VM in KVM
 
-We will now use the image to spin up our Virtual Machine in KVM. Copy the ISO to a KVM storage pool on the system. We'll use a standard libvirt location, `boot` but if you have another storage pool configured you can use that as well. 
+We will now use the image to spin up our Virtual Machine in KVM. Copy the ISO to a KVM storage pool on the system. We'll use a standard libvirt location, `boot` but if you have another storage pool configured you can use that as well.
 
 ```bash
 sudo cp output/bootiso/install.iso /var/lib/libvirt/boot/
@@ -209,7 +207,7 @@ sudo virt-install \
     --vcpus 4 \
     --memory 4096 \
     --cdrom /var/lib/libvirt/boot/install.iso \
-    --os-variant rhel9-unknown \
+    --os-variant rhel10-unknown \
     --disk size=20 \
     --network network=default
 ```
@@ -226,6 +224,6 @@ VM_IP=$(sudo virsh -q domifaddr rhel-bootc-vm | awk '{ print $4 }' | cut -d"/" -
 ```
 Warning: Permanently added '192.168.124.209' (ED25519) to the list of known hosts.
 bootc-user@192.168.124.209's password:
-This is a RHEL 9.6 VM installed using a bootable container as an rpm-ostree source!
+This is a RHEL 10.0 VM installed using a bootable container as an rpm-ostree source!
 [bootc-user@localhost ~]$
 ```

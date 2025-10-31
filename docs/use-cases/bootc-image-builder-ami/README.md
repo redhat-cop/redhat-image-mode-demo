@@ -46,9 +46,7 @@ podman run -it --name rhel-bootc-vm --hostname rhel-bootc-vm -p 8080:80 rhel-boo
 
 Note: The *"-p 8080:80"* part forwards the container's *http* port to the port 8080 on the host to test that it is working.
 
-The container will now start and a login prompt will appear:
-
-![](./assets/bootc-container.png)
+The container will now start and a login prompt will appear.
 
 On another terminal tab or in your browser, you can verify that the httpd server is working and serving traffic.
 
@@ -169,7 +167,7 @@ sudo podman run \
     --pull=newer \
     -v $HOME/.aws:/root/.aws:ro \
     --env AWS_PROFILE=default \
-    registry.redhat.io/rhel9/bootc-image-builder:latest \
+    registry.redhat.io/rhel10/bootc-image-builder:latest \
     build \
     --type ami \
     --aws-ami-name rhel-bootc-x86 \
@@ -233,4 +231,3 @@ Warning: Permanently added '*****' (ED25519) to the list of known hosts.
 bootc-user@*****'s password:
 [bootc-user@ip-172-31-22-31 ~]$
 ```
-

@@ -72,7 +72,7 @@ sudo podman run \
     --security-opt label=type:unconfined_t \
     -v $(pwd)/output:/output \
     -v /var/lib/containers/storage:/var/lib/containers/storage \
-    registry.redhat.io/rhel9/bootc-image-builder:latest \
+    registry.redhat.io/rhel10/bootc-image-builder:latest \
     build \
     --type qcow2 \
     quay.io/$QUAY_USER/rhel-bootc-vm:insights
@@ -126,7 +126,7 @@ sudo virt-install \
     --vcpus 4 \
     --memory 4096 \
     --import --disk ./output/qcow2/disk.qcow2,format=qcow2 \
-    --os-variant rhel9.4 \
+    --os-variant rhel10.4 \
     --network network=default
 ```
 
@@ -246,4 +246,3 @@ sudo insights-client
 Now the new version is applied, and if you check the console, no new update is scheduled, but you can see the rollback image pointing to the pre-upgrade image:
 
 ![](./assets/insights-rollback.png)
-

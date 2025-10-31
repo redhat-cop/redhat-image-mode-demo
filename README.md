@@ -43,7 +43,7 @@ In this repo you will find some use cases that explain and show RHEL Image mode 
 
 ### Managing VM lifecycle with RHEL Image mode
 
-- [Use a RHEL bootc container to spin up a RHEL 9 VM with Anaconda and Kickstart](https://redhat-cop.github.io/redhat-image-mode-demo/use-cases/bootc-container-anaconda-ks/)
+- [Use a RHEL bootc container to spin up a RHEL 10 VM with Anaconda and Kickstart](https://redhat-cop.github.io/redhat-image-mode-demo/use-cases/bootc-container-anaconda-ks/)
 - [Update a VM based on a RHEL bootc container as a source adding packages and configuration](https://redhat-cop.github.io/redhat-image-mode-demo/use-cases/bootc-container-upgrade/)
 - [Apply a different RHEL container image to an existing VM](https://redhat-cop.github.io/redhat-image-mode-demo/use-cases/bootc-container-replace/)
 
