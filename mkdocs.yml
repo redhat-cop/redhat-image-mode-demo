@@ -31,7 +31,9 @@ nav:
   - Getting Started:
     - Introducing RHEL Image mode: getting-started/introduction.md
     - Quickstart: getting-started/quickstart.md
-    - Contributing to the project: getting-started/contributing.md
+    - Contributing to the project:
+        - Contribution guidelines: getting-started/contributing.md
+        - Reviewing and testing changes: getting-started/review-and-test-changes.md
   - Use Cases:
     - Build a simple RHEL container: use-cases/bootc-container-simple/README.md
     - Build an Apache RHEL image: use-cases/bootc-container-httpd/README.md
