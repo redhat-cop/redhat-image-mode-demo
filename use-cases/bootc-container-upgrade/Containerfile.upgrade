@@ -1,5 +1,5 @@
 MAINTAINER Alessandro Rossi <al.rossi87@gmail.com>
-FROM registry.redhat.io/rhel10-beta/rhel-bootc:10.0-beta
+FROM registry.redhat.io/rhel10/rhel-bootc:10.0
 RUN dnf -y update && dnf -y install tmux mkpasswd
 RUN pass=$(mkpasswd --method=SHA-512 --rounds=4096 redhat) && useradd -m -G wheel bootc-user -p $pass
 RUN echo "%wheel        ALL=(ALL)       NOPASSWD: ALL" > /etc/sudoers.d/wheel-sudo

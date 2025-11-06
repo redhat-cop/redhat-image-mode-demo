@@ -45,6 +45,12 @@ nav:
     - Generate a RHEL ISO image for a VM using bootc-image-builder: use-cases/bootc-image-builder-iso/README.md
     - Generate a RHEL AMI image for an AWS instance using bootc-image-builder: use-cases/bootc-image-builder-ami/README.md
     - Manage RHEL Image Mode systems with Red Hat Insights: use-cases/image-mode-management-insights/README.md
+    - Ways of working with RHEL Image Mode:
+      - Introduction: use-cases/image-mode-way-of-working/README.md
+      - Configuring the demo: use-cases/image-mode-way-of-working/demo-build.md
+      - Chapter 1 - Working with Golden Images: use-cases/image-mode-way-of-working/chapter1.md
+      - Chapter 2 - Working with updates and upgrades: use-cases/image-mode-way-of-working/chapter2.md
+
 markdown_extensions:
   - admonition
   - pymdownx.details
@@ -56,9 +62,15 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets:
       base_path: !relative $config_dir
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid_custom
   - attr_list
   - pymdownx.emoji
   - abbr
 plugins:
   - macros
+  - mermaid2
+  - search
