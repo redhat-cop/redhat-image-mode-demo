@@ -6,7 +6,6 @@ We will then use **bootc** to manage the system update, and you will see how eas
 
 The Containerfile in this example will:
 
-- Updates packages
 - Installs tmux and mkpasswd to create a simple user password
 - Creates a *bootc-user* user in the image
 - Adds the wheel group to sudoers
@@ -30,11 +29,13 @@ But it will add the following two steps, resulting in a different image with an 
   ```
 </details>
 
-Since the *bootc upgrade* command will preserve the /var and /etc content, we will use a workaround to create the needed dirs for MariaDB leveraging **systemd tmpfiles**:
+Since the *bootc update* command will preserve the /var and /etc content, we will use a workaround to create the needed dirs for MariaDB leveraging **systemd tmpfiles**:
 
 ```bash
 --8<-- "use-cases/bootc-container-update/files/00-mariadb-tmpfile.conf"
 ```
+
+Since this is a minor update, not involving kernel modules or packages, we can leverage [soft reboot]() to apply the changes.
 
 ## Building the image
 
@@ -139,14 +140,14 @@ Verify that bootc is installed:
 [bootc-user@localhost ~]$ bootc --help
 Deploy and transactionally in-place with bootable container images.
 
-The `bootc` project currently uses ostree-containers as a backend to support a model of bootable container images.  Once installed, whether directly via `bootc install` (executed as part of a container) or via another mechanism such as an OS installer tool, further updates can be pulled via e.g. `bootc upgrade`.
+The `bootc` project currently uses ostree-containers as a backend to support a model of bootable container images.  Once installed, whether directly via `bootc install` (executed as part of a container) or via another mechanism such as an OS installer tool, further updates can be pulled via e.g. `bootc update`.
 
 Changes in `/etc` and `/var` persist.
 
 Usage: bootc <COMMAND>
 
 Commands:
-  upgrade      Download and queue an updated container image to apply
+  update      Download and queue an updated container image to apply
   switch       Target a new container image reference to boot
   edit         Apply full changes to the host specification
   status       Display status
@@ -158,16 +159,16 @@ Options:
   -h, --help   Print help (see a summary with '-h')
 ```
 
-Note that among the options we have the **upgrade** option that we will be using in this use case.
-The upgrade option allows checking, fetching and using any updated container image corresponding to the *imagename:tag* we used, in this case **quay.io/YOURQUAYUSERNAME/rhel-bootc-vm:httpd**
+Note that among the options we have the **update** option that we will be using in this use case.
+The update option allows checking, fetching and using any updated container image corresponding to the *imagename:tag* we used, in this case **quay.io/YOURQUAYUSERNAME/rhel-bootc-vm:httpd**
 
-The upgrade command requires higher privileges to run, let's perform the update!
+The update command requires higher privileges to run, let's perform the update!
 
 ```bash
-[bootc-user@localhost ~]$ sudo bootc upgrade
+[bootc-user@localhost ~]$ sudo bootc update --soft-reboot=required --apply
 layers already present: 71; layers needed: 4 (99.3 MB)
  379 B [████████████████████] (0s) Fetched layer sha256:3851db6a0d50                                                                                                                                                                                                                                                                                                                                            Queued for next boot: quay.io/kubealex/rhel-bootc-vm:httpd
-  Version: 9.20240714.0
+  Version: 9.20251011.0
   Digest: sha256:09ceaf9cc673ddd49ca204216433c688b09418e24992492b7f0e46ef27f4d5a5
 Total new layers: 75    Size: 1.3 GB
 Removed layers:   1     Size: 403 bytes
@@ -176,20 +177,14 @@ Added layers:     4     Size: 99.3 MB
 
 As you can see, at the beginning it performs a comparison between the actual rpm-ostree image that the system is booted from and the new image, fetching **only the additional layer** corresponding to the updates introduced during the last build.
 
-Verify that mariadb is still not present at this time, and proceed with a reboot:
-
-```bash
-[bootc-user@localhost ~]$ systemctl status mariadb
-Unit mariadb.service could not be found.
-[bootc-user@localhost ~]$ sudo reboot
-```
+As soft reboot restarts systemd services including sshd, we will be disconnected after the update is applied.
 
 Let's log back in!
 
 ```bash
  ~ ▓▒░ ssh bootc-user@192.168.124.16
 bootc-user@192.168.124.16's password:
-This is a RHEL 10.0 VM installed using a bootable container as source!
+This is a RHEL 9 VM installed using a bootable container as source!
 This server now supports MariaDB as a database, after last update
 Last login: Mon Jul 29 12:10:44 2024 from 192.168.124.1
 [bootc-user@localhost ~]$

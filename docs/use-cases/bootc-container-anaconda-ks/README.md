@@ -3,6 +3,10 @@
 In this example, we will expand the image we built in the [Apache bootc use case](../bootc-container-httpd/README.md) that you can use as a reference for details.
 This way, we will be able to streamline the creation of VMs based on a frozen, immutable configuration that will take few seconds to be deployed.
 
+
+??? tip
+  "We will stay on RHEL9 to further show how to perform major upgrades in a following example."
+
 The Containerfile.anaconda in the example:
 
 - Updates packages
@@ -70,13 +74,13 @@ You can now browse to [https://quay.io/repository/YOURQUAYUSERNAME/rhel-bootc-ht
 ![](./assets/quay-repo-public.png)
 
 
-## Install RHEL 10.0 using the resulting image
+## Install RHEL 9.7 using the resulting image
 
 ### Prepare install media and review the kickstart file
 
-RHEL 10.0 ISO images are available on the [Red Hat Developer portal](https://developers.redhat.com/content-gateway/file/rhel/Red_Hat_Enterprise_Linux_10.0/rhel-10.0-x86_64-boot.iso) and for this use case we will only need the boot image.
+RHEL 9.7 ISO images are available on the [Red Hat Developer portal](https://developers.redhat.com/content-gateway/file/rhel/Red_Hat_Enterprise_Linux_9.7/rhel-9.7-x86_64-boot.iso) and for this use case we will only need the boot image.
 
-Save the image and place it in the use case folder with the name **rhel10.iso**
+Save the image and place it in the use case folder with the name **rhel9.iso**
 
 The kickstart file is a very simple one:
 
@@ -96,16 +100,16 @@ What is relevant is the **ostreecontainer** directive, that references the conta
 
 ### Creating the Virtual Machine in KVM
 
-You are now ready to spin-up a Virtual Machine using the downloaded boot image for RHEL 10.0, injecting and using the kickstart to perform an unattended installation.
+You are now ready to spin-up a Virtual Machine using the downloaded boot image for RHEL 9.7, injecting and using the kickstart to perform an unattended installation.
 
 ```bash
-virt-install --name rhel10-server \
+virt-install --name rhel9-server \
 --memory 4096 \
 --vcpus 2 \
 --disk size=20 \
 --network network=default \
---location ./rhel10.iso \
---os-variant rhel10.0 \
+--location ./rhel9.iso \
+--os-variant rhel9.7 \
 --initrd-inject ks.cfg \
 --extra-args "inst.ks=file:/ks.cfg"
 ```
@@ -117,5 +121,5 @@ In a few seconds, the VM will boot and start the installation, grabbing the cont
 Based on the connection, it can take a while to fetch the container image and complete the setup. Once it is completed, you can log-in with the **bootc-user/redhat** credentials, and you will see the custom Message Of The Day (MOTD) we added in our Containerfile!
 
 ```bash
-This is a RHEL 10.0 VM installed using a bootable container as a source!
+This is a RHEL 9.7 VM installed using a bootable container as a source!
 ```
