@@ -1,6 +1,6 @@
 # Use Case - Upgrading a VM based on a bootc image
 
-In this example, we want to add some bits to the [previously generated httpd image](../bootc-container-anaconda-ks/README.md) to upgrade the system from **RHEL 10.0** to **RHEL 10 Beta**.
+In this example, we want to add some bits to the [previously generated httpd image](../bootc-container-anaconda-ks/README.md) to upgrade the system from **RHEL 9.7** to **RHEL 10.1**.
 
 We will then use **bootc** to manage the system upgrade, and you will see how easy and fast perfoming upgrades is.
 
@@ -94,7 +94,7 @@ The first thing to do is logging in the VM created in the [previous use case](..
 ```bash
  ~ ▓▒░ ssh bootc-user@192.168.124.16
 bootc-user@192.168.124.16's password:
-This is a RHEL 10.0 VM installed using a bootable container as an rpm-ostree source!
+This is a RHEL 9.7 VM installed using a bootable container as an rpm-ostree source!
 Last login: Mon Jul 29 12:03:40 2024 from 192.168.124.1
 [bootc-user@localhost ~]$
 ```
@@ -156,7 +156,7 @@ Let's log back in!
 ```bash
  ~ ▓▒░ ssh bootc-user@192.168.122.19
 bootc-user@192.168.122.19's password:
-This is a RHEL 10.0 VM installed using a bootable container as source!
+This is a RHEL 10.1 VM installed using a bootable container as source!
 This server is now running on RHEL 10 after the latest upgrade.
 Last login: Mon Feb 24 12:15:42 2025 from 192.168.122.1
 [bootc-user@localhost ~]$
@@ -167,12 +167,12 @@ You can already see that something changed, we have a new line in our message of
 ```bash
 [bootc-user@localhost ~]$ cat /etc/os-release
 NAME="Red Hat Enterprise Linux"
-VERSION="10.0 (Coughlan)"
+VERSION="10.1 (Coughlan)"
 ID="rhel"
 ID_LIKE="centos fedora"
-VERSION_ID="10.0"
+VERSION_ID="10.1"
 PLATFORM_ID="platform:el10"
-PRETTY_NAME="Red Hat Enterprise Linux 10.0 Beta (Coughlan)"
+PRETTY_NAME="Red Hat Enterprise Linux 10.1 (Coughlan)"
 ANSI_COLOR="0;31"
 LOGO="fedora-logo-icon"
 CPE_NAME="cpe:/o:redhat:enterprise_linux:10::baseos"
@@ -183,9 +183,9 @@ DOCUMENTATION_URL="https://access.redhat.com/documentation/en-us/red_hat_enterpr
 BUG_REPORT_URL="https://issues.redhat.com/"
 
 REDHAT_BUGZILLA_PRODUCT="Red Hat Enterprise Linux 10"
-REDHAT_BUGZILLA_PRODUCT_VERSION=10.0
+REDHAT_BUGZILLA_PRODUCT_VERSION=10.1
 REDHAT_SUPPORT_PRODUCT="Red Hat Enterprise Linux"
-REDHAT_SUPPORT_PRODUCT_VERSION="10.0 Beta"
+REDHAT_SUPPORT_PRODUCT_VERSION="10.1"
 ```
 
 Here we go, our image is upgraded and fully working. Of course we can use the new image to provision similar VMs that need the same pieces of software on them.
