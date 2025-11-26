@@ -1,5 +1,4 @@
 FROM registry.redhat.io/rhel10/rhel-bootc:latest
-#FROM registry.redhat.io/rhel10/rhel-bootc:10.0-1747275807
 
 RUN dnf -y install mkpasswd
 RUN pass=$(mkpasswd --method=SHA-512 --rounds=4096 redhat) && useradd -m -G wheel bootc-user -p $pass

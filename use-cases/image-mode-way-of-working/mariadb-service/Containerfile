@@ -1,4 +1,4 @@
-FROM quay.io/jvdbreggen/demolab-rhel:latest
+FROM quay.io/$QUAY_USER/demolab-rhel:latest
 
 ADD etc/ /etc
 
