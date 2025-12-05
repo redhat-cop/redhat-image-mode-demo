@@ -1,6 +1,5 @@
-MAINTAINER Alessandro Rossi <al.rossi87@gmail.com>
-FROM registry.redhat.io/rhel10/rhel-bootc:10.0
-RUN dnf -y update && dnf -y install tmux mkpasswd
+FROM registry.redhat.io/rhel10/rhel-bootc:10.1
+RUN dnf -y install tmux mkpasswd
 RUN pass=$(mkpasswd --method=SHA-512 --rounds=4096 redhat) && useradd -m -G wheel bootc-user -p $pass
 RUN echo "%wheel        ALL=(ALL)       NOPASSWD: ALL" > /etc/sudoers.d/wheel-sudo
 RUN dnf -y install httpd && \
@@ -9,6 +8,6 @@ RUN dnf -y install httpd && \
     sed -ie 's,/var/www,/usr/share/www,' /etc/httpd/conf/httpd.conf && \
     mkdir -p /var/log/httpd
 COPY files/index.html /usr/share/www/html/index.html
-RUN echo "This is a RHEL 10.0 VM installed using a bootable container as source!" > /etc/motd.d/10-first-setup.motd
+RUN echo "This is a RHEL 10.1 VM installed using a bootable container as source!" > /etc/motd.d/10-first-setup.motd
 RUN echo "This server is now running on RHEL 10 after the latest upgrade." > /etc/motd.d/20-upgrade.motd
 EXPOSE 80

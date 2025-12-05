@@ -231,6 +231,12 @@ Similar we are going to build the database services image on RHEL 10 and upgrade
     cat /etc/redhat-release
     ```
 
+## Use RHEL's soft-reboot feature to deploy an update to the homepage
+
+
+
+
+
 ## Conclusion
 
 This concludes the workshop exercises. We encourage you to try different services and applications based on the base image `soe-rhel` that we used in these exercise. We also encourage you to build your own base or corporate image and build and deploy servers using it. You can use Podman Desktop for many of the executions that we did in the command line, and using a desktop approach may be easier for you. Finally, we didn't incorporate any pipelines or CI/CD flows in these examples and using these tools to test and deploy updates makes the task of a system administrator a lot easier. Our Youtube channel "Into the Terminal" episode 151 has a great introduction to this.
