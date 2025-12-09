@@ -3,20 +3,20 @@
 
 We are going to create a new soe-rhel base image that is based on the latest RHEL, version 10. This base image we are going to use to upgrade our services, httpd and mariadb. We created a new RHEL 10 homepage and then will upgrade the VMs to RHEL 10.
 
-<details>
-  <summary>Review soe-rhel10/Containerfile</summary>
-  ```dockerfile
-  --8<-- "use-cases/image-mode-way-of-working/soe-rhel10/Containerfile"
-  ```
-</details>
-
 1. Change to the RHEL 10 Container file directory to build the new RHEL 10 base image.
 
     ```bash
-    cd $HOME/redhat-image-mode-demo/use-cases/way-of-woking-rhel-im/soe-rhel10.0
+    cd ../soe-rhel10.0
     ```
 
 2. Use Podman build to build the new RHEL 10 image and tag it as `soe-rhel:latest` and `soe-rhel:10`.
+
+    <details>
+    <summary>Review soe-rhel10/Containerfile</summary>
+    ```dockerfile
+    --8<-- "use-cases/image-mode-way-of-working/soe-rhel10/Containerfile"
+    ```
+    </details>
 
     ```bash
     podman build -t quay.io/$QUAY_USER/soe-rhel:latest -t quay.io/$QUAY_USER/soe-rhel:10 -f Containerfile
@@ -32,21 +32,25 @@ We are going to create a new soe-rhel base image that is based on the latest RHE
 
 Next we are going to build the httpd services image on RHEL 10 and upgrade the homepage VM.
 
-<details>
-  <summary>Review httpd-service/Containerfile</summary>
-  ```dockerfile
-  --8<-- "use-cases/image-mode-way-of-working/httpd-service/Containerfile"
-  ```
-</details>
 
 1. Change directory to the httpd-service directory. Since we base our httpd image on the latest tagged RHEL base image in the repository, we can reuse the same Container file.
 
     ```bash
-    cd $HOME/redhat-image-mode-demo/use-cases/way-of-woking-rhel-im/httpd-service
+    cd ../httpd-service
     ```
 
 2. Use Podman build to build the new httpd images and we will tag the images as `httpd:latest` and `httpd:rhel10`. It is best practice to tag these images with version numbers or date stamps, but for the demo it makes it easier to track the RHEL version we are using.
 
+    !!! tip
+        Remeber to change the $QUAY_USER in the `Containerfile` to your repository userid.
+    
+    <details>
+    <summary>Review httpd-service/Containerfile</summary>
+    ```dockerfile
+    --8<-- "use-cases/image-mode-way-of-working/httpd-service/Containerfile"
+    ```
+    </details>
+    
     ```bash
     podman build -t quay.io/$QUAY_USER/httpd:latest -t quay.io/$QUAY_USER/httpd:rhel10 -f Containerfile
     ```
@@ -60,7 +64,7 @@ Next we are going to build the httpd services image on RHEL 10 and upgrade the h
 4. Change to the homepage-rhel10 directory. This has an updated homepage for RHEL 10 with RHEL 10 logos.
 
     ```bash
-    cd $HOME/redhat-image-mode-demo/use-cases/way-of-woking-rhel-im/homepage-rhel10
+    cd ../homepage-rhel10
     ```
 
 5. Build the new homepage images with the tags `homepage:latest` and `homepage:rhel10`. We fixed the ContainerFile in the previous section, and it will now use the httpd image and deploy correctly.
@@ -151,7 +155,7 @@ Similar we are going to build the database services image on RHEL 10 and upgrade
 1. Change directory to the mariadb-service directory. Since we base our database service image on the latest tagged RHEL base image in the repository, we can reuse the same Container file.
 
     ```bash
-    cd $HOME/redhat-image-mode-demo/use-cases/way-of-woking-rhel-im/mariadb-service
+    cd ../mariadb-service
     ```
 
 2. Use Podman build to build the new httpd images and we will tag the images as `database:latest` and `database:rhel10`. It is best practice to tag these images with version numbers or date stamps, but for the demo it makes it easier to track the RHEL version we are using.
@@ -233,9 +237,84 @@ Similar we are going to build the database services image on RHEL 10 and upgrade
 
 ## Use RHEL's soft-reboot feature to deploy an update to the homepage
 
+In the last steps we are going to push a new RHEL 10 webpage to the homapage server and make use of the RHEL 10 soft-reboot feature to deploy the new layers.
 
+1. Change to the homepage-rhel10update directory. This has a new homepage for RHEL 10 with more images.
 
+    ```bash
+    cd ../homepage-rhel10update
+    ```
 
+2. Build the new homepage images with the tags `homepage:latest` and `homepage:rhel10update`.
+
+    !!! tip
+        Remeber to change the $QUAY_USER in the `Containerfile` to your repository userid.
+
+    <details>
+    <summary>Review homepage-rhel10update/Containerfile</summary>
+    ```dockerfile
+    --8<-- "use-cases/image-mode-way-of-working/homepage-rhel10update/Containerfile"
+    ```
+    </details>
+
+    ```bash
+    podman build -t quay.io/$QUAY_USER/homepage:latest -t quay.io/$QUAY_USER/homepage:rhel10update -f Containerfile
+    ```
+
+3. Push the updated homepage images to the registry.
+
+    ```bash
+    podman push quay.io/$QUAY_USER/homepage:latest && podman push quay.io/$QUAY_USER/homepage:rhel10update
+    ```
+
+4. No we switch to the `homepage` VM, we will use our special ssh command to log into the VM.
+
+    ```bash
+    VM_IP=$(sudo virsh -q domifaddr homepage | awk '{ print $4 }' | cut -d"/" -f1) && ssh bootc-user@$VM_IP
+    ```
+
+5. Let's check if there is an update in the registry using the `bootc upgrade --check` command.
+
+    ```bash
+    sudo bootc upgrade --check
+    ```
+
+    ```
+        Update available for: docker://quay.io/$QUAY_USER/homepage:latest \
+        Version: 10.1 \
+        Digest: sha256:0c5416...... \
+        Total new layers: 77    Size: 885.4 MB \
+        Removed layers:   76    Size: 1.4 GB \
+        Added layers:     76    Size: 885.4 MB
+    ```
+
+6. Since we want to check that only systemd is rebooted and not the VM we will check the time the VM has been running
+
+    ```bash
+    uptime
+    ```
+
+7. Apply the upgrage to our VM. This should be quick as we are only pulling a few layers. The VM will let us know it is rebooting and as the sshd service will also re-initialise we will be logged out.
+
+    ```bash
+    sudo bootc upgrade --soft-reboot=required --apply
+    ```
+
+8. We use our special ssh command again to log into the VM.
+
+    ```bash
+    VM_IP=$(sudo virsh -q domifaddr homepage | awk '{ print $4 }' | cut -d"/" -f1) && ssh bootc-user@$VM_IP
+    ```
+
+9. and check the OS version using `bootc status`
+
+    ```bash
+    sudo bootc status
+    ```
+
+10. Finally, use the VMs ip address and go to the web site to confirm the web page upgrade showing the brand new RHEL 10 web page with the additional images.
+
+This is to show how we update the application only with minimal downtime.
 
 ## Conclusion
 

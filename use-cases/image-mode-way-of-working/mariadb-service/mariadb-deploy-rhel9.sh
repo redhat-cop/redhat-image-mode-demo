@@ -3,10 +3,10 @@
 
 QUAY_USER="your quay username"
 
-podman build -t quay.io/$QUAY_USER/demolab-database:latest -t quay.io/$QUAY_USER/demolab-database:rhel9.6 -f Containerfile
-podman push quay.io/$QUAY_USER/demolab-database:latest && podman push quay.io/$QUAY_USER/demolab-database:rhel9.6
+podman build -t quay.io/$QUAY_USER/database:latest -t quay.io/$QUAY_USER/database:rhel9.6 -f Containerfile
+podman push quay.io/$QUAY_USER/database:latest && podman push quay.io/$QUAY_USER/database:rhel9.6
 
-sudo podman pull quay.io/$QUAY_USER/demolab-database:latest
+sudo podman pull quay.io/$QUAY_USER/database:latest
 sudo podman run \
 --rm \
 -it \
@@ -18,7 +18,7 @@ sudo podman run \
 -v /var/lib/containers/storage:/var/lib/containers/storage registry.redhat.io/rhel9/bootc-image-builder:latest \
 --type qcow2 \
 --tls-verify=false \
-quay.io/$QUAY_USER/demolab-database:latest
+quay.io/$QUAY_USER/database:latest
 
 sudo mv qcow2/disk.qcow2 /var/lib/libvirt/images/database.qcow2
 
