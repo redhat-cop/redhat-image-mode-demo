@@ -1,0 +1,9 @@
+FROM quay.io/$QUAY_USER/soe-rhel:latest
+
+ADD etc/ /etc
+
+RUN dnf -y install mariadb mariadb-server vim && dnf clean all && rm -rf /var/cache /var/log/dnf && systemctl enable mariadb
+
+COPY ./files/00-mariadb-tmpfile.conf /usr/lib/tmpfiles.d/
+
+EXPOSE 3306

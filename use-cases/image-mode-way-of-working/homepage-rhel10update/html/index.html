@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>RHEL 10 Image Mode Demo</title>
+</head>
+<body>
+    <p style="text-align: center;"><img src="images/banner-platform-rhel.png" alt="Red Hat 10 Banner" width=100% height="150px"/></p>
+    <div><h2 style="text-align: center;"><span style="color: red;">Red Hat Enterprise Linux 10</h2>
+        <h1 style="text-align: center;">Image mode for Red&nbsp;Hat&nbsp;Enterprise&nbsp;Linux</h1>
+    </div>
+    <!-- <h1><span style="color: black;"><br />Welcome to the <span style="background-color: yellow;">first</span> deployment of the <span style="color: red;">RHEL 10</span> Base Image in Image Mode for RHEL.</span></h1> -->
+    
+    <p>Image mode for Red Hat® Enterprise Linux® is a simple, consistent approach to building, deploying, and managing the operating system (OS) using container technologies.</p><p>Now available on Red Hat Enterprise Linux 9.6 and 10.</p>
+    
+    <p style="text-align: center;"><span style="color: black;"><img src="rhel10.png" alt="RHEL9 Logo" width="96" height="96" /></span></p>
+    <p/>
+    
+    <div style="text-align: center;"><h2>Contain drift. Accelerate delivery.</h2></div>
+
+    <div>&nbsp;Image mode for Red Hat Enterprise Linux enables you to manage your OS with the same container tools and workflows as applications, creating a consistent experience and common language across teams.<img src="/rhdc/managed-files/rhel10-story-bg-v3-2000x477.png" alt="" /></div>
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <h2>Limit drift and anomalies</h2>
+                    <p dir="ltr">Image mode addresses the&nbsp;<a href="https://developers.redhat.com/articles/2025/02/25/how-image-mode-rhel-improves-security#minimize_drift">challenge of drift</a> by helping keep your servers&rsquo; configurations the same, eliminating deviations that can lead to system instability and security risks.&nbsp;</p>
+                    <p dir="ltr">With image-level updates, changes can be deployed, even across major releases, or rolled back without using external snapshots should issues arise. Together, this results in less time spent troubleshooting anomalies and shorter maintenance windows.</p>
+                </td>
+                <td>
+                    <div>&nbsp;</div>
+                    <div><img src="images/rhel10-subpage-image-mode-story1-v4-385x436.png" alt="RHEL Lightspeed" width="385" height="436" /></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div><img src="images/rhel10-subpage-image-mode-story2-v2-390x357.png" alt="RHEL Lightspeed" width="428" height="329" /></div>
+                </td>
+                <td>
+                    <h2>Reduce time to market</h2>
+                    <p dir="ltr">Deliver faster solutions using DevOps and continuous integration/continuous delivery (CI/CD), which now includes the OS.&nbsp;</p>
+                    <p dir="ltr"><strong>With image mode, you can:</strong></p>
+                    <ul>
+                        <li dir="ltr">Start with a&nbsp;<a href="https://catalog.redhat.com/search?gs=&amp;q=bootc&amp;searchType=containers">bootc base image</a>, which includes the kernel, bootloader, and other items that are typically excluded from application containers.</li>
+                        <li dir="ltr">Add any software or dependency to your bootc base image before you build and push it to the registry.</li>
+                        <li dir="ltr">Test images in advance by moving to more robust tooling within your CI/CD pipelines.</li>
+                        <li dir="ltr">Build anywhere with standard Open Container Initiative (OCI) tools and registries, including&nbsp;<a title="What is Podman Desktop?" href="/en/topics/containers/what-is-podman-desktop" data-entity-type="node" data-entity-uuid="6c12217c-9df8-457a-a930-51a035b34aae" data-entity-substitution="canonical">Podman Desktop</a>.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h2>Boost your security capabilities</h2>
+                    <p dir="ltr">Combining read-only system software with read-write configuration directories,&nbsp;<a href="https://developers.redhat.com/articles/2025/02/25/how-image-mode-rhel-improves-security#an_immutable_os_increases_security">image mode reduces the attack surface of the OS</a>. With image mode, you can use container-oriented security tools all the way down at the OS level. Registry scanning and container signing now extends to cover both applications and the OS. Base images also include a software bill of materials (SBOM) to help users track and enhance their software supply chain across their environment.&nbsp;</p>
+                    <p dir="ltr">Regardless of how you choose to build your image, image mode can help you simplify your compliance requirements by applying the same security hardening profiles (including STIG, PCI, and CIS) across your Red Hat Enterprise Linux systems.&nbsp;</p>
+                </td>
+                <td><img src="images/rhel10-subpage-image-mode-story3-v2-441x345.png" alt="Image mode security" width="441" height="345" /></td>
+            </tr>
+            <tr>
+                <td>
+                    <div><img src="images/rhel10-subpage-image-mode-story4-v3-378x436.png" alt="Image mode simplify appliance creation" width="378" height="436" /></div>
+                </td>
+                <td>&nbsp;
+                    <h2>Simplify appliance creation</h2>
+                    <p>Image mode lets you easily combine your OS with whatever applications and drivers you want for faster development and delivery. You can put your entire solution in a container, regardless of it running on a dedicated piece of hardware, cloud provider, or a virtual machine (VM). Image mode will also work even if your application already uses containers or isn&rsquo;t container-friendly. This means you can spend more time on developing your solution rather than last minute OS integration.</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="rh-band-header-headline">A new approach to deploying the OS</h2>
+    <p>The choice is yours with Red Hat Enterprise Linux 10. Image mode is a different method for deploying Red Hat Enterprise Linux, while package mode is the familiar install that has powered the enterprise for decades. Red Hat Enterprise Linux empowers organisations to select the approach that best suits their specific workloads and organisational needs.</p>
+    <table style="width: 100%;" border="1">
+        <tbody>
+            <tr>
+                <th>&nbsp;</th>
+                <th>Package mode</th>
+                <th>Image mode</th>
+            </tr>
+            <tr>
+                <th>Build</th>
+                <td>Image builder</td>
+                <td>Container tools</td>
+            </tr>
+            <tr>
+                <th>Update</th>
+                <td>Packages (dnf)</td>
+                <td>Images (bootc)</td>
+            </tr>
+            <tr>
+                <th>Distribute</th>
+                <td>rpm repository</td>
+                <td>Container registry</td>
+            </tr>
+            <tr>
+                <th>Change</th>
+                <td>Run time (dnf)</td>
+                <td>Build time</td>
+            </tr>
+            <tr>
+                <th>Manage</th>
+                <td colspan="2">Red Hat Lightspeed (formerly Red Hat Insights), Red Hat Satellite, and Red Hat Ansible&reg; Automation Platform</td>
+            </tr>
+            <tr>
+                <th>Deploy</th>
+                <td colspan="2">Bare metal, VM, cloud, edge</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p style="text-align: center;"><span style="color: black;"><img src="rhel.png" alt="RHEL EL Logo" width="96" height="96" /></span></p>
+    <p/>
+
+    <footer>
+        <p>&copy; 2025 Red Hat, Inc. All rights reserved.</p>
+    </footer>
+</body>
+</html>

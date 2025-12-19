@@ -1,4 +1,3 @@
-MAINTAINER Alessandro Rossi <al.rossi87@gmail.com>
 FROM registry.redhat.io/rhel10/rhel-bootc:10.1
 RUN dnf -y install tmux mkpasswd
 RUN pass=$(mkpasswd --method=SHA-512 --rounds=4096 redhat) && useradd -m -G wheel bootc-user -p $pass

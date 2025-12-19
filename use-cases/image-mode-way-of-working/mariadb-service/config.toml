@@ -1,0 +1,5 @@
+[[customizations.user]]
+name = "bootc-user"
+password = "redhat"
+groups = ["wheel"]
+# key = "ssh-ed25519 AAAA..."
