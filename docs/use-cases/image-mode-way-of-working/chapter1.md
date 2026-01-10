@@ -18,7 +18,7 @@ We will name our SOE (Standard Operating Environment/Golden) image `soe-rhel:9` 
     </details>
 
     ```bash
-    podman build -t quay.io/$QUAY_USER/soe-rhel:latest -t quay.io/$QUAY_USER/soe-rhel:9.7 -f Containerfile
+    podman build -t quay.io/$QUAY_USER/soe-rhel:latest -t quay.io/$QUAY_USER/soe-rhel:9 -f Containerfile
     ```
 
 2. If we want to test our image we can run it in a container. You can log in with user `bootc-user` and password `redhat` and run `curl localhost` to test if the httpd service is running and you can see the base image welcome page. You can stop and exit the container with `sudo halt`. We are going to run our container in the next step to check that the httpd service is running and that we can see our homepage before deploying it to a VM.
@@ -150,7 +150,7 @@ Since we need to run the Image Builder convert tool as superuser we need to pull
 8. Since we are going to refer to the quay.io registry, let us add $QUAY_USER to our .bashrc file.
 
     ```bash
-    sed -i '/unset rc[^\n]*/,$!b;//{x;//p;g};//!H;$!d;x;iQUAY_USER="your quay.io username not the email address"' .bashrc
+    sed -i '/unset rc[^\n]*/,$!b;//{x;//p;g};//!H;$!d;x;iexport QUAY_USER="your quay.io username not the email address"' .bashrc
     ```
 
 9. and reload the .bashrc file to bring QUAY_USER into the variables.
@@ -272,17 +272,22 @@ On our image builder server we will build a new Image Mode for RHEL 9 homepage i
 
 ## Rollback and fix our homepage
 
-In the previous section the httpd service wasn't in the image. This is due to a mistake we made in the Containerfile. First we will rollback so that we have the old homepage up and running and then we will fix the problem.
+In the previous section the httpd service wasn't in the image. This is due to a mistake we made in the Containerfile. First, we will rollback so that we have the old homepage up and running, and then we will fix the problem.
 
 On our image builder server we will build a new Image Mode for RHEL 9 homepage image that we will deploy to the VM.
 
-1. If you aren't in the `homepage-rhel9` directory then change directory to the new web page Container file and the updated web page at `homepage-rhel9`. You can open the `index.html` file in the `html` directory to see the updates to the homepage.
+1. In the homepage VM we will issue the rollback command, and use the `--apply` flag to automatically reboot the VM.
+
+   ```bash
+   sudo bootc rollback --apply
+   ```
+2. You should have been exited from the VM. If you aren't in the `homepage-rhel9` directory then change directory to the new web page Container file and the updated web page at `homepage-rhel9`. You can open the `index.html` file in the `html` directory to see the updates to the homepage.
 
     ```bash
     cd ../homepage-rhel9
     ```
 
-2. We need to fix the Containerfile to pull the correct image from the registry. Use an editor to change the following line to
+3. We need to fix the Containerfile to pull the correct image from the registry. Use an editor to change the following line to
 
     !!! tip
         Remeber to change the $QUAY_USER in the `Containerfile` to your repository userid.
@@ -297,25 +302,25 @@ On our image builder server we will build a new Image Mode for RHEL 9 homepage i
     FROM quay.io/$QUAY_USER/httpd:latest
     ```
 
-3. Build the new homepage images from the `Containerfile` and tag to a new version `homepage:rhel9-fix`.
+4. Build the new homepage images from the `Containerfile` and tag to a new version `homepage:rhel9-fix`.
 
     ```bash
     podman build -t quay.io/$QUAY_USER/homepage:rhel9-fix -t quay.io/$QUAY_USER/homepage:latest -f Containerfile
     ```
 
-4. Push the image to the registry using the `homepage:rhel9-fix` and `homepage:latest` tags.
+5. Push the image to the registry using the `homepage:rhel9-fix` and `homepage:latest` tags.
 
     ```bash
     podman push quay.io/$QUAY_USER/homepage:latest && podman push quay.io/$QUAY_USER/homepage:rhel9-fix
     ```
 
-5. Switch to the Homepage virtual machine and login to the `homepage` VM using ssh.
+6. Switch to the Homepage virtual machine and login to the `homepage` VM using ssh.
 
     ```bash
     VM_IP=$(sudo virsh -q domifaddr homepage | awk '{ print $4 }' | cut -d"/" -f1) && ssh bootc-user@$VM_IP
     ```
 
-6. We are going to use the `bootc switch` command to switch the virtual machine to the homepage image in the registry.
+7. We are going to use the `bootc switch` command to switch the virtual machine to the homepage image in the registry.
 
     !!! tip
         If you didn't add the `$QUAY_USER` to the `.bashrc` file then run the following
@@ -328,7 +333,7 @@ On our image builder server we will build a new Image Mode for RHEL 9 homepage i
     sudo bootc switch quay.io/$QUAY_USER/homepage:latest
     ```
 
-7. Let us check the we have staged the new homepage image in the virtual machine.
+8. Let us check the we have staged the new homepage image in the virtual machine.
 
     ```bash
     sudo bootc status
@@ -344,19 +349,19 @@ On our image builder server we will build a new Image Mode for RHEL 9 homepage i
             Version: 9.7 (2025-07-21 13:10:35.887718188 UTC)
     ```
 
-8. and we check that we have the old RHEL 9 homepage without our new Image Mode content.
+9. and we check that we have the old RHEL 9 homepage without our new Image Mode content.
 
     ```bash
     curl localhost
     ```
 
-9. We need to reboot the virtual machine to activate the new layers and have our new home page.
+10. We need to reboot the virtual machine to activate the new layers and have our new home page.
 
     ```bash
     sudo reboot
     ```
 
-10. Login to the virtual machine to verify that we have a new updated Image Mode homepage.
+11. Login to the virtual machine to verify that we have a new updated Image Mode homepage.
 
     ```bash
     VM_IP=$(sudo virsh -q domifaddr homepage | awk '{ print $4 }' | cut -d"/" -f1) && ssh bootc-user@$VM_IP
