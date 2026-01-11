@@ -1,0 +1,1709 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation page for the Red Hat Enterprise Linux (RHEL) Image mode demo hosted on GitHub.">
+      
+      
+        <meta name="author" content="Alessandro Rossi - Red Hat">
+      
+      
+      
+        <link rel="prev" href="../demo-build/">
+      
+      
+        <link rel="next" href="../chapter2/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter 1 - Working with Golden Images - Red Hat Enterprise Linux Image Mode demo</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Red+Hat+Display:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Red Hat Display";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#build-the-demo-base-image-for-rhel" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Red Hat Enterprise Linux Image Mode demo" class="md-header__button md-logo" aria-label="Red Hat Enterprise Linux Image Mode demo" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Red Hat Enterprise Linux Image Mode demo
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 1 - Working with Golden Images
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/redhat-cop/redhat-image-mode-demo/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Red Hat Enterprise Linux Image Mode demo" class="md-nav__button md-logo" aria-label="Red Hat Enterprise Linux Image Mode demo" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    Red Hat Enterprise Linux Image Mode demo
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/redhat-cop/redhat-image-mode-demo/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducing RHEL Image mode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing to the project
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Contributing to the project
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contribution guidelines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/review-and-test-changes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reviewing and testing changes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use Cases
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Cases
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bootc-container-simple/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build a simple RHEL container
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bootc-container-httpd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build an Apache RHEL image
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bootc-container-anaconda-ks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use a RHEL bootc container to spin up a RHEL 9 VM with Anaconda and Kickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bootc-container-update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Update a VM based on a RHEL bootc container as a source adding packages and configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bootc-container-upgrade/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrade a VM based on RHEL 9 bootc container to RHEL 10
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bootc-container-replace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Apply a different RHEL container image to an existing VM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bootc-image-builder-qcow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generate a RHEL QCOW image for a VM using bootc-image-builder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bootc-image-builder-iso/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generate a RHEL ISO image for a VM using bootc-image-builder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bootc-image-builder-ami/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generate a RHEL AMI image for an AWS instance using bootc-image-builder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../image-mode-management-insights/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manage RHEL Image Mode systems with Red Hat Insights
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_11" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ways of working with RHEL Image Mode
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Ways of working with RHEL Image Mode
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../demo-build/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuring the demo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 1 - Working with Golden Images
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 1 - Working with Golden Images
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#build-the-demo-base-image-for-rhel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build the demo base image for RHEL
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploying-the-homepage-virtual-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deploying the Homepage Virtual Machine
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update-the-homepage-vm-to-our-image-mode-web-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update the Homepage VM to our Image Mode web page
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rollback-and-fix-our-homepage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rollback and fix our homepage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-the-database-virtual-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build the database virtual machine
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 2 - Working with updates and upgrades
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#build-the-demo-base-image-for-rhel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build the demo base image for RHEL
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploying-the-homepage-virtual-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deploying the Homepage Virtual Machine
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update-the-homepage-vm-to-our-image-mode-web-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update the Homepage VM to our Image Mode web page
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rollback-and-fix-our-homepage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rollback and fix our homepage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-the-database-virtual-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build the database virtual machine
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>Chapter 1 - Working with Golden Images</h1>
+
+<h2 id="build-the-demo-base-image-for-rhel">Build the demo base image for RHEL</h2>
+<p>The first steps we will build our base SOE (golden) image that we are going to use within the workshop. We will start with RHEL 9 and during the workshop update to RHEL 10.</p>
+<p>We will name our SOE (Standard Operating Environment/Golden) image <code>soe-rhel:9</code> and also tag it as our latest rhel base image as <code>soe-rhel:latest</code>.</p>
+<ol>
+<li>
+<p>Use podman to build our soe base RHEL "golden image". Change to the directory where you have cloned this repo and use <code>podman build</code> to build the image from the <code>Containerfile</code>. The following command will work if you cloned it into your home directory.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span><span class="nv">$HOME</span>/redhat-image-mode-demo/use-cases/image-mode-way-of-working/soe-rhel9
+</span></code></pre></div>
+<p><details>
+<summary>Review soe-rhel9/Containerfile</summary>
+<div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">registry.redhat.io/rhel9/rhel-bootc:latest</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">RUN</span><span class="w"> </span>dnf<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>mkpasswd
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="k">RUN</span><span class="w"> </span><span class="nv">pass</span><span class="o">=</span><span class="k">$(</span>mkpasswd<span class="w"> </span>--method<span class="o">=</span>SHA-512<span class="w"> </span>--rounds<span class="o">=</span><span class="m">4096</span><span class="w"> </span>redhat<span class="k">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>useradd<span class="w"> </span>-m<span class="w"> </span>-G<span class="w"> </span>wheel<span class="w"> </span>bootc-user<span class="w"> </span>-p<span class="w"> </span><span class="nv">$pass</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="k">ADD</span><span class="w"> </span>etc/<span class="w"> </span>/etc
+</span></code></pre></div>
+</details></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>podman<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/soe-rhel:latest<span class="w"> </span>-t<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/soe-rhel:9<span class="w"> </span>-f<span class="w"> </span>Containerfile
+</span></code></pre></div>
+</li>
+<li>
+<p>If we want to test our image we can run it in a container. You can log in with user <code>bootc-user</code> and password <code>redhat</code> and run <code>curl localhost</code> to test if the httpd service is running and you can see the base image welcome page. You can stop and exit the container with <code>sudo halt</code>. We are going to run our container in the next step to check that the httpd service is running and that we can see our homepage before deploying it to a VM.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>podman<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span>--name<span class="w"> </span>soe-rhel9<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:80<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/soe-rhel:9
+</span></code></pre></div>
+</li>
+<li>
+<p>Push the base rhel image to our registry.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>podman<span class="w"> </span>push<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/soe-rhel:latest<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>podman<span class="w"> </span>push<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/soe-rhel:9
+</span></code></pre></div>
+</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>We could base the initial image on an older release of RHEL, such as <code>rhel:9.6</code>, or a specific timestamp version of RHEL such as <code>rhel:9.6-1747275992</code>, or fix it at a certain release such as <code>rhel:9.7</code>, instead of pulling the latest release by specifying the release number in the Containerfile <code>FROM</code> statement.</p>
+</div>
+<h2 id="deploying-the-homepage-virtual-machine">Deploying the Homepage Virtual Machine</h2>
+<p>We need to create an image for our httpd service based on the RHEL 9 base image we created in the previous step.
+We will name our httpd service image <code>httpd:rhel9</code> and also tag it as our latest rhel base image as <code>httpd:latest</code>.</p>
+<ol>
+<li>
+<p>Use podman to build httpd service image. Change to the httpd-service folder.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">cd</span><span class="w"> </span>../httpd-service
+</span></code></pre></div>
+<p><details>
+<summary>Review httpd-service/Containerfile</summary>
+<div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">quay.io/$QUAY_USER/soe-rhel:latest</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="k">RUN</span><span class="w"> </span>dnf<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>httpd
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="k">ADD</span><span class="w"> </span>etc/<span class="w"> </span>/etc
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="k">RUN</span><span class="w"> </span>&lt;&lt;EOF<span class="w"> </span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>-euxo<span class="w"> </span>pipefail
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">    </span>mv<span class="w"> </span>/var/www<span class="w"> </span>/usr/share/www
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">    </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;s-/var/www-/usr/share/www-&#39;</span><span class="w"> </span>/etc/httpd/conf/httpd.conf
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>EOF
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="k">ADD</span><span class="w"> </span>html/<span class="w"> </span>/usr/share/www/html
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="k">RUN</span><span class="w"> </span>cp<span class="w"> </span>/etc/redhat-release<span class="w"> </span>/usr/share/www/html/redhat-release
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="k">RUN</span><span class="w"> </span>cp<span class="w"> </span>/etc/os-release<span class="w"> </span>/usr/share/www/html/os-release
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="k">RUN</span><span class="w"> </span>uname<span class="w"> </span>-sr<span class="w"> </span>&gt;<span class="w"> </span>/usr/share/www/html/uname.txt
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="k">RUN</span><span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>httpd<span class="w"> </span>
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="k">EXPOSE</span><span class="w"> </span><span class="s">80</span>
+</span></code></pre></div>
+</details></p>
+</li>
+<li>
+<p>Change the $QUAY_USER in the <code>Containerfile</code> to your Quay userid or your registry.</p>
+</li>
+<li>
+<p>Use <code>podman build</code> to build the image from the <code>Containerfile</code>.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>podman<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/httpd:latest<span class="w"> </span>-t<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/httpd:rhel9<span class="w"> </span>-f<span class="w"> </span>Containerfile
+</span></code></pre></div>
+</li>
+<li>
+<p>Push the httpd service image to our registry.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>podman<span class="w"> </span>push<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/httpd:latest<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>podman<span class="w"> </span>push<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/httpd:rhel9
+</span></code></pre></div>
+</li>
+<li>
+<p>If we want to test our image we can run it in a container.
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>podman<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span>--name<span class="w"> </span>httpd-rhel9<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:80<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/httpd:rhel9
+</span></code></pre></div></p>
+</li>
+<li>
+<p>You can log in with user <code>bootc-user</code> and password <code>redhat</code> and run <code>curl localhost</code> to test if the httpd service is running and you can see the base image welcome page. You can test the homepage in a browser on the local machine by using the URL <code>http://localhost:8080</code>. You can stop and exit the container with <code>sudo halt</code>.</p>
+</li>
+</ol>
+<p>Now we are ready to create the virtual machine disk image that we are going to import into our new VM.</p>
+<p>Since we need to run the Image Builder convert tool as superuser we need to pull the image from the registry using sudo to add it to sudo's image repository.</p>
+<ol>
+<li>
+<p>Since we need to run podman as root to build the virtual machine qcow2 image file, we need to pull the image as root.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You may also get an error <code>Error: unable to copy from source</code>. You need to go to your repository, in our example, Quay, and make the repositories <code>public</code>.</p>
+</div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>sudo<span class="w"> </span>podman<span class="w"> </span>pull<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/httpd:latest
+</span></code></pre></div>
+</li>
+<li>
+<p>We need to use podman to run the Image Mode virtual machine disk builder to pull the image from the registry and create the virtual machine disk file. You can edit the <code>config.toml</code>file to change it to add or replace the user, password, ssh key and more. Refer to <a href="https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html-single/using_image_mode_for_rhel_to_build_deploy_and_manage_operating_systems/index#supported-image-customizations-for-a-configuration-file_creating-bootc-compatible-base-disk-images-with-bootc-image-builder">Supported image customizations for a configuration file</a>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you get an error <code>Error: unable to copy from source</code> you may have to do a <code>sudo podman login registry.redhat.io -u $REDHAT_USER -p $REDHAT_PASSWORD</code>.</p>
+</div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>sudo<span class="w"> </span>podman<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>--rm<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>--privileged<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>--pull<span class="o">=</span>newer<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>--security-opt<span class="w"> </span><span class="nv">label</span><span class="o">=</span>type:unconfined_t<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/config.toml:/config.toml:ro<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/output<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>-v<span class="w"> </span>/var/lib/containers/storage:/var/lib/containers/storage<span class="w"> </span>registry.redhat.io/rhel9/bootc-image-builder:latest<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>--type<span class="w"> </span>qcow2<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>quay.io/<span class="nv">$QUAY_USER</span>/httpd:latest
+</span></code></pre></div>
+</li>
+<li>
+<p>We will copy the new disk image to the libvirt images pool.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can move the disk image if you don't plan to use it for another VM using the mv command.</p>
+</div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>sudo<span class="w"> </span>cp<span class="w"> </span>./qcow2/disk.qcow2<span class="w"> </span>/var/lib/libvirt/images/homepage.qcow2
+</span></code></pre></div>
+</li>
+<li>
+<p>Create the VM from the copied virtual machine image qcow2 file. We will give it 4GB of RAM and set the boot option to UEFI.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>sudo<span class="w"> </span>virt-install<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>--connect<span class="w"> </span>qemu:///system<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>--name<span class="w"> </span>homepage<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>--import<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>--boot<span class="w"> </span>uefi<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>--memory<span class="w"> </span><span class="m">4096</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>--graphics<span class="w"> </span>none<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>--osinfo<span class="w"> </span>rhel9-unknown<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>--noautoconsole<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>--noreboot<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>--disk<span class="w"> </span>/var/lib/libvirt/images/homepage.qcow2
+</span></code></pre></div>
+</li>
+<li>
+<p>Start the VM.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>sudo<span class="w"> </span>virsh<span class="w"> </span>start<span class="w"> </span>homepage
+</span></code></pre></div>
+</li>
+<li>
+<p>Login via ssh. You can use the following command that will get the IP address from virsh and log you in.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nv">VM_IP</span><span class="o">=</span><span class="k">$(</span>sudo<span class="w"> </span>virsh<span class="w"> </span>-q<span class="w"> </span>domifaddr<span class="w"> </span>homepage<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{ print $4 }&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="s2">&quot;/&quot;</span><span class="w"> </span>-f1<span class="k">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>ssh<span class="w"> </span>bootc-user@<span class="nv">$VM_IP</span>
+</span></code></pre></div>
+</li>
+<li>
+<p>You can run a <code>curl localhost</code> to check if the httpd service with our base image homepage is working. Exit the VM with <code>exit</code>, <code>logout</code> or Ctrl-d.</p>
+</li>
+<li>
+<p>Since we are going to refer to the quay.io registry, let us add $QUAY_USER to our .bashrc file.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;/unset rc[^\n]*/,$!b;//{x;//p;g};//!H;$!d;x;iexport QUAY_USER=&quot;your quay.io username not the email address&quot;&#39;</span><span class="w"> </span>.bashrc
+</span></code></pre></div>
+</li>
+<li>
+<p>and reload the .bashrc file to bring QUAY_USER into the variables.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nb">source</span><span class="w"> </span>.bashrc
+</span></code></pre></div>
+</li>
+<li>
+<p>Finally for this section run the bootc status command to view the booted image registry source and the RHEL version.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>sudo<span class="w"> </span>bootc<span class="w"> </span>status
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>    Booted image: quay.io/$QUAY_USER/httpd:rhel9 \
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>    Digest: sha256:a48811e05........... \
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>    Version: 9.7 (2025-07-21 13:10:35.887718188 UTC)
+</span></code></pre></div>
+</li>
+</ol>
+<p>Our virtual machine based on Image Mode is now running and we are ready to make updates to the web page.</p>
+<h2 id="update-the-homepage-vm-to-our-image-mode-web-page">Update the Homepage VM to our Image Mode web page</h2>
+<p>The next steps we will update the web page in our <code>homepage</code> VM from the basic RHEL webpage that we created to an more updated web page showing the advantages of using Image Mode.</p>
+<p>On our image builder server we will build a new Image Mode for RHEL 9 homepage image that we will deploy to the VM.</p>
+<ol>
+<li>
+<p>Change directory to the new web page Container file and the <em>RHEL 9 Image Mode</em> web page at <code>homepage-rhel9</code>. You can open the <code>index.html</code> file in the <code>html</code> directory to see the updates to the homepage.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nb">cd</span><span class="w"> </span>../homepage-rhel9
+</span></code></pre></div>
+</li>
+<li>
+<p>Build the new homepage images from the <code>Containerfile</code>.</p>
+<p><details>
+<summary>Review homepage-rhel9/Containerfile</summary>
+<div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">quay.io/$QUAY_USER/soe-rhel:latest</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="k">ADD</span><span class="w"> </span>html/<span class="w"> </span>/usr/share/www/html
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="k">ADD</span><span class="w"> </span>etc/<span class="w"> </span>/etc
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="k">RUN</span><span class="w"> </span>cp<span class="w"> </span>/etc/redhat-release<span class="w"> </span>/usr/share/www/html/redhat-release
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="k">RUN</span><span class="w"> </span>cp<span class="w"> </span>/etc/os-release<span class="w"> </span>/usr/share/www/html/os-release
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="k">RUN</span><span class="w"> </span>uname<span class="w"> </span>-sr<span class="w"> </span>&gt;<span class="w"> </span>/usr/share/www/html/uname.txt
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a><span class="k">EXPOSE</span><span class="w"> </span><span class="s">80</span>
+</span></code></pre></div>
+</details></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Remeber to change the $QUAY_USER in the <code>Containerfile</code> to your repository userid.
+Remeber to make the homepage repository on your Quay registry public.</p>
+</div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>podman<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/homepage:rhel9<span class="w"> </span>-t<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/homepage:latest<span class="w"> </span>-f<span class="w"> </span>Containerfile
+</span></code></pre></div>
+</li>
+<li>
+<p>Push the image to the registry using the <code>homepage:rhel9</code> and <code>homepage:latest</code> tags.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>podman<span class="w"> </span>push<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/homepage:latest<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>podman<span class="w"> </span>push<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/homepage:rhel9
+</span></code></pre></div>
+</li>
+<li>
+<p>Switch to the Homepage virtual machine and login to the <code>homepage</code> VM using ssh.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="nv">VM_IP</span><span class="o">=</span><span class="k">$(</span>sudo<span class="w"> </span>virsh<span class="w"> </span>-q<span class="w"> </span>domifaddr<span class="w"> </span>homepage<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{ print $4 }&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="s2">&quot;/&quot;</span><span class="w"> </span>-f1<span class="k">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>ssh<span class="w"> </span>bootc-user@<span class="nv">$VM_IP</span>
+</span></code></pre></div>
+</li>
+<li>
+<p>We are now going to use the <code>bootc switch</code> command to switch the virtual machine to the homepage image in the registry.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you didn't add the <code>$QUAY_USER</code> to the <code>.bashrc</code> file then run the following</p>
+</div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="nv">QUAY_USER</span><span class="o">=</span><span class="s2">&quot;your quay.io username not the email address&quot;</span>
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>sudo<span class="w"> </span>bootc<span class="w"> </span>switch<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/homepage:latest
+</span></code></pre></div>
+</li>
+<li>
+<p>Let us check the we have staged the new homepage image in the virtual machine.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>sudo<span class="w"> </span>bootc<span class="w"> </span>status
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>    Staged image: quay.io/$QUAY_USER/homepage:latest \
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>            Digest:  sha256:2be7b1...... \
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>        Version: 9.7 (2025-07-21 15:43:03.624175287 UTC) \
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>        \
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>    ● Booted image: quay.io/$QUAY_USER/soe-rhel:9.7 \
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>            Digest: sha256:a48811...... \
+</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>        Version: 9.7 (2025-07-21 13:10:35.887718188 UTC)
+</span></code></pre></div>
+</li>
+<li>
+<p>and we check that we have the old RHEL 9 homepage without our new Image Mode content.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>curl<span class="w"> </span>localhost
+</span></code></pre></div>
+</li>
+<li>
+<p>We need to reboot the virtual machine to activate the new layers and have our new home page.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>sudo<span class="w"> </span>reboot
+</span></code></pre></div>
+</li>
+<li>
+<p>Login to the virtual machine to verify that we have a new updated Image Mode homepage.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="nv">VM_IP</span><span class="o">=</span><span class="k">$(</span>sudo<span class="w"> </span>virsh<span class="w"> </span>-q<span class="w"> </span>domifaddr<span class="w"> </span>homepage<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{ print $4 }&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="s2">&quot;/&quot;</span><span class="w"> </span>-f1<span class="k">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>ssh<span class="w"> </span>bootc-user@<span class="nv">$VM_IP</span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>curl<span class="w"> </span>localhost
+</span></code></pre></div>
+</li>
+<li>
+<p>Something went wrong! Our httpd service has failed during the update! Let us check the service.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>httpd
+</span></code></pre></div>
+</li>
+<li>
+<p>There is no httpd service. We will rollback in the next section and fix the problem.</p>
+</li>
+</ol>
+<h2 id="rollback-and-fix-our-homepage">Rollback and fix our homepage</h2>
+<p>In the previous section the httpd service wasn't in the image. This is due to a mistake we made in the Containerfile. First, we will rollback so that we have the old homepage up and running, and then we will fix the problem.</p>
+<p>On our image builder server we will build a new Image Mode for RHEL 9 homepage image that we will deploy to the VM.</p>
+<ol>
+<li>In the homepage VM we will issue the rollback command, and use the <code>--apply</code> flag to automatically reboot the VM.</li>
+</ol>
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>sudo<span class="w"> </span>bootc<span class="w"> </span>rollback<span class="w"> </span>--apply
+</span></code></pre></div>
+2. You should have been exited from the VM. If you aren't in the <code>homepage-rhel9</code> directory then change directory to the new web page Container file and the updated web page at <code>homepage-rhel9</code>. You can open the <code>index.html</code> file in the <code>html</code> directory to see the updates to the homepage.</p>
+<div class="language-text highlight"><pre><span></span><code>```bash
+cd ../homepage-rhel9
+```
+</code></pre></div>
+<ol>
+<li>
+<p>We need to fix the Containerfile to pull the correct image from the registry. Use an editor to change the following line to</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Remeber to change the $QUAY_USER in the <code>Containerfile</code> to your repository userid.</p>
+</div>
+<div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">quay.io/$QUAY_USER/soe-rhel:latest</span>
+</span></code></pre></div>
+<p>change to</p>
+<div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">quay.io/$QUAY_USER/httpd:latest</span>
+</span></code></pre></div>
+</li>
+<li>
+<p>Build the new homepage images from the <code>Containerfile</code> and tag to a new version <code>homepage:rhel9-fix</code>.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>podman<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/homepage:rhel9-fix<span class="w"> </span>-t<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/homepage:latest<span class="w"> </span>-f<span class="w"> </span>Containerfile
+</span></code></pre></div>
+</li>
+<li>
+<p>Push the image to the registry using the <code>homepage:rhel9-fix</code> and <code>homepage:latest</code> tags.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>podman<span class="w"> </span>push<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/homepage:latest<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>podman<span class="w"> </span>push<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/homepage:rhel9-fix
+</span></code></pre></div>
+</li>
+<li>
+<p>Switch to the Homepage virtual machine and login to the <code>homepage</code> VM using ssh.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="nv">VM_IP</span><span class="o">=</span><span class="k">$(</span>sudo<span class="w"> </span>virsh<span class="w"> </span>-q<span class="w"> </span>domifaddr<span class="w"> </span>homepage<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{ print $4 }&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="s2">&quot;/&quot;</span><span class="w"> </span>-f1<span class="k">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>ssh<span class="w"> </span>bootc-user@<span class="nv">$VM_IP</span>
+</span></code></pre></div>
+</li>
+<li>
+<p>We are going to use the <code>bootc switch</code> command to switch the virtual machine to the homepage image in the registry.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you didn't add the <code>$QUAY_USER</code> to the <code>.bashrc</code> file then run the following</p>
+</div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="nv">QUAY_USER</span><span class="o">=</span><span class="s2">&quot;your quay.io username not the email address&quot;</span>
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>sudo<span class="w"> </span>bootc<span class="w"> </span>switch<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/homepage:latest
+</span></code></pre></div>
+</li>
+<li>
+<p>Let us check the we have staged the new homepage image in the virtual machine.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>sudo<span class="w"> </span>bootc<span class="w"> </span>status
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>    Staged image: quay.io/$QUAY_USER/homepage:latest \
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>            Digest:  sha256:2be7b1...... \
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>        Version: 9.7 (2025-07-21 15:43:03.624175287 UTC) \
+</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a>        \
+</span><span id="__span-43-5"><a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a>    ● Booted image: quay.io/$QUAY_USER/soe-rhel:9.7 \
+</span><span id="__span-43-6"><a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a>            Digest: sha256:a48811...... \
+</span><span id="__span-43-7"><a id="__codelineno-43-7" name="__codelineno-43-7" href="#__codelineno-43-7"></a>        Version: 9.7 (2025-07-21 13:10:35.887718188 UTC)
+</span></code></pre></div>
+</li>
+<li>
+<p>and we check that we have the old RHEL 9 homepage without our new Image Mode content.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>curl<span class="w"> </span>localhost
+</span></code></pre></div>
+</li>
+<li>
+<p>We need to reboot the virtual machine to activate the new layers and have our new home page.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>sudo<span class="w"> </span>reboot
+</span></code></pre></div>
+</li>
+<li>
+<p>Login to the virtual machine to verify that we have a new updated Image Mode homepage.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="nv">VM_IP</span><span class="o">=</span><span class="k">$(</span>sudo<span class="w"> </span>virsh<span class="w"> </span>-q<span class="w"> </span>domifaddr<span class="w"> </span>homepage<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{ print $4 }&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="s2">&quot;/&quot;</span><span class="w"> </span>-f1<span class="k">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>ssh<span class="w"> </span>bootc-user@<span class="nv">$VM_IP</span>
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>curl<span class="w"> </span>localhost
+</span></code></pre></div>
+</li>
+</ol>
+<h2 id="build-the-database-virtual-machine">Build the database virtual machine</h2>
+<p>We will then deploy a new virtual machine named <code>database</code> as this will be our new demo database server.
+We will build the two images in one linked command and push it as the version 1 and latest images to our registry.</p>
+<p>We are following a less complex deployment for the database server than the deployment we did for the homepage.
+We are going to deploy the mariadb service using a bash script to automate the deployment.</p>
+<p>In the <code>mariadb_service</code> directory update the QUAY_USER variable in the <code>mariadb-deploy-rhel9.sh</code> file and the <code>Containerfile</code> with your quay user id.</p>
+<details>
+  <summary>Review mariadb-service/mariadb-deploy-rhel9.sh</summary>
+  <div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="c">#! /bin/bash</span>
+</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a><span class="c"># This script deploys a MariaDB database using Podman.</span>
+</span><span id="__span-48-3"><a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a>
+</span><span id="__span-48-4"><a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a><span class="nv">QUAY_USER</span><span class="o">=</span><span class="s2">&quot;your quay username&quot;</span>
+</span><span id="__span-48-5"><a id="__codelineno-48-5" name="__codelineno-48-5" href="#__codelineno-48-5"></a>
+</span><span id="__span-48-6"><a id="__codelineno-48-6" name="__codelineno-48-6" href="#__codelineno-48-6"></a>podman<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/database:latest<span class="w"> </span>-t<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/database:rhel9.6<span class="w"> </span>-f<span class="w"> </span>Containerfile
+</span><span id="__span-48-7"><a id="__codelineno-48-7" name="__codelineno-48-7" href="#__codelineno-48-7"></a>podman<span class="w"> </span>push<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/database:latest<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>podman<span class="w"> </span>push<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/database:rhel9.6
+</span><span id="__span-48-8"><a id="__codelineno-48-8" name="__codelineno-48-8" href="#__codelineno-48-8"></a>
+</span><span id="__span-48-9"><a id="__codelineno-48-9" name="__codelineno-48-9" href="#__codelineno-48-9"></a>sudo<span class="w"> </span>podman<span class="w"> </span>pull<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/database:latest
+</span><span id="__span-48-10"><a id="__codelineno-48-10" name="__codelineno-48-10" href="#__codelineno-48-10"></a>sudo<span class="w"> </span>podman<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-48-11"><a id="__codelineno-48-11" name="__codelineno-48-11" href="#__codelineno-48-11"></a>--rm<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-48-12"><a id="__codelineno-48-12" name="__codelineno-48-12" href="#__codelineno-48-12"></a>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-48-13"><a id="__codelineno-48-13" name="__codelineno-48-13" href="#__codelineno-48-13"></a>--privileged<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-48-14"><a id="__codelineno-48-14" name="__codelineno-48-14" href="#__codelineno-48-14"></a>--pull<span class="o">=</span>newer<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-48-15"><a id="__codelineno-48-15" name="__codelineno-48-15" href="#__codelineno-48-15"></a>--security-opt<span class="w"> </span><span class="nv">label</span><span class="o">=</span>type:unconfined_t<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-48-16"><a id="__codelineno-48-16" name="__codelineno-48-16" href="#__codelineno-48-16"></a>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/config.toml:/config.toml:ro<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-48-17"><a id="__codelineno-48-17" name="__codelineno-48-17" href="#__codelineno-48-17"></a>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/output<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-48-18"><a id="__codelineno-48-18" name="__codelineno-48-18" href="#__codelineno-48-18"></a>-v<span class="w"> </span>/var/lib/containers/storage:/var/lib/containers/storage<span class="w"> </span>registry.redhat.io/rhel9/bootc-image-builder:latest<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-48-19"><a id="__codelineno-48-19" name="__codelineno-48-19" href="#__codelineno-48-19"></a>--type<span class="w"> </span>qcow2<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-48-20"><a id="__codelineno-48-20" name="__codelineno-48-20" href="#__codelineno-48-20"></a>--tls-verify<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-48-21"><a id="__codelineno-48-21" name="__codelineno-48-21" href="#__codelineno-48-21"></a>quay.io/<span class="nv">$QUAY_USER</span>/database:latest
+</span><span id="__span-48-22"><a id="__codelineno-48-22" name="__codelineno-48-22" href="#__codelineno-48-22"></a>
+</span><span id="__span-48-23"><a id="__codelineno-48-23" name="__codelineno-48-23" href="#__codelineno-48-23"></a>sudo<span class="w"> </span>mv<span class="w"> </span>qcow2/disk.qcow2<span class="w"> </span>/var/lib/libvirt/images/database.qcow2
+</span><span id="__span-48-24"><a id="__codelineno-48-24" name="__codelineno-48-24" href="#__codelineno-48-24"></a>
+</span><span id="__span-48-25"><a id="__codelineno-48-25" name="__codelineno-48-25" href="#__codelineno-48-25"></a>sudo<span class="w"> </span>virt-install<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-48-26"><a id="__codelineno-48-26" name="__codelineno-48-26" href="#__codelineno-48-26"></a><span class="w">  </span>--connect<span class="w"> </span>qemu:///system<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-48-27"><a id="__codelineno-48-27" name="__codelineno-48-27" href="#__codelineno-48-27"></a><span class="w">  </span>--name<span class="w"> </span>database<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-48-28"><a id="__codelineno-48-28" name="__codelineno-48-28" href="#__codelineno-48-28"></a><span class="w">  </span>--import<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-48-29"><a id="__codelineno-48-29" name="__codelineno-48-29" href="#__codelineno-48-29"></a><span class="w">  </span>--boot<span class="w"> </span>uefi<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-48-30"><a id="__codelineno-48-30" name="__codelineno-48-30" href="#__codelineno-48-30"></a><span class="w">  </span>--memory<span class="w"> </span><span class="m">4096</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-48-31"><a id="__codelineno-48-31" name="__codelineno-48-31" href="#__codelineno-48-31"></a><span class="w">  </span>--graphics<span class="w"> </span>none<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-48-32"><a id="__codelineno-48-32" name="__codelineno-48-32" href="#__codelineno-48-32"></a><span class="w">  </span>--osinfo<span class="w"> </span>rhel9-unknown<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-48-33"><a id="__codelineno-48-33" name="__codelineno-48-33" href="#__codelineno-48-33"></a><span class="w">  </span>--noautoconsole<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-48-34"><a id="__codelineno-48-34" name="__codelineno-48-34" href="#__codelineno-48-34"></a><span class="w">  </span>--noreboot<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-48-35"><a id="__codelineno-48-35" name="__codelineno-48-35" href="#__codelineno-48-35"></a><span class="w">  </span>--disk<span class="w"> </span>/var/lib/libvirt/images/database.qcow2
+</span><span id="__span-48-36"><a id="__codelineno-48-36" name="__codelineno-48-36" href="#__codelineno-48-36"></a>
+</span><span id="__span-48-37"><a id="__codelineno-48-37" name="__codelineno-48-37" href="#__codelineno-48-37"></a>sudo<span class="w"> </span>virsh<span class="w"> </span>start<span class="w"> </span>database
+</span></code></pre></div>
+</details>
+
+<p>and the Containerfile</p>
+<details>
+  <summary>Review mariadb-service/Containerfile</summary>
+  <div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">quay.io/$QUAY_USER/soe-rhel:latest</span>
+</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>
+</span><span id="__span-49-3"><a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a><span class="k">ADD</span><span class="w"> </span>etc/<span class="w"> </span>/etc
+</span><span id="__span-49-4"><a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a>
+</span><span id="__span-49-5"><a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a><span class="k">RUN</span><span class="w"> </span>dnf<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>mariadb<span class="w"> </span>mariadb-server<span class="w"> </span>vim<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>dnf<span class="w"> </span>clean<span class="w"> </span>all<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/cache<span class="w"> </span>/var/log/dnf<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>mariadb
+</span><span id="__span-49-6"><a id="__codelineno-49-6" name="__codelineno-49-6" href="#__codelineno-49-6"></a>
+</span><span id="__span-49-7"><a id="__codelineno-49-7" name="__codelineno-49-7" href="#__codelineno-49-7"></a><span class="k">COPY</span><span class="w"> </span>./files/00-mariadb-tmpfile.conf<span class="w"> </span>/usr/lib/tmpfiles.d/
+</span><span id="__span-49-8"><a id="__codelineno-49-8" name="__codelineno-49-8" href="#__codelineno-49-8"></a>
+</span><span id="__span-49-9"><a id="__codelineno-49-9" name="__codelineno-49-9" href="#__codelineno-49-9"></a><span class="k">EXPOSE</span><span class="w"> </span><span class="s">3306</span>
+</span></code></pre></div>
+</details>
+
+<ol>
+<li>
+<p>Change to the <code>mariadb-service</code> directory.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="nb">cd</span><span class="w"> </span>../mariadb-service
+</span></code></pre></div>
+</li>
+<li>
+<p>Ensure that the <code>mariadb-deploy.sh</code> file is executable.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>chmod<span class="w"> </span>+x<span class="w"> </span>mariadb-deploy.sh
+</span></code></pre></div>
+</li>
+<li>
+<p>Edit the mariadb-deploy.sh file and change the entry for the QUAY_USER to your quay.io user name.</p>
+</li>
+<li>
+<p>Run the bash script <code>mariadb-deploy.sh</code> to create the database images and the database VM.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>./mariadb_deploy.sh
+</span></code></pre></div>
+</li>
+</ol>
+<p>This will build and push the mariadb service image and deploy the VM from the image.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "navigation.expand", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
