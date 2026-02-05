@@ -1,0 +1,1524 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation page for the Red Hat Enterprise Linux (RHEL) Image mode demo hosted on GitHub.">
+      
+      
+        <meta name="author" content="Alessandro Rossi - Red Hat">
+      
+      
+      
+        <link rel="prev" href="../bootc-container-upgrade/">
+      
+      
+        <link rel="next" href="../bootc-image-builder-qcow/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Apply a different RHEL container image to an existing VM - Red Hat Enterprise Linux Image Mode demo</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Red+Hat+Display:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Red Hat Display";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#use-case-applying-a-different-rhel-container-image-to-an-existing-vm" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Red Hat Enterprise Linux Image Mode demo" class="md-header__button md-logo" aria-label="Red Hat Enterprise Linux Image Mode demo" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Red Hat Enterprise Linux Image Mode demo
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Apply a different RHEL container image to an existing VM
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/redhat-cop/redhat-image-mode-demo/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Red Hat Enterprise Linux Image Mode demo" class="md-nav__button md-logo" aria-label="Red Hat Enterprise Linux Image Mode demo" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    Red Hat Enterprise Linux Image Mode demo
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/redhat-cop/redhat-image-mode-demo/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducing RHEL Image mode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing to the project
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Contributing to the project
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contribution guidelines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/review-and-test-changes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reviewing and testing changes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use Cases
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Cases
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bootc-container-simple/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build a simple RHEL container
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bootc-container-httpd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build an Apache RHEL image
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bootc-container-anaconda-ks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use a RHEL bootc container to spin up a RHEL 9 VM with Anaconda and Kickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bootc-container-update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Update a VM based on a RHEL bootc container as a source adding packages and configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bootc-container-upgrade/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrade a VM based on RHEL 9 bootc container to RHEL 10
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Apply a different RHEL container image to an existing VM
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Apply a different RHEL container image to an existing VM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#building-the-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building the image
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-the-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing the image
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing the image">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing-nginx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Nginx
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Postgresql
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tagging-and-pushing-the-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tagging and pushing the image
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#updating-the-vm-with-the-newly-created-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Updating the VM with the newly created image
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bootc-image-builder-qcow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generate a RHEL QCOW image for a VM using bootc-image-builder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bootc-image-builder-iso/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generate a RHEL ISO image for a VM using bootc-image-builder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bootc-image-builder-ami/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generate a RHEL AMI image for an AWS instance using bootc-image-builder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../image-mode-management-insights/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manage RHEL Image Mode systems with Red Hat Insights
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ways of working with RHEL Image Mode
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Ways of working with RHEL Image Mode
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../image-mode-way-of-working/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../image-mode-way-of-working/demo-build/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuring the demo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../image-mode-way-of-working/chapter1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 1 - Working with Golden Images
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../image-mode-way-of-working/chapter2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 2 - Working with updates and upgrades
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#building-the-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building the image
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-the-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing the image
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing the image">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing-nginx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Nginx
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Postgresql
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tagging-and-pushing-the-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tagging and pushing the image
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#updating-the-vm-with-the-newly-created-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Updating the VM with the newly created image
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="use-case-applying-a-different-rhel-container-image-to-an-existing-vm">Use Case - Applying a different RHEL container image to an existing VM</h1>
+<p>Our team is looking to improve performances and test different configurations.
+We created our new and shiny image with Apache HTTPD and MariaDB, but you are exploring alternatives and want to use <a href="https://www.nginx.com/">Nginx</a> and <a href="https://www.postgresql.org/">PostgreSQL</a> as some of your team members are more familiar with that stack.</p>
+<p>We will then create an alternative image, with a dedicated tag, that will help our fellow colleagues in their efforts.
+Instead of redeploying the VM from scratch, we are going to use <strong>bootc</strong> to change the reference of the image in our existing VM to use it for configuring the system!</p>
+<p>The Containerfile.replace is similar to the one in the <a href="../bootc-container-upgrade/">Image Upgrade use case</a>:</p>
+<ul>
+<li>Updates packages</li>
+<li>Installs tmux and mkpasswd to create a simple user password</li>
+<li>Creates a <em>bootc-user</em> user in the image</li>
+<li>Adds the wheel group to sudoers</li>
+<li>Installs nginx server</li>
+<li>Enables the systemd unit for nginx</li>
+<li>Adds a custom index.html</li>
+<li>Customizes the Message of the day</li>
+<li>Add an additional message of the day with the new release notes</li>
+<li>Add postgresql-server package and vim</li>
+<li>Enable the postgresql-server systemd unit</li>
+</ul>
+<p>Since the <em>bootc switch</em> command will preserve the /var and /etc content, we will use a workaround to create the needed dirs for Nginx and Postgresql leveraging <a href="https://github.com/redhat-cop/redhat-image-mode-demo/blob/main//use-cases/bootc-container-replace/files/tmpfiles.d/">systemd-tmpfiles</a> and <a href="https://github.com/redhat-cop/redhat-image-mode-demo/blob/main//use-cases/bootc-container-replace/files/sysusers.d/">systemd-sysusers</a> to ensure users are in place.</p>
+<details>
+  <summary>Review Containerfile.replace</summary>
+  <div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">LABEL</span><span class="w"> </span>org.opencontainers.image.authors<span class="o">=</span><span class="s2">&quot;alerossi@redhat.com&quot;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">FROM</span><span class="w"> </span><span class="s">registry.redhat.io/rhel10/rhel-bootc:10.1</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">RUN</span><span class="w"> </span>dnf<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>tmux<span class="w"> </span>mkpasswd
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">RUN</span><span class="w"> </span><span class="nv">pass</span><span class="o">=</span><span class="k">$(</span>mkpasswd<span class="w"> </span>--method<span class="o">=</span>SHA-512<span class="w"> </span>--rounds<span class="o">=</span><span class="m">4096</span><span class="w"> </span>redhat<span class="k">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>useradd<span class="w"> </span>-m<span class="w"> </span>-G<span class="w"> </span>wheel<span class="w"> </span>bootc-user<span class="w"> </span>-p<span class="w"> </span><span class="nv">$pass</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">RUN</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;%wheel        ALL=(ALL)       NOPASSWD: ALL&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/etc/sudoers.d/wheel-sudo
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">RUN</span><span class="w"> </span>dnf<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>nginx<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>nginx
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="k">RUN</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Welcome to the bootc-nginx instance!&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/usr/share/nginx/html/index.html
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="k">RUN</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;This is a RHEL 10 VM installed using a bootable container as an rpm-ostree source!&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/etc/motd.d/10-first-setup.motd
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="k">RUN</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;This server is equipped with Nginx and PostgreSQL&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/etc/motd.d/20-replace.motd
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="k">RUN</span><span class="w"> </span>dnf<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>postgresql<span class="w"> </span>postgresql-server<span class="w"> </span>vim<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span>dnf<span class="w"> </span>clean<span class="w"> </span>all<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/cache<span class="w"> </span>/var/log/dnf<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">    </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>postgresql
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="k">COPY</span><span class="w"> </span>./files/sysusers.d/<span class="w"> </span>/usr/lib/sysusers.d/
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="k">COPY</span><span class="w"> </span>./files/tmpfiles.d/<span class="w"> </span>/usr/lib/tmpfiles.d/
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="k">EXPOSE</span><span class="w"> </span><span class="s">80 5432</span>
+</span></code></pre></div>
+</details>
+
+<h2 id="building-the-image">Building the image</h2>
+<p>From the root folder of the repository, switch to the use case directory:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">cd</span><span class="w"> </span>use-cases/bootc-container-replace
+</span></code></pre></div>
+<p>You can build the image right from the Containerfile using Podman:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>podman<span class="w"> </span>build<span class="w"> </span>-f<span class="w"> </span>Containerfile.replace<span class="w"> </span>-t<span class="w"> </span>rhel-bootc-vm:nginx<span class="w"> </span>.
+</span></code></pre></div>
+<h2 id="testing-the-image">Testing the image</h2>
+<p>You can now test it using:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>podman<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--name<span class="w"> </span>rhel-bootc-vm-nginx<span class="w"> </span>--hostname<span class="w"> </span>rhel-bootc-vm-nginx<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:80<span class="w"> </span>-p<span class="w"> </span><span class="m">5432</span>:5432<span class="w"> </span>rhel-bootc-vm:nginx
+</span></code></pre></div>
+<p>Note: The <em>"-p 8080:80" -p 5432:5432</em> part forwards the container's <em>http</em> and <em>postgresql</em> port to the port 8080 and 3306 on the host to test that nginx and postgresql are working.</p>
+<p>The container will now start and a login prompt will appear.</p>
+<h3 id="testing-nginx">Testing Nginx</h3>
+<p>On another terminal tab or in your browser, you can verify that the httpd server is working and serving traffic.</p>
+<p><strong>Terminal</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="w"> </span>~<span class="w"> </span>▓▒░<span class="w"> </span>curl<span class="w"> </span>localhost:8080<span class="w">                                                                                                           </span>░▒▓<span class="w"> </span>✔<span class="w">  </span><span class="m">11</span>:59:44
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Welcome<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>bootc-nginx<span class="w"> </span>instance!
+</span></code></pre></div>
+<p><strong>Browser</strong></p>
+<p><img alt="" src="assets/browser-test.png" /></p>
+<h3 id="testing-postgresql">Testing Postgresql</h3>
+<p>From the login prompt, login as <strong>bootc-user/redhat</strong> and impersonate the root user:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="o">[</span>bootc-user@rhel-bootc-vm-nginx<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>sudo<span class="w"> </span>-i
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="o">[</span>root@rhel-bootc-vm-nginx<span class="w"> </span>~<span class="o">]</span><span class="c1">#</span>
+</span></code></pre></div>
+<p>Initialize PostgreSQL db and config:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="o">[</span>root@rhel-bootc-vm-nginx<span class="w"> </span>~<span class="o">]</span><span class="c1"># postgresql-setup --initdb</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w"> </span>*<span class="w"> </span>Initializing<span class="w"> </span>database<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s1">&#39;/var/lib/pgsql/data&#39;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w"> </span>*<span class="w"> </span>Initialized,<span class="w"> </span>logs<span class="w"> </span>are<span class="w"> </span><span class="k">in</span><span class="w"> </span>/var/lib/pgsql/initdb_postgresql.log
+</span></code></pre></div>
+<p>You will now be able to restart the postgresql systemd unit and test the connection:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="o">[</span>root@rhel-bootc-vm-nginx<span class="w"> </span>~<span class="o">]</span><span class="c1"># systemctl restart postgresql</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="o">[</span>root@rhel-bootc-vm-nginx<span class="w"> </span>~<span class="o">]</span><span class="c1"># su - postgres</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="o">[</span>postgres@rhel-bootc-vm-nginx<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>psql
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>psql<span class="w"> </span><span class="o">(</span><span class="m">13</span>.14<span class="o">)</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>Type<span class="w"> </span><span class="s2">&quot;help&quot;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>help.
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="nv">postgres</span><span class="o">=</span><span class="c1">#</span>
+</span></code></pre></div>
+<h2 id="tagging-and-pushing-the-image">Tagging and pushing the image</h2>
+<p>To tag and push the image you can simply run (replace <strong>YOURQUAYUSERNAME</strong> with the account name):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">QUAY_USER</span><span class="o">=</span>YOURQUAYUSERNAME
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>podman<span class="w"> </span>tag<span class="w"> </span>rhel-bootc-vm:nginx<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/rhel-bootc-vm:nginx
+</span></code></pre></div>
+<p>Log-in to Quay.io:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>podman<span class="w"> </span>login<span class="w"> </span>-u<span class="w"> </span><span class="nv">$QUAY_USER</span><span class="w"> </span>quay.io
+</span></code></pre></div>
+<p>And push the image:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>podman<span class="w"> </span>push<span class="w"> </span>quay.io/<span class="nv">$QUAY_USER</span>/rhel-bootc-vm:nginx
+</span></code></pre></div>
+<p>You can now browse to <a href="https://quay.io/repository/YOURQUAYUSERNAME/rhel-bootc-httpd?tab=settings">https://quay.io/repository/YOURQUAYUSERNAME/rhel-bootc-httpd?tab=settings</a> and ensure that the repository is set to <strong>"Public"</strong>.</p>
+<p><img alt="" src="assets/quay-repo-public.png" /></p>
+<h2 id="updating-the-vm-with-the-newly-created-image">Updating the VM with the newly created image</h2>
+<p>The first thing to do is logging in the VM updated in the <a href="../bootc-container-upgrade/">previous use case</a>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="w"> </span>~<span class="w"> </span>▓▒░<span class="w"> </span>ssh<span class="w"> </span>bootc-user@192.168.124.16
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>bootc-user@192.168.124.16<span class="err">&#39;</span>s<span class="w"> </span>password:
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>This<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>RHEL<span class="w"> </span>VM<span class="w"> </span>installed<span class="w"> </span>using<span class="w"> </span>a<span class="w"> </span>bootable<span class="w"> </span>container<span class="w"> </span>as<span class="w"> </span>source!
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>This<span class="w"> </span>server<span class="w"> </span>now<span class="w"> </span>supports<span class="w"> </span>MariaDB<span class="w"> </span>as<span class="w"> </span>a<span class="w"> </span>database,<span class="w"> </span>after<span class="w"> </span>last<span class="w"> </span>update
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>Last<span class="w"> </span>login:<span class="w"> </span>Mon<span class="w"> </span>Jul<span class="w"> </span><span class="m">29</span><span class="w"> </span><span class="m">12</span>:12:51<span class="w"> </span><span class="m">2024</span><span class="w"> </span>from<span class="w"> </span><span class="m">192</span>.168.124.1
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="o">[</span>bootc-user@localhost<span class="w"> </span>~<span class="o">]</span>$
+</span></code></pre></div>
+<p>Verify that bootc is installed:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="o">[</span>bootc-user@localhost<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>bootc<span class="w"> </span>--help
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>Deploy<span class="w"> </span>and<span class="w"> </span>transactionally<span class="w"> </span><span class="k">in</span>-place<span class="w"> </span>with<span class="w"> </span>bootable<span class="w"> </span>container<span class="w"> </span>images.
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>The<span class="w"> </span><span class="sb">`</span>bootc<span class="sb">`</span><span class="w"> </span>project<span class="w"> </span>currently<span class="w"> </span>uses<span class="w"> </span>ostree-containers<span class="w"> </span>as<span class="w"> </span>a<span class="w"> </span>backend<span class="w"> </span>to<span class="w"> </span>support<span class="w"> </span>a<span class="w"> </span>model<span class="w"> </span>of<span class="w"> </span>bootable<span class="w"> </span>container<span class="w"> </span>images.<span class="w">  </span>Once<span class="w"> </span>installed,<span class="w"> </span>whether<span class="w"> </span>directly<span class="w"> </span>via<span class="w"> </span><span class="sb">`</span>bootc<span class="w"> </span>install<span class="sb">`</span><span class="w"> </span><span class="o">(</span>executed<span class="w"> </span>as<span class="w"> </span>part<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span>container<span class="o">)</span><span class="w"> </span>or<span class="w"> </span>via<span class="w"> </span>another<span class="w"> </span>mechanism<span class="w"> </span>such<span class="w"> </span>as<span class="w"> </span>an<span class="w"> </span>OS<span class="w"> </span>installer<span class="w"> </span>tool,<span class="w"> </span>further<span class="w"> </span>updates<span class="w"> </span>can<span class="w"> </span>be<span class="w"> </span>pulled<span class="w"> </span>via<span class="w"> </span>e.g.<span class="w"> </span><span class="sb">`</span>bootc<span class="w"> </span>upgrade<span class="sb">`</span>.
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>Changes<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="sb">`</span>/etc<span class="sb">`</span><span class="w"> </span>and<span class="w"> </span><span class="sb">`</span>/var<span class="sb">`</span><span class="w"> </span>persist.
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>Usage:<span class="w"> </span>bootc<span class="w"> </span>&lt;COMMAND&gt;
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>Commands:
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="w">  </span>upgrade<span class="w">      </span>Download<span class="w"> </span>and<span class="w"> </span>queue<span class="w"> </span>an<span class="w"> </span>updated<span class="w"> </span>container<span class="w"> </span>image<span class="w"> </span>to<span class="w"> </span>apply
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="w">  </span>switch<span class="w">       </span>Target<span class="w"> </span>a<span class="w"> </span>new<span class="w"> </span>container<span class="w"> </span>image<span class="w"> </span>reference<span class="w"> </span>to<span class="w"> </span>boot
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="w">  </span>edit<span class="w">         </span>Apply<span class="w"> </span>full<span class="w"> </span>changes<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>host<span class="w"> </span>specification
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="w">  </span>status<span class="w">       </span>Display<span class="w"> </span>status
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="w">  </span>usr-overlay<span class="w">  </span>Add<span class="w"> </span>a<span class="w"> </span>transient<span class="w"> </span>writable<span class="w"> </span>overlayfs<span class="w"> </span>on<span class="w"> </span><span class="sb">`</span>/usr<span class="sb">`</span><span class="w"> </span>that<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>discarded<span class="w"> </span>on<span class="w"> </span>reboot
+</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="w">  </span>install<span class="w">      </span>Install<span class="w"> </span>the<span class="w"> </span>running<span class="w"> </span>container<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>target
+</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="w">  </span><span class="nb">help</span><span class="w">         </span>Print<span class="w"> </span>this<span class="w"> </span>message<span class="w"> </span>or<span class="w"> </span>the<span class="w"> </span><span class="nb">help</span><span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>given<span class="w"> </span>subcommand<span class="o">(</span>s<span class="o">)</span>
+</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>
+</span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a>Options:
+</span><span id="__span-13-20"><a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a><span class="w">  </span>-h,<span class="w"> </span>--help<span class="w">   </span>Print<span class="w"> </span><span class="nb">help</span><span class="w"> </span><span class="o">(</span>see<span class="w"> </span>a<span class="w"> </span>summary<span class="w"> </span>with<span class="w"> </span><span class="s1">&#39;-h&#39;</span><span class="o">)</span>
+</span></code></pre></div>
+<p>Note that among the options we have the <strong>switch</strong> option that we will be using in this use case.
+The switch option allows checking, fetching and using a different container image to replace the current configuration and spin up a new rpm-ostree image for the system.</p>
+<p>In our case we will switch from <strong>rhel-bootc-vm:httpd</strong> to <strong>rhel-bootc-vm:nginx</strong> image.</p>
+<p>The switch command requires higher privileges to run, let's perform the change!</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="o">[</span>bootc-user@localhost<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>sudo<span class="w"> </span>bootc<span class="w"> </span>switch<span class="w"> </span>quay.io/kubealex/rhel-bootc-vm:nginx
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>layers<span class="w"> </span>already<span class="w"> </span>present:<span class="w"> </span><span class="m">69</span><span class="p">;</span><span class="w"> </span>layers<span class="w"> </span>needed:<span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="o">(</span><span class="m">182</span>.7<span class="w"> </span>MB<span class="o">)</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w"> </span><span class="m">426</span><span class="w"> </span>B<span class="w"> </span><span class="o">[</span>████████████████████<span class="o">]</span><span class="w"> </span><span class="o">(</span>0s<span class="o">)</span><span class="w"> </span>Fetched<span class="w"> </span>layer<span class="w"> </span>sha256:8a192c7a518d<span class="w">                                                                                                                                                                                                                                                                                                                                            </span>Queued<span class="w"> </span><span class="k">for</span><span class="w"> </span>next<span class="w"> </span>boot:<span class="w"> </span>quay.io/kubealex/rhel-bootc-vm:nginx
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span>Version:<span class="w"> </span><span class="m">9</span>.20240714.0
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">  </span>Digest:<span class="w"> </span>sha256:e9dc2975eea3510044934fde745c296b734e8ca6f76add0e92c350e73db54620
+</span></code></pre></div>
+<p>In this case, unlike last time, the layers to retrieve were many more, as we changed big parts of the previous image.
+At the end of the process, it queued the actual switch after reboot. Let's verify that postgres and nginx are still not present at this time, and proceed with a reboot:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="o">[</span>bootc-user@localhost<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>nginx<span class="w"> </span>postgresql
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>Unit<span class="w"> </span>nginx.service<span class="w"> </span>could<span class="w"> </span>not<span class="w"> </span>be<span class="w"> </span>found.
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>Unit<span class="w"> </span>postgresql.service<span class="w"> </span>could<span class="w"> </span>not<span class="w"> </span>be<span class="w"> </span>found.
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="o">[</span>bootc-user@localhost<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>sudo<span class="w"> </span>reboot
+</span></code></pre></div>
+<p>Let's log back in!</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="w"> </span>~/▓▒░<span class="w"> </span>ssh<span class="w"> </span>bootc-user@192.168.124.16
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>bootc-user@192.168.124.16<span class="err">&#39;</span>s<span class="w"> </span>password:
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>This<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>RHEL<span class="w"> </span><span class="m">10</span><span class="w"> </span>VM<span class="w"> </span>installed<span class="w"> </span>using<span class="w"> </span>a<span class="w"> </span>bootable<span class="w"> </span>container<span class="w"> </span>as<span class="w"> </span>an<span class="w"> </span>rpm-ostree<span class="w"> </span>source!
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>This<span class="w"> </span>server<span class="w"> </span>is<span class="w"> </span>equipped<span class="w"> </span>with<span class="w"> </span>Nginx<span class="w"> </span>and<span class="w"> </span>PostgreSQL
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>Last<span class="w"> </span>login:<span class="w"> </span>Mon<span class="w"> </span>Jul<span class="w"> </span><span class="m">29</span><span class="w"> </span><span class="m">12</span>:26:13<span class="w"> </span><span class="m">2024</span><span class="w"> </span>from<span class="w"> </span><span class="m">192</span>.168.124.1
+</span></code></pre></div>
+<p>You can already see that something changed, we have a different line in our message of the day, let's test if nginx and Postgresql are running and working!</p>
+<p>Initialize the DB:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="o">[</span>root@rhel-bootc-vm-nginx<span class="w"> </span>~<span class="o">]</span><span class="c1"># postgresql-setup --initdb</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w"> </span>*<span class="w"> </span>Initializing<span class="w"> </span>database<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s1">&#39;/var/lib/pgsql/data&#39;</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w"> </span>*<span class="w"> </span>Initialized,<span class="w"> </span>logs<span class="w"> </span>are<span class="w"> </span><span class="k">in</span><span class="w"> </span>/var/lib/pgsql/initdb_postgresql.log
+</span></code></pre></div>
+<p>Restart the PGSQL service:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="o">[</span>root@rhel-bootc-vm-nginx<span class="w"> </span>~<span class="o">]</span><span class="c1"># systemctl restart postgresql</span>
+</span></code></pre></div>
+<p>And verify everything is up and running:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="o">[</span>bootc-user@localhost<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>nginx<span class="w"> </span>postgresql
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>●<span class="w"> </span>nginx.service<span class="w"> </span>-<span class="w"> </span>The<span class="w"> </span>nginx<span class="w"> </span>HTTP<span class="w"> </span>and<span class="w"> </span>reverse<span class="w"> </span>proxy<span class="w"> </span>server
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">     </span>Loaded:<span class="w"> </span>loaded<span class="w"> </span><span class="o">(</span>/usr/lib/systemd/system/nginx.service<span class="p">;</span><span class="w"> </span>enabled<span class="p">;</span><span class="w"> </span>preset:<span class="w"> </span>disabled<span class="o">)</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">     </span>Active:<span class="w"> </span>active<span class="w"> </span><span class="o">(</span>running<span class="o">)</span><span class="w"> </span>since<span class="w"> </span>Mon<span class="w"> </span><span class="m">2024</span>-07-29<span class="w"> </span><span class="m">12</span>:31:03<span class="w"> </span>CEST<span class="p">;</span><span class="w"> </span>8min<span class="w"> </span>ago
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">    </span>Process:<span class="w"> </span><span class="m">727</span><span class="w"> </span><span class="nv">ExecStartPre</span><span class="o">=</span>/usr/bin/rm<span class="w"> </span>-f<span class="w"> </span>/run/nginx.pid<span class="w"> </span><span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited,<span class="w"> </span><span class="nv">status</span><span class="o">=</span><span class="m">0</span>/SUCCESS<span class="o">)</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="w">    </span>Process:<span class="w"> </span><span class="m">730</span><span class="w"> </span><span class="nv">ExecStartPre</span><span class="o">=</span>/usr/sbin/nginx<span class="w"> </span>-t<span class="w"> </span><span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited,<span class="w"> </span><span class="nv">status</span><span class="o">=</span><span class="m">0</span>/SUCCESS<span class="o">)</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="w">    </span>Process:<span class="w"> </span><span class="m">736</span><span class="w"> </span><span class="nv">ExecStart</span><span class="o">=</span>/usr/sbin/nginx<span class="w"> </span><span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited,<span class="w"> </span><span class="nv">status</span><span class="o">=</span><span class="m">0</span>/SUCCESS<span class="o">)</span>
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="w">   </span>Main<span class="w"> </span>PID:<span class="w"> </span><span class="m">749</span><span class="w"> </span><span class="o">(</span>nginx<span class="o">)</span>
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="w">      </span>Tasks:<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="o">(</span>limit:<span class="w"> </span><span class="m">23136</span><span class="o">)</span>
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="w">     </span>Memory:<span class="w"> </span><span class="m">4</span>.2M
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="w">        </span>CPU:<span class="w"> </span>11ms
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="w">     </span>CGroup:<span class="w"> </span>/system.slice/nginx.service
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="w">             </span>├─749<span class="w"> </span><span class="s2">&quot;nginx: master process /usr/sbin/nginx&quot;</span>
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a><span class="w">             </span>├─750<span class="w"> </span><span class="s2">&quot;nginx: worker process&quot;</span>
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a><span class="w">             </span>└─751<span class="w"> </span><span class="s2">&quot;nginx: worker process&quot;</span>
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>
+</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>Jul<span class="w"> </span><span class="m">29</span><span class="w"> </span><span class="m">12</span>:31:03<span class="w"> </span>localhost.localdomain<span class="w"> </span>systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>:<span class="w"> </span>Starting<span class="w"> </span>The<span class="w"> </span>nginx<span class="w"> </span>HTTP<span class="w"> </span>and<span class="w"> </span>reverse<span class="w"> </span>proxy<span class="w"> </span>server...
+</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>Jul<span class="w"> </span><span class="m">29</span><span class="w"> </span><span class="m">12</span>:31:03<span class="w"> </span>localhost.localdomain<span class="w"> </span>nginx<span class="o">[</span><span class="m">730</span><span class="o">]</span>:<span class="w"> </span>nginx:<span class="w"> </span>the<span class="w"> </span>configuration<span class="w"> </span>file<span class="w"> </span>/etc/nginx/nginx.conf<span class="w"> </span>syntax<span class="w"> </span>is<span class="w"> </span>ok
+</span><span id="__span-20-18"><a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a>Jul<span class="w"> </span><span class="m">29</span><span class="w"> </span><span class="m">12</span>:31:03<span class="w"> </span>localhost.localdomain<span class="w"> </span>nginx<span class="o">[</span><span class="m">730</span><span class="o">]</span>:<span class="w"> </span>nginx:<span class="w"> </span>configuration<span class="w"> </span>file<span class="w"> </span>/etc/nginx/nginx.conf<span class="w"> </span><span class="nb">test</span><span class="w"> </span>is<span class="w"> </span>successful
+</span><span id="__span-20-19"><a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a>Jul<span class="w"> </span><span class="m">29</span><span class="w"> </span><span class="m">12</span>:31:03<span class="w"> </span>localhost.localdomain<span class="w"> </span>systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>:<span class="w"> </span>Started<span class="w"> </span>The<span class="w"> </span>nginx<span class="w"> </span>HTTP<span class="w"> </span>and<span class="w"> </span>reverse<span class="w"> </span>proxy<span class="w"> </span>server.
+</span><span id="__span-20-20"><a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a>
+</span><span id="__span-20-21"><a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a>●<span class="w"> </span>postgresql.service<span class="w"> </span>-<span class="w"> </span>PostgreSQL<span class="w"> </span>database<span class="w"> </span>server
+</span><span id="__span-20-22"><a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a><span class="w">     </span>Loaded:<span class="w"> </span>loaded<span class="w"> </span><span class="o">(</span>/usr/lib/systemd/system/postgresql.service<span class="p">;</span><span class="w"> </span>enabled<span class="p">;</span><span class="w"> </span>preset:<span class="w"> </span>disabled<span class="o">)</span>
+</span><span id="__span-20-23"><a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a><span class="w">     </span>Active:<span class="w"> </span>active<span class="w"> </span><span class="o">(</span>running<span class="o">)</span><span class="w"> </span>since<span class="w"> </span>Mon<span class="w"> </span><span class="m">2024</span>-07-29<span class="w"> </span><span class="m">12</span>:39:52<span class="w"> </span>CEST<span class="p">;</span><span class="w"> </span>2s<span class="w"> </span>ago
+</span><span id="__span-20-24"><a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a><span class="w">    </span>Process:<span class="w"> </span><span class="m">1338</span><span class="w"> </span><span class="nv">ExecStartPre</span><span class="o">=</span>/usr/libexec/postgresql-check-db-dir<span class="w"> </span>postgresql<span class="w"> </span><span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited,<span class="w"> </span><span class="nv">status</span><span class="o">=</span><span class="m">0</span>/SUCCESS<span class="o">)</span>
+</span><span id="__span-20-25"><a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a><span class="w">   </span>Main<span class="w"> </span>PID:<span class="w"> </span><span class="m">1340</span><span class="w"> </span><span class="o">(</span>postmaster<span class="o">)</span>
+</span><span id="__span-20-26"><a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a><span class="w">      </span>Tasks:<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="o">(</span>limit:<span class="w"> </span><span class="m">23136</span><span class="o">)</span>
+</span><span id="__span-20-27"><a id="__codelineno-20-27" name="__codelineno-20-27" href="#__codelineno-20-27"></a><span class="w">     </span>Memory:<span class="w"> </span><span class="m">16</span>.5M
+</span><span id="__span-20-28"><a id="__codelineno-20-28" name="__codelineno-20-28" href="#__codelineno-20-28"></a><span class="w">        </span>CPU:<span class="w"> </span>16ms
+</span><span id="__span-20-29"><a id="__codelineno-20-29" name="__codelineno-20-29" href="#__codelineno-20-29"></a><span class="w">     </span>CGroup:<span class="w"> </span>/system.slice/postgresql.service
+</span><span id="__span-20-30"><a id="__codelineno-20-30" name="__codelineno-20-30" href="#__codelineno-20-30"></a><span class="w">             </span>├─1340<span class="w"> </span>/usr/bin/postmaster<span class="w"> </span>-D<span class="w"> </span>/var/lib/pgsql/data
+</span><span id="__span-20-31"><a id="__codelineno-20-31" name="__codelineno-20-31" href="#__codelineno-20-31"></a><span class="w">             </span>├─1341<span class="w"> </span><span class="s2">&quot;postgres: logger &quot;</span>
+</span><span id="__span-20-32"><a id="__codelineno-20-32" name="__codelineno-20-32" href="#__codelineno-20-32"></a><span class="w">             </span>├─1343<span class="w"> </span><span class="s2">&quot;postgres: checkpointer &quot;</span>
+</span><span id="__span-20-33"><a id="__codelineno-20-33" name="__codelineno-20-33" href="#__codelineno-20-33"></a><span class="w">             </span>├─1344<span class="w"> </span><span class="s2">&quot;postgres: background writer &quot;</span>
+</span><span id="__span-20-34"><a id="__codelineno-20-34" name="__codelineno-20-34" href="#__codelineno-20-34"></a><span class="w">             </span>├─1345<span class="w"> </span><span class="s2">&quot;postgres: walwriter &quot;</span>
+</span><span id="__span-20-35"><a id="__codelineno-20-35" name="__codelineno-20-35" href="#__codelineno-20-35"></a><span class="w">             </span>├─1346<span class="w"> </span><span class="s2">&quot;postgres: autovacuum launcher &quot;</span>
+</span><span id="__span-20-36"><a id="__codelineno-20-36" name="__codelineno-20-36" href="#__codelineno-20-36"></a><span class="w">             </span>├─1347<span class="w"> </span><span class="s2">&quot;postgres: stats collector &quot;</span>
+</span><span id="__span-20-37"><a id="__codelineno-20-37" name="__codelineno-20-37" href="#__codelineno-20-37"></a><span class="w">             </span>└─1348<span class="w"> </span><span class="s2">&quot;postgres: logical replication launcher &quot;</span>
+</span><span id="__span-20-38"><a id="__codelineno-20-38" name="__codelineno-20-38" href="#__codelineno-20-38"></a>
+</span><span id="__span-20-39"><a id="__codelineno-20-39" name="__codelineno-20-39" href="#__codelineno-20-39"></a>Jul<span class="w"> </span><span class="m">29</span><span class="w"> </span><span class="m">12</span>:39:52<span class="w"> </span>localhost.localdomain<span class="w"> </span>systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>:<span class="w"> </span>Starting<span class="w"> </span>PostgreSQL<span class="w"> </span>database<span class="w"> </span>server...
+</span><span id="__span-20-40"><a id="__codelineno-20-40" name="__codelineno-20-40" href="#__codelineno-20-40"></a>Jul<span class="w"> </span><span class="m">29</span><span class="w"> </span><span class="m">12</span>:39:52<span class="w"> </span>localhost.localdomain<span class="w"> </span>postmaster<span class="o">[</span><span class="m">1340</span><span class="o">]</span>:<span class="w"> </span><span class="m">2024</span>-07-29<span class="w"> </span><span class="m">12</span>:39:52.234<span class="w"> </span>CEST<span class="w"> </span><span class="o">[</span><span class="m">1340</span><span class="o">]</span><span class="w"> </span>LOG:<span class="w">  </span>redirecting<span class="w"> </span>log<span class="w"> </span>output<span class="w"> </span>to<span class="w"> </span>logging<span class="w"> </span>collector<span class="w"> </span>process
+</span><span id="__span-20-41"><a id="__codelineno-20-41" name="__codelineno-20-41" href="#__codelineno-20-41"></a>Jul<span class="w"> </span><span class="m">29</span><span class="w"> </span><span class="m">12</span>:39:52<span class="w"> </span>localhost.localdomain<span class="w"> </span>postmaster<span class="o">[</span><span class="m">1340</span><span class="o">]</span>:<span class="w"> </span><span class="m">2024</span>-07-29<span class="w"> </span><span class="m">12</span>:39:52.234<span class="w"> </span>CEST<span class="w"> </span><span class="o">[</span><span class="m">1340</span><span class="o">]</span><span class="w"> </span>HINT:<span class="w">  </span>Future<span class="w"> </span>log<span class="w"> </span>output<span class="w"> </span>will<span class="w"> </span>appear<span class="w"> </span><span class="k">in</span><span class="w"> </span>directory<span class="w"> </span><span class="s2">&quot;log&quot;</span>.
+</span><span id="__span-20-42"><a id="__codelineno-20-42" name="__codelineno-20-42" href="#__codelineno-20-42"></a>Jul<span class="w"> </span><span class="m">29</span><span class="w"> </span><span class="m">12</span>:39:52<span class="w"> </span>localhost.localdomain<span class="w"> </span>systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>:<span class="w"> </span>Started<span class="w"> </span>PostgreSQL<span class="w"> </span>database<span class="w"> </span>server.
+</span></code></pre></div>
+<p>Let's test if postgresql is working.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="o">[</span>bootc-user@localhost<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>sudo<span class="w"> </span>su<span class="w"> </span>-l<span class="w"> </span>postgres
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>Last<span class="w"> </span>login:<span class="w"> </span>Mon<span class="w"> </span>Mar<span class="w"> </span><span class="m">18</span><span class="w"> </span><span class="m">10</span>:34:34<span class="w"> </span>CET<span class="w"> </span><span class="m">2024</span><span class="w"> </span>on<span class="w"> </span>pts/0
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="o">[</span>postgres@localhost<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>psql
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>psql<span class="w"> </span><span class="o">(</span><span class="m">13</span>.14<span class="o">)</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>Type<span class="w"> </span><span class="s2">&quot;help&quot;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>help.
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="nv">postgres</span><span class="o">=</span><span class="c1">#</span>
+</span></code></pre></div>
+<p>Now we can try and see if the nginx server is reachable, using our browser we can go to the VM IP on port 80 to check:</p>
+<p><img alt="" src="assets/vm-browser.png" /></p>
+<p>Here we go, our VM is fully working. Of course we can use the new image to provision similar VMs that need the same pieces of software on them.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "navigation.expand", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
