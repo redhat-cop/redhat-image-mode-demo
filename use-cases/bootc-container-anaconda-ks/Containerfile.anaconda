@@ -1,4 +1,4 @@
-MAINTAINER Alessandro Rossi <al.rossi87@gmail.com>
+LABEL org.opencontainers.image.authors="alerossi@redhat.com"
 FROM registry.redhat.io/rhel9/rhel-bootc:9.7
 RUN dnf -y install tmux mkpasswd
 RUN pass=$(mkpasswd --method=SHA-512 --rounds=4096 redhat) && useradd -m -G wheel bootc-user -p $pass

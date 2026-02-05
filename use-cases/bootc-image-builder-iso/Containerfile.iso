@@ -1,4 +1,4 @@
-MAINTAINER Alessandro Rossi <al.rossi87@gmail.com>
+LABEL org.opencontainers.image.authors="alerossi@redhat.com"
 FROM registry.redhat.io/rhel10/rhel-bootc:10.1
 RUN dnf -y install tmux mkpasswd
 RUN echo "%wheel        ALL=(ALL)       NOPASSWD: ALL" > /etc/sudoers.d/wheel-sudo
