@@ -40,15 +40,37 @@ From the root folder of the repository, switch to the use case directory:
 cd use-cases/image-mode-build-from-scratch
 ```
 
+Log-in to [registry.redhat.io](https://registry.redhat.io) using your Red Hat Credentials:
+
+```bash
+podman login registry.redhat.io --authfile auth.json
+```
+
+??? tip "Saving credentials to an authfile"
+
+    During the example, we will use *sudo* to run privileged commands with podman, with authfiles we can save the login information to a shared file that can be used by both users to interact with the Red Hat registry.
+
 To build the image, the inner build process requires elevated privileges for mount namespacing and device access. Without these flags, the rootfs generation step will fail:
 ```bash
-podman build \
+ podman build \
   --cap-add=all \
   --security-opt=label=type:container_runtime_t \
   --device /dev/fuse \
   -f Containerfile \
+  --authfile auth.json \
   -t rhel-image-mode:from-scratch .
 ```
+
+??? tip "Making the image available to root for further steps"
+
+    You can use `podman` to copy images between remote hosts using
+    SCP with the `image` subcommand. This will also work for local
+    storage on Linux without using SSHd. For example, to copy the
+    locally built image to system storage without pulling from the quay.io:
+
+    ```bash
+    podman image scp localhost/rhel-image-mode:from-scratch root@localhost::
+    ```
 
 ## Optimizing the image
 
@@ -59,7 +81,8 @@ Use the `rechunk` subcommand to split the filesystem into content-addressed repr
 ```bash
 sudo podman run --rm --privileged \
   -v /var/lib/containers:/var/lib/containers \
-  registry.redhat.io/rhel10/rhel-image-mode:latest \
+  --authfile auth.json \
+  registry.redhat.io/rhel10/rhel-bootc:latest \
   /usr/libexec/bootc-base-imagectl rechunk \
     localhost/rhel-image-mode:from-scratch  \
     localhost/rhel-image-mode:from-scratch-chunked
