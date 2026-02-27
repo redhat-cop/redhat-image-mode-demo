@@ -46,6 +46,7 @@ nav:
     - Generate a RHEL AMI image for an AWS instance using bootc-image-builder: use-cases/bootc-image-builder-ami/README.md
     - Manage RHEL Image Mode systems with Red Hat Insights: use-cases/image-mode-management-insights/README.md
     - Embed a Containerized application in Image Mode for RHEL: use-cases/image-mode-podman-container/README.md
+    - Build a minimal RHEL image from scratch: use-cases/image-mode-build-from-scratch/README.md
     - Ways of working with RHEL Image Mode:
       - Introduction: use-cases/image-mode-way-of-working/README.md
       - Configuring the demo: use-cases/image-mode-way-of-working/demo-build.md

@@ -1,0 +1,37 @@
+# Stage 1: Use the official rhel-bootc image as a builder to generate a minimal root filesystem.
+FROM registry.redhat.io/rhel10/rhel-bootc:10.0 AS builder
+
+# Generate a minimal root filesystem into /target-rootfs.
+RUN dnf repolist && \
+    /usr/libexec/bootc-base-imagectl build-rootfs --manifest=minimal /target-rootfs && \
+    cp -rL /etc/yum.repos.d /target-rootfs/etc/ && \
+    cp -rL /etc/pki/entitlement-host/ /target-rootfs/etc/pki/ && \
+    cp -rL /etc/rhsm-host/ /target-rootfs/etc/
+
+# Stage 2: Start from an empty image and copy in only the generated root filesystem.
+FROM scratch
+
+# Copy the minimal root filesystem from the builder stage.
+COPY --from=builder /target-rootfs/ /
+
+# Install additional packages not included in the minimal manifest.
+# After installation, clean up package manager cache and ephemeral runtime directories
+# to keep the image size small. Finally, run bootc container lint to validate the image.
+
+RUN <<EORUN
+set -xeuo pipefail
+dnf -y install NetworkManager openssh-server sudo mkpasswd
+dnf clean all
+rm -rf /var/{log,cache,lib}/*
+rm -rf /etc/{pki/entitlement-host,rhsm-host}
+pass=$(mkpasswd --method=SHA-512 --rounds=4096 redhat) && useradd -m -G wheel bootc-user -p $pass && echo "%wheel        ALL=(ALL)       NOPASSWD: ALL" > /etc/sudoers.d/wheel-sudo
+bootc container lint
+EORUN
+
+# These two labels are required for the image to be recognized as a valid bootc image.
+LABEL containers.bootc=1
+LABEL ostree.bootable=1
+
+# Ensure correct behaviour when the image is run directly as a container under systemd.
+STOPSIGNAL SIGRTMIN+3
+CMD ["/sbin/init"]
