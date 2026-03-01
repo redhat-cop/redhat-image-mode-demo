@@ -1,2 +1,3 @@
 site*/
 *.code-workspace
+.vscode

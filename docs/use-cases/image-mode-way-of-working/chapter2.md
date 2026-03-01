@@ -6,7 +6,7 @@ We are going to create a new soe-rhel base image that is based on the latest RHE
 1. Change to the RHEL 10 Container file directory to build the new RHEL 10 base image.
 
     ```bash
-    cd ../soe-rhel10.0
+    cd ../soe-rhel10
     ```
 
 2. Use Podman build to build the new RHEL 10 image and tag it as `soe-rhel:latest` and `soe-rhel:10`.
