@@ -1,4 +1,3 @@
-# FROM quay.io/jvdbreggen/base-rhel:latest
 FROM quay.io/$QUAY_USER/httpd:latest
 
 ADD html/ /usr/share/www/html
