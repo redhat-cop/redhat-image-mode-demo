@@ -1,7 +1,7 @@
 
 ## Create a new RHEL 10 base image
 
-We are going to create a new soe-rhel base image that is based on the latest RHEL, version 10. This base image we are going to use to upgrade our services, httpd and mariadb. We created a new RHEL 10 homepage and then will upgrade the VMs to RHEL 10.
+We are going to create a new soe-rhel base image that is based on the latest RHEL, version 10. This base image we are going to use to upgrade our services, httpd and mariadb. We created a new RHEL 10 webpage and then will upgrade the VMs to RHEL 10.
 
 1. Change to the RHEL 10 Container file directory to build the new RHEL 10 base image.
 
@@ -28,9 +28,9 @@ We are going to create a new soe-rhel base image that is based on the latest RHE
     podman push quay.io/$QUAY_USER/soe-rhel:latest && podman push quay.io/$QUAY_USER/soe-rhel:10
     ```
 
-## Upgrade the VM to RHEL 10 and update the homepage
+## Upgrade the VM to RHEL 10 and update the webpage
 
-Next we are going to build the httpd services image on RHEL 10 and upgrade the homepage VM.
+Next we are going to build the httpd services image on RHEL 10 and upgrade the webpage VM.
 
 
 1. Change directory to the httpd-service directory. Since we base our httpd image on the latest tagged RHEL base image in the repository, we can reuse the same Container file.
@@ -61,28 +61,28 @@ Next we are going to build the httpd services image on RHEL 10 and upgrade the h
     podman push quay.io/$QUAY_USER/httpd:latest && podman push quay.io/$QUAY_USER/httpd:rhel10
     ```
 
-4. Change to the homepage-rhel10 directory. This has an updated homepage for RHEL 10 with RHEL 10 logos.
+4. Change to the webpage-rhel10 directory. This has an updated webpage for RHEL 10 with RHEL 10 logos.
 
     ```bash
-    cd ../homepage-rhel10
+    cd ../webpage-rhel10
     ```
 
-5. Build the new homepage images with the tags `homepage:latest` and `homepage:rhel10`. We fixed the ContainerFile in the previous section, and it will now use the httpd image and deploy correctly.
+5. Build the new webpage images with the tags `webpage:latest` and `webpage:rhel10`. We fixed the ContainerFile in the previous section, and it will now use the httpd image and deploy correctly.
 
     ```bash
-    podman build -t quay.io/$QUAY_USER/homepage:latest -t quay.io/$QUAY_USER/homepage:rhel10 -f Containerfile
+    podman build -t quay.io/$QUAY_USER/webpage:latest -t quay.io/$QUAY_USER/webpage:rhel10 -f Containerfile
     ```
 
-6. Push the updated homepage images to the registry.
+6. Push the updated webpage images to the registry.
 
     ```bash
-    podman push quay.io/$QUAY_USER/homepage:latest && podman push quay.io/$QUAY_USER/homepage:rhel10
+    podman push quay.io/$QUAY_USER/webpage:latest && podman push quay.io/$QUAY_USER/webpage:rhel10
     ```
 
-7. No we switch to the `homepage` VM, we will use our special ssh command to log into the VM.
+7. No we switch to the `webpage` VM, we will use our special ssh command to log into the VM.
 
     ```bash
-    VM_IP=$(sudo virsh -q domifaddr homepage | awk '{ print $4 }' | cut -d"/" -f1) && ssh bootc-user@$VM_IP
+    VM_IP=$(sudo virsh -q domifaddr webpage | awk '{ print $4 }' | cut -d"/" -f1) && ssh bootc-user@$VM_IP
     ```
 
 8. Let's check if there is an update in the registry using the `bootc upgrade --check` command.
@@ -92,7 +92,7 @@ Next we are going to build the httpd services image on RHEL 10 and upgrade the h
     ```
 
     ```
-        Update available for: docker://quay.io/$QUAY_USER/homepage:latest \
+        Update available for: docker://quay.io/$QUAY_USER/webpage:latest \
         Version: 10.1 \
         Digest: sha256:0c5416...... \
         Total new layers: 77    Size: 885.4 MB \
@@ -100,7 +100,7 @@ Next we are going to build the httpd services image on RHEL 10 and upgrade the h
         Added layers:     76    Size: 885.4 MB
     ```
 
-9. Apply the upgrage to our VM. This may take a while as we are pulling RHEL 10 and the homepage updates in one go.
+9. Apply the upgrage to our VM. This may take a while as we are pulling RHEL 10 and the webpage updates in one go.
 
     ```bash
     sudo bootc upgrade
@@ -113,11 +113,11 @@ Next we are going to build the httpd services image on RHEL 10 and upgrade the h
     ```
 
     ```
-        Staged image: quay.io/$QUAY_USER/homepage:latest \
+        Staged image: quay.io/$QUAY_USER/webpage:latest \
                 Digest: sha256:0c5416...... \
             Version: 10.1 (2025-07-21 17:25:47.229186615 UTC) \
         \
-        ● Booted image: quay.io/$QUAY_USER/homepage:latest \
+        ● Booted image: quay.io/$QUAY_USER/webpage:latest \
                 Digest: sha256:2be7b1...... \
             Version: 9.6 (2025-07-21 15:43:03.624175287 UTC) \
         \
@@ -126,7 +126,7 @@ Next we are going to build the httpd services image on RHEL 10 and upgrade the h
                 Version: 9.6 (2025-07-21 16:04:36.100285429 UTC)
     ```
 
-11. Reboot the VM to change to the new homepage and run RHEL 10!
+11. Reboot the VM to change to the new webpage and run RHEL 10!
 
     ```bash
     sudo reboot
@@ -135,7 +135,7 @@ Next we are going to build the httpd services image on RHEL 10 and upgrade the h
 12. We use our special ssh command again to log into the VM.
 
     ```bash
-    VM_IP=$(sudo virsh -q domifaddr homepage | awk '{ print $4 }' | cut -d"/" -f1) && ssh bootc-user@$VM_IP
+    VM_IP=$(sudo virsh -q domifaddr webpage | awk '{ print $4 }' | cut -d"/" -f1) && ssh bootc-user@$VM_IP
     ```
 
 13. and check the OS version using `bootc status`
@@ -146,7 +146,7 @@ Next we are going to build the httpd services image on RHEL 10 and upgrade the h
 
 14. Finally use the VMs ip address and go to the web site to confirm the web page upgrade showing RHEL 10 logos.
 
-This is to show how we update the base OS on an existing deployment. Usually this will be done during an application, or in this case, a homepage update.
+This is to show how we update the base OS on an existing deployment. Usually this will be done during an application, or in this case, a webpage update.
 
 ## Upgrade the database server to RHEL 10
 
@@ -191,7 +191,7 @@ Similar we are going to build the database services image on RHEL 10 and upgrade
         Added layers:     76    Size: 885.4 MB
     ```
 
-6. Apply the upgrage to our VM. This may take a while as we are pulling RHEL 10 and the homepage updates in one go. Using  `--apply` the VM will be rebooted after the upgrade is done.
+6. Apply the upgrage to our VM. This may take a while as we are pulling RHEL 10 and the webpage updates in one go. Using  `--apply` the VM will be rebooted after the upgrade is done.
 
     ```bash
     sudo bootc upgrade --apply
@@ -210,11 +210,11 @@ Similar we are going to build the database services image on RHEL 10 and upgrade
     ```
 
     ```
-        Staged image: quay.io/$QUAY_USER/homepage:latest \
+        Staged image: quay.io/$QUAY_USER/webpage:latest \
                 Digest: sha256:0c5416...... \
             Version: 10.1 (2025-07-21 17:25:47.229186615 UTC) \
         \
-        ● Booted image: quay.io/$QUAY_USER/homepage:latest \
+        ● Booted image: quay.io/$QUAY_USER/webpage:latest \
                 Digest: sha256:2be7b1...... \
             Version: 9.6 (2025-07-21 15:43:03.624175287 UTC) \
         \
@@ -235,42 +235,42 @@ Similar we are going to build the database services image on RHEL 10 and upgrade
     cat /etc/redhat-release
     ```
 
-## Use RHEL's soft-reboot feature to deploy an update to the homepage
+## Use RHEL's soft-reboot feature to deploy an update to the webpage
 
 In the last steps we are going to push a new RHEL 10 webpage to the homapage server and make use of the RHEL 10 soft-reboot feature to deploy the new layers.
 
-1. Change to the homepage-rhel10update directory. This has a new homepage for RHEL 10 with more images.
+1. Change to the webpage-rhel10update directory. This has a new webpage for RHEL 10 with more images.
 
     ```bash
-    cd ../homepage-rhel10update
+    cd ../webpage-rhel10update
     ```
 
-2. Build the new homepage images with the tags `homepage:latest` and `homepage:rhel10update`.
+2. Build the new webpage images with the tags `webpage:latest` and `webpage:rhel10update`.
 
     !!! tip
         Remeber to change the $QUAY_USER in the `Containerfile` to your repository userid.
 
     <details>
-    <summary>Review homepage-rhel10update/Containerfile</summary>
+    <summary>Review webpage-rhel10update/Containerfile</summary>
     ```dockerfile
-    --8<-- "use-cases/image-mode-way-of-working/homepage-rhel10update/Containerfile"
+    --8<-- "use-cases/image-mode-way-of-working/webpage-rhel10update/Containerfile"
     ```
     </details>
 
     ```bash
-    podman build -t quay.io/$QUAY_USER/homepage:latest -t quay.io/$QUAY_USER/homepage:rhel10update -f Containerfile
+    podman build -t quay.io/$QUAY_USER/webpage:latest -t quay.io/$QUAY_USER/webpage:rhel10update -f Containerfile
     ```
 
-3. Push the updated homepage images to the registry.
+3. Push the updated webpage images to the registry.
 
     ```bash
-    podman push quay.io/$QUAY_USER/homepage:latest && podman push quay.io/$QUAY_USER/homepage:rhel10update
+    podman push quay.io/$QUAY_USER/webpage:latest && podman push quay.io/$QUAY_USER/webpage:rhel10update
     ```
 
-4. No we switch to the `homepage` VM, we will use our special ssh command to log into the VM.
+4. No we switch to the `webpage` VM, we will use our special ssh command to log into the VM.
 
     ```bash
-    VM_IP=$(sudo virsh -q domifaddr homepage | awk '{ print $4 }' | cut -d"/" -f1) && ssh bootc-user@$VM_IP
+    VM_IP=$(sudo virsh -q domifaddr webpage | awk '{ print $4 }' | cut -d"/" -f1) && ssh bootc-user@$VM_IP
     ```
 
 5. Let's check if there is an update in the registry using the `bootc upgrade --check` command.
@@ -280,7 +280,7 @@ In the last steps we are going to push a new RHEL 10 webpage to the homapage ser
     ```
 
     ```
-        Update available for: docker://quay.io/$QUAY_USER/homepage:latest \
+        Update available for: docker://quay.io/$QUAY_USER/webpage:latest \
         Version: 10.1 \
         Digest: sha256:0c5416...... \
         Total new layers: 77    Size: 885.4 MB \
@@ -303,7 +303,7 @@ In the last steps we are going to push a new RHEL 10 webpage to the homapage ser
 8. We use our special ssh command again to log into the VM.
 
     ```bash
-    VM_IP=$(sudo virsh -q domifaddr homepage | awk '{ print $4 }' | cut -d"/" -f1) && ssh bootc-user@$VM_IP
+    VM_IP=$(sudo virsh -q domifaddr webpage | awk '{ print $4 }' | cut -d"/" -f1) && ssh bootc-user@$VM_IP
     ```
 
 9. and check the OS version using `bootc status`
