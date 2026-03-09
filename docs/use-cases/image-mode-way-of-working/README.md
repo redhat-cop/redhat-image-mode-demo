@@ -34,16 +34,16 @@ The following Container files with the content will be built:
 
 ## The workflow
 
-1. Create a RHEL 9.6 base image
+1. Create a RHEL 9 base image
 2. Create our application images and VMs.
-    1. Create a httpd server image based on our RHEL 9.6 base image
-    2. Create a MariaDB server image based on our RHEL 9.6 base image
+    1. Create a httpd server image based on our RHEL 9 base image
+    2. Create a MariaDB server image based on our RHEL 9 base image
 3. Deploy the application images as a virtual machine servers.
 4. Create the webpage image with our 9 webpage content and switch the VM to the webpage image.
 5. Rollback to get our old webpage back up and running.
 6. Fix the error in the webpage container file and update the VM.
 7. Upgrade the base RHEL image to RHEL 10.
-8. Build a new version of the httpd service image on RHEL 10.
-9. Build a new version of the webpage image containing the RHEL 10 webpage.
-10. Upgrade the Webpage VM to the latest 10 webpage and the OS to RHEL version 10.
-11. Upgrade the Database server to RHEL 10.
+    1. Build a new version of the httpd service image on RHEL 10.
+    2. Build a new version of the webpage image containing the RHEL 10 webpage.
+8. Upgrade the Webpage VM to the latest 10 webpage and the OS to RHEL version 10.
+9. Upgrade the Database server to RHEL 10.
