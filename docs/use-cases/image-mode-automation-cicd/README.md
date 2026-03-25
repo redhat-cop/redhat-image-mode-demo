@@ -35,6 +35,11 @@ A series of Git repositories are available, each aligned to a specific Automatio
 
 All resources are hosted in the [Red Hat Communities of Practice GitLab group](https://gitlab.com/redhat-cop). The **[RHEL Image Mode CICD](https://gitlab.com/redhat/cop/rhel/rhel-image-mode-cicd)** repository is the recommended starting point, as it contains references to each of the available implementations.
 
+??? warning "**Support Policy for Community content**"
+    The repositories are open source community projects. They are **not** maintained by Red Hat Engineering and do not include support from the Red Hat Customer Experience and Engagement (CEE) team.
+    For production support guidance, refer to [Red Hat's support policy](https://access.redhat.com/support/policy/).
+
+
 ---
 
 ## Architectural Principles
@@ -78,12 +83,3 @@ Image Mode for RHEL works perfectly with other Red Hat Products, that have full 
 - [Red Hat Edge Manager](https://www.redhat.com/en/resources/simplify-edge-management-at-scale-detail)
 
 From content management, including container registry capabilities in Satellite, to proactive remediation suggestions and automation at scale.
-
-
----
-
-## Support Policy
-
-The repositories are open source community projects. They are **not** maintained by Red Hat Engineering and do not include support from the Red Hat Customer Experience and Engagement (CEE) team.
-
-For production support guidance, refer to [Red Hat's support policy](https://access.redhat.com/support/policy/).
