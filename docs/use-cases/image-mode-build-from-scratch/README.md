@@ -46,7 +46,7 @@ Log-in to [registry.redhat.io](https://registry.redhat.io) using your Red Hat Cr
 podman login registry.redhat.io --authfile auth.json
 ```
 
-??? tip "Saving credentials to an authfile"
+!!! tip "Saving credentials to an authfile"
 
     During the example, we will use *sudo* to run privileged commands with podman, with authfiles we can save the login information to a shared file that can be used by both users to interact with the Red Hat registry.
 
@@ -61,7 +61,7 @@ To build the image, the inner build process requires elevated privileges for mou
   -t rhel-image-mode:from-scratch .
 ```
 
-??? tip "Making the image available to root for further steps"
+!!! tip "Making the image available to root for further steps"
 
     You can use `podman` to copy images between remote hosts using
     SCP with the `image` subcommand. This will also work for local

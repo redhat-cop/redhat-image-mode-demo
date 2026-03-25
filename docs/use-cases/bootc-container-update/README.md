@@ -16,11 +16,11 @@ The Containerfile in this example will:
 
 But it will add the following two steps, resulting in a different image with an additional layer:
 
-**- Add an additional message of the day with the update notes**
+- **Add an additional message of the day with the update notes**
 
-**- Add mariadb-server package and vim**
+- **Add mariadb-server package and vim**
 
-**- Enable the mariadb systemd unit**
+- **Enable the mariadb systemd unit**
 
 <details>
   <summary>Review Containerfile.update</summary>

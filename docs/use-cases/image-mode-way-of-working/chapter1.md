@@ -218,10 +218,9 @@ On our image builder server we will build a new Image Mode for RHEL 9 webpage im
 
     !!! tip
         If you didn't add the `$QUAY_USER` to the `.bashrc` file then run the following
-
-    ```bash
-    QUAY_USER="your quay.io username not the email address"
-    ```
+        ```bash
+        QUAY_USER="your quay.io username not the email address"
+        ```
 
     ```bash
     sudo bootc switch quay.io/$QUAY_USER/webpage:latest
@@ -324,10 +323,9 @@ On our image builder server we will build a new Image Mode for RHEL 9 webpage im
 
     !!! tip
         If you didn't add the `$QUAY_USER` to the `.bashrc` file then run the following
-
-    ```bash
-    QUAY_USER="your quay.io username not the email address"
-    ```
+        ```bash
+        QUAY_USER="your quay.io username not the email address"
+        ```
 
     ```bash
     sudo bootc switch quay.io/$QUAY_USER/webpage:latest
