@@ -4,8 +4,9 @@ In this example, we will expand the image we built in the [Apache bootc use case
 This way, we will be able to streamline the creation of VMs based on a frozen, immutable configuration that will take few seconds to be deployed.
 
 
-??? tip
-  "We will stay on RHEL9 to further show how to perform major upgrades in a following example."
+!!! info "Note about using a specific version of RHEL"
+
+    We will stay on RHEL9 to further show how to perform major upgrades in a following example.
 
 The Containerfile.anaconda in the example:
 
