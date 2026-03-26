@@ -6,7 +6,7 @@ In this article, we will explore how Image Mode for RHEL fits into CI/CD and aut
 
 ---
 
-## Why do we need automation for Image Mode?
+## Why automation works so well with Image Mode?
 
 Image Mode for RHEL represents a convergence of two automation worlds that have traditionally operated separately: the OS/infrastructure lifecycle and the container image pipeline.
 In package mode, automation meant configuration management, applying state to a running system. In Image Mode, the system is the image. That shift means the entire OS lifecycle (building, testing, updating, managing) can now be expressed as a workflow or a pipeline, using the same patterns and toolchain your teams already use for containerized applications.
