@@ -8,7 +8,9 @@ In this article, we will explore how Image Mode for RHEL fits into CI/CD and aut
 
 ## Why do we need automation for Image Mode?
 
-As you might have seen in the other examples, Image Mode for RHEL relies on container technologies, exactly like any other containerized content.
+Image Mode for RHEL represents a convergence of two automation worlds that have traditionally operated separately: the OS/infrastructure lifecycle and the container image pipeline.
+In package mode, automation meant configuration management, applying state to a running system. In Image Mode, the system is the image. That shift means the entire OS lifecycle (building, testing, updating, managing) can now be expressed as a workflow or a pipeline, using the same patterns and toolchain your teams already use for containerized applications.
+
 Each phase of its lifecycle, is made of a set of steps that the users need to do in order to:
 
 - **Build** - Create a new OS container image from a Containerfile
@@ -16,6 +18,7 @@ Each phase of its lifecycle, is made of a set of steps that the users need to do
 - **Publish** - Push the image to a container registry
 - **Test** - Validate the image before promoting it
 - **Deploy** - Roll out the new image to target systems
+- **Configure and maintain** - Perform configurations and maintenance like any other RHEL system
 
 Automating this lifecycle through a CI/CD system or an Automation tool removes manual steps, enforces consistency, and makes OS updates auditable and repeatable.
 
@@ -63,7 +66,7 @@ Each integration may introduce patterns unique to its platform, but the list abo
 Building Image Mode container images can follow the same flow application containers, so it is very easy to integrate their build into existing workflows or pipelines.
 The examples available show how easy it is to just get started.
 
-### Convert container images and deploy VM iesnstan
+### Convert container images and deploy VMs and instances
 
 To deploy Image Mode for RHEL Instances/VMs you need to convert it to a format that can be used by Hypervisors, Cloud providers or Bare Metal servers/devices.
 The conversion process leverages a tool, [*bootc-image-builder*](https://github.com/osbuild/bootc-image-builder) that runs as a container, making it 'friendly' to be plugged into existing workflows or pipelines.
