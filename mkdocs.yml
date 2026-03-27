@@ -47,6 +47,7 @@ nav:
     - Manage RHEL Image Mode systems with Red Hat Insights: use-cases/image-mode-management-insights/README.md
     - Embed a Containerized application in Image Mode for RHEL: use-cases/image-mode-podman-container/README.md
     - Build a minimal RHEL image from scratch: use-cases/image-mode-build-from-scratch/README.md
+    - Simplify Image Mode for RHEL lifecycle management with Automation workflows and CI/CD pipelines: use-cases/image-mode-automation-cicd/README.md
     - Ways of working with RHEL Image Mode:
       - Introduction: use-cases/image-mode-way-of-working/README.md
       - Configuring the demo: use-cases/image-mode-way-of-working/demo-build.md
