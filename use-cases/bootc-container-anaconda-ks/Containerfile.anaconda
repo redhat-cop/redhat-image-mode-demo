@@ -1,4 +1,4 @@
-FROM registry.redhat.io/rhel9/rhel-bootc:9.7
+FROM registry.redhat.io/rhel9/rhel-bootc:9.8
 LABEL org.opencontainers.image.authors="alerossi@redhat.com"
 RUN dnf -y install tmux mkpasswd
 RUN pass=$(mkpasswd --method=SHA-512 --rounds=4096 redhat) && useradd -m -G wheel bootc-user -p $pass
@@ -8,6 +8,6 @@ RUN dnf -y install httpd && \
     mv /var/www /usr/share/www && \
     sed -ie 's,/var/www,/usr/share/www,' /etc/httpd/conf/httpd.conf
 RUN echo "Welcome to the bootc-http instance!" > /usr/share/www/html/index.html
-RUN echo "This is a RHEL 9.7 VM installed using a bootable container as source!" > /etc/motd.d/10-first-setup.motd
+RUN echo "This is a RHEL 9.8 VM installed using a bootable container as source!" > /etc/motd.d/10-first-setup.motd
 EXPOSE 80
 CMD [ "/sbin/init" ]
