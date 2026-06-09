@@ -1,4 +1,5 @@
-FROM registry.redhat.io/rhel10/rhel-bootc:10.1
+FROM registry.redhat.io/rhel10/rhel-bootc:10.2
+
 LABEL org.opencontainers.image.authors="alerossi@redhat.com"
 RUN dnf -y install tmux mkpasswd
 RUN echo "%wheel        ALL=(ALL)       NOPASSWD: ALL" > /etc/sudoers.d/wheel-sudo

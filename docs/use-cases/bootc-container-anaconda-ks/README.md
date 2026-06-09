@@ -75,11 +75,11 @@ You can now browse to [https://quay.io/repository/YOURQUAYUSERNAME/rhel-bootc-ht
 ![](./assets/quay-repo-public.png)
 
 
-## Install RHEL 9.7 using the resulting image
+## Install RHEL 9.8 using the resulting image
 
 ### Prepare install media and review the kickstart file
 
-RHEL 9.7 ISO images are available on the [Red Hat Developer portal](https://developers.redhat.com/content-gateway/file/rhel/Red_Hat_Enterprise_Linux_9.7/rhel-9.7-x86_64-boot.iso) and for this use case we will only need the boot image.
+RHEL 9.8 ISO images are available on the [Red Hat Developer portal](https://developers.redhat.com/content-gateway/file/rhel/Red_Hat_Enterprise_Linux_9.8/rhel-9.8-x86_64-boot.iso) and for this use case we will only need the boot image.
 
 Save the image and place it in the use case folder with the name **rhel9.iso**
 
@@ -101,7 +101,7 @@ What is relevant is the **ostreecontainer** directive, that references the conta
 
 ### Creating the Virtual Machine in KVM
 
-You are now ready to spin-up a Virtual Machine using the downloaded boot image for RHEL 9.7, injecting and using the kickstart to perform an unattended installation.
+You are now ready to spin-up a Virtual Machine using the downloaded boot image for RHEL 9.8, injecting and using the kickstart to perform an unattended installation.
 
 ```bash
 virt-install --name rhel9-server \
@@ -110,7 +110,7 @@ virt-install --name rhel9-server \
 --disk size=20 \
 --network network=default \
 --location ./rhel9.iso \
---os-variant rhel9.7 \
+--os-variant rhel9.8 \
 --initrd-inject ks.cfg \
 --extra-args "inst.ks=file:/ks.cfg"
 ```
@@ -122,5 +122,5 @@ In a few seconds, the VM will boot and start the installation, grabbing the cont
 Based on the connection, it can take a while to fetch the container image and complete the setup. Once it is completed, you can log-in with the **bootc-user/redhat** credentials, and you will see the custom Message Of The Day (MOTD) we added in our Containerfile!
 
 ```bash
-This is a RHEL 9.7 VM installed using a bootable container as a source!
+This is a RHEL 9.8 VM installed using a bootable container as a source!
 ```
