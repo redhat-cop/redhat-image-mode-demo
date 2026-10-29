@@ -1,7 +1,7 @@
 # Use Case - Upgrading a VM based on a bootc image
 
-In this example, we want to add some bits to the [previously generated httpd image](../bootc-container-anaconda-ks/README.md) to upgrade the system from **RHEL 9.8
-** to **RHEL 10.2
+In this example, we want to add some bits to the [previously generated httpd image](../bootc-container-anaconda-ks/README.md) to upgrade the system from **RHEL 9.9
+** to **RHEL 10.3
 **.
 
 We will then use **bootc** to manage the system upgrade, and you will see how easy and fast perfoming upgrades is.
@@ -96,7 +96,7 @@ The first thing to do is logging in the VM created in the [previous use case](..
 ```bash
  ~ ▓▒░ ssh bootc-user@192.168.124.16
 bootc-user@192.168.124.16's password:
-This is a RHEL 9.8
+This is a RHEL 9.9
  VM installed using a bootable container as an rpm-ostree source!
 Last login: Mon Jul 29 12:03:40 2024 from 192.168.124.1
 [bootc-user@localhost ~]$
@@ -139,7 +139,7 @@ Fetching layers ████████████████████ 71/
  └ Fetching ████████████████████ 240 B/240 B (0 B/s) layer 3f31bbba8d765173de253
 Fetched layers: 1.39 GiB in 3 minutes (6.93 MiB/
 Queued for next boot: quay.io/kubealex/rhel-image-mode-demo:app
-  Version: 10.20250116.0
+  Version: 10.30250116.0
   Digest: sha256:4cf5180c3586eaf352661e05399ff23a9a2e021a98acefaabd83b0e991dd21b3
 Total new layers: 73    Size: 1.5 GB
 Removed layers:   78    Size: 1.5 GB
@@ -159,7 +159,7 @@ Let's log back in!
 ```bash
  ~ ▓▒░ ssh bootc-user@192.168.122.19
 bootc-user@192.168.122.19's password:
-This is a RHEL 10.2
+This is a RHEL 10.3
  VM installed using a bootable container as source!
 This server is now running on RHEL 10 after the latest upgrade.
 Last login: Mon Feb 24 12:15:42 2025 from 192.168.122.1
@@ -171,14 +171,14 @@ You can already see that something changed, we have a new line in our message of
 ```bash
 [bootc-user@localhost ~]$ cat /etc/os-release
 NAME="Red Hat Enterprise Linux"
-VERSION="10.2
+VERSION="10.3
  (Coughlan)"
 ID="rhel"
 ID_LIKE="centos fedora"
-VERSION_ID="10.2
+VERSION_ID="10.3
 "
 PLATFORM_ID="platform:el10"
-PRETTY_NAME="Red Hat Enterprise Linux 10.2
+PRETTY_NAME="Red Hat Enterprise Linux 10.3
  (Coughlan)"
 ANSI_COLOR="0;31"
 LOGO="fedora-logo-icon"
@@ -190,10 +190,10 @@ DOCUMENTATION_URL="https://access.redhat.com/documentation/en-us/red_hat_enterpr
 BUG_REPORT_URL="https://issues.redhat.com/"
 
 REDHAT_BUGZILLA_PRODUCT="Red Hat Enterprise Linux 10"
-REDHAT_BUGZILLA_PRODUCT_VERSION=10.2
+REDHAT_BUGZILLA_PRODUCT_VERSION=10.3
 
 REDHAT_SUPPORT_PRODUCT="Red Hat Enterprise Linux"
-REDHAT_SUPPORT_PRODUCT_VERSION="10.2
+REDHAT_SUPPORT_PRODUCT_VERSION="10.3
 "
 ```
 
