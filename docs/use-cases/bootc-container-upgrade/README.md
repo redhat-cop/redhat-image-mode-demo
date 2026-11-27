@@ -1,6 +1,6 @@
 # Use Case - Upgrading a VM based on a bootc image
 
-In this example, we want to add some bits to the [previously generated httpd image](../bootc-container-anaconda-ks/README.md) to upgrade the system from **RHEL 9.8
+In this example, we want to add some bits to the [previously generated httpd image](../bootc-container-anaconda-ks/README.md) to upgrade the system from **RHEL 9.9
 ** to **RHEL 10.2
 **.
 
@@ -96,7 +96,7 @@ The first thing to do is logging in the VM created in the [previous use case](..
 ```bash
  ~ ▓▒░ ssh bootc-user@192.168.124.16
 bootc-user@192.168.124.16's password:
-This is a RHEL 9.8
+This is a RHEL 9.9
  VM installed using a bootable container as an rpm-ostree source!
 Last login: Mon Jul 29 12:03:40 2024 from 192.168.124.1
 [bootc-user@localhost ~]$
