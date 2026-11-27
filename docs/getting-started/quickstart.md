@@ -13,7 +13,7 @@ Creating a container for RHEL Image Mode is as easy as writing and running a Con
 
 
 ```dockerfile
-FROM registry.redhat.io/rhel10/rhel-bootc:10.2
+FROM registry.redhat.io/rhel10/rhel-bootc:10.3
 
 ```
 
